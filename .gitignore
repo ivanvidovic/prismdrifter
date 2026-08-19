@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Adobe
+*.ai.lck
+Adobe Illustrator Temp*
+
+# Local
+*.log
+node_modules/

@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prismdrifter — Brand Assets</title>
+<meta name="description" content="Logos, illustrations, typeface and brand documentation for Prismdrifter.">
+
+<style>
+/* ============================================================
+   FONT
+   Filenames contain a comma, so url() must be quoted.
+   ============================================================ */
+@font-face {
+  font-family: 'Archivo';
+  src: url('assets/fonts/Archivo-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Archivo';
+  src: url('assets/fonts/Archivo-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root {
+  --paper: #ffffff;
+  --ink:   #000000;
+  --rule:  rgba(0,0,0,.16);
+  --rule-strong: rgba(0,0,0,.42);
+  --dim:   rgba(0,0,0,.52);
+  --field: rgba(0,0,0,.045);
+  --gutter: clamp(20px, 4vw, 56px);
+  --max: 1440px;
+}
+:root[data-theme="dark"] {
+  --paper: #000000;
+  --ink:   #ffffff;
+  --rule:  rgba(255,255,255,.20);
+  --rule-strong: rgba(255,255,255,.48);
+  --dim:   rgba(255,255,255,.56);
+  --field: rgba(255,255,255,.07);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+/* ---------- shared type roles ---------- */
+.lbl {
+  font-size: 10.5px;
+  font-weight: 600;
+  font-stretch: 78%;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ============================================================
+   MASTHEAD
+   ============================================================ */
+.mast { border-bottom: 1px solid var(--rule); padding: clamp(28px,5vw,56px) 0 clamp(24px,4vw,40px); }
+.mast-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.mast h1 {
+  margin: 0;
+  font-size: clamp(34px, 7.4vw, 82px);
+  font-weight: 800;
+  font-stretch: 118%;
+  letter-spacing: -.022em;
+  line-height: .9;
+  text-transform: uppercase;
+}
+.mast-sub { margin: 14px 0 0; max-width: 46ch; }
+
+.theme-btn {
+  font: inherit;
+  font-size: 10.5px;
+  font-weight: 600;
+  font-stretch: 78%;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: none;
+  border: 1px solid var(--rule-strong);
+  padding: 9px 15px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .12s, color .12s;
+}
+.theme-btn:hover { background: var(--ink); color: var(--paper); }
+
+/* ============================================================
+   STICKY NAV
+   ============================================================ */
+.nav {
+  position: sticky; top: 0; z-index: 40;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+.nav-inner { display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav a {
+  flex: none;
+  padding: 14px 20px 13px 0;
+  margin-right: 20px;
+  color: var(--dim);
+  text-decoration: none;
+  font-size: 10.5px;
+  font-weight: 600;
+  font-stretch: 78%;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color .12s, border-color .12s;
+}
+.nav a:hover, .nav a.on { color: var(--ink); border-bottom-color: var(--ink); }
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+.sec { padding: clamp(48px, 7vw, 96px) 0; border-bottom: 1px solid var(--rule); }
+.sec:last-of-type { border-bottom: 0; }
+
+.sec-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 8px; }
+.sec-head .idx {
+  font-size: clamp(11px, 1.3vw, 13px);
+  font-weight: 700;
+  font-stretch: 80%;
+  letter-spacing: .1em;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+.sec-head h2 {
+  margin: 0;
+  font-size: clamp(24px, 4.2vw, 46px);
+  font-weight: 800;
+  font-stretch: 112%;
+  letter-spacing: -.016em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.sec-note { margin: 0 0 30px; max-width: 62ch; color: var(--dim); font-size: 14px; }
+
+/* ============================================================
+   01 — BRAND STORY
+   ============================================================ */
+.story {
+  border-top: 1px solid var(--rule);
+  padding-top: 30px;
+  display: grid;
+  grid-template-columns: minmax(0,1.55fr) minmax(0,1fr);
+  gap: clamp(30px, 6vw, 76px);
+  align-items: start;
+}
+@media (max-width: 860px) { .story { grid-template-columns: 1fr; } }
+
+.story-copy p {
+  margin: 0 0 .68em;
+  font-size: clamp(16px, 2.1vw, 22px);
+  font-weight: 400;
+  font-stretch: 96%;
+  line-height: 1.42;
+  letter-spacing: -.005em;
+  max-width: 40ch;
+}
+.story-copy p:last-child { margin-bottom: 0; }
+
+/* ============================================================
+   ASSET SECTIONS
+   ============================================================ */
+.bulk {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 12px 0;
+  margin-bottom: 26px;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+.bulk-grp { display: flex; align-items: center; gap: 10px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.card { background: var(--paper); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.card.wide { grid-column: 1 / -1; }
+
+.card-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.card-name { font-size: 12.5px; font-weight: 700; font-stretch: 88%; letter-spacing: .04em; text-transform: uppercase; }
+.card-dim { font-size: 10.5px; font-weight: 500; font-stretch: 78%; letter-spacing: .09em; color: var(--dim); font-variant-numeric: tabular-nums; }
+
+.stage {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  padding: 13%;
+  border: 1px solid var(--rule);
+  background: var(--stage-bg, transparent);
+  overflow: hidden;
+}
+.card.wide .stage { padding: 3% 6%; }
+.stage svg { width: 100%; height: 100%; display: block; }
+.stage.err {
+  border-style: dashed;
+  border-color: var(--rule-strong);
+  place-items: center;
+  padding: 18px;
+}
+.stage.err span {
+  font-size: 10.5px;
+  font-weight: 500;
+  font-stretch: 78%;
+  letter-spacing: .08em;
+  color: var(--dim);
+  text-align: center;
+  word-break: break-all;
+  line-height: 1.6;
+}
+
+.ctl { display: flex; flex-direction: column; gap: 9px; }
+.ctl-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+/* swatches */
+.sw {
+  width: 22px; height: 22px;
+  padding: 0;
+  border: 1px solid var(--rule-strong);
+  cursor: pointer;
+  position: relative;
+  background-clip: padding-box;
+}
+.sw[aria-pressed="true"]::after,
+.sw.on::after {
+  content: "";
+  position: absolute; inset: -4px;
+  border: 1px solid var(--ink);
+}
+.sw-k { background: #000; }
+.sw-w { background: #fff; }
+.sw-c { padding: 0; overflow: hidden; }
+.sw-c input {
+  position: absolute; inset: -6px;
+  width: calc(100% + 12px); height: calc(100% + 12px);
+  padding: 0; border: 0; cursor: pointer; background: none;
+}
+
+/* size ladder */
+.sz {
+  font: inherit;
+  font-size: 10.5px;
+  font-weight: 600;
+  font-stretch: 78%;
+  letter-spacing: .07em;
+  font-variant-numeric: tabular-nums;
+  color: var(--dim);
+  background: none;
+  border: 1px solid var(--rule);
+  padding: 5px 8px;
+  cursor: pointer;
+  transition: color .1s, border-color .1s, background .1s;
+}
+.sz:hover { color: var(--ink); border-color: var(--rule-strong); }
+.sz[aria-pressed="true"] { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+
+.szc {
+  font: inherit;
+  font-size: 10.5px;
+  font-weight: 600;
+  font-stretch: 78%;
+  letter-spacing: .07em;
+  font-variant-numeric: tabular-nums;
+  width: 62px;
+  color: var(--ink);
+  background: var(--field);
+  border: 1px solid var(--rule);
+  padding: 5px 7px;
+}
+.szc::-webkit-outer-spin-button, .szc::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.szc { -moz-appearance: textfield; }
+
+/* download buttons */
+.dl { display: flex; gap: 8px; margin-top: 1px; }
+.dl button {
+  flex: 1;
+  font: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  font-stretch: 80%;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 10px 8px;
+  cursor: pointer;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  transition: opacity .12s;
+}
+.dl button.ghost { background: none; color: var(--ink); }
+.dl button:hover { opacity: .72; }
+.dl button:disabled { opacity: .3; cursor: not-allowed; }
+
+.out {
+  font-size: 10.5px;
+  font-weight: 500;
+  font-stretch: 78%;
+  letter-spacing: .09em;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+  min-height: 1.4em;
+}
+
+/* ============================================================
+   05 — FONT
+   ============================================================ */
+.spec { border-top: 1px solid var(--rule); }
+.spec-blk { border-bottom: 1px solid var(--rule); padding: 26px 0; }
+.spec-blk:last-child { border-bottom: 0; }
+.spec-ttl { margin: 0 0 16px; }
+
+.glyphs {
+  font-size: clamp(19px, 3.2vw, 34px);
+  font-weight: 500;
+  font-stretch: 100%;
+  letter-spacing: .015em;
+  line-height: 1.34;
+  word-break: break-word;
+}
+.glyphs .lc { font-weight: 300; }
+.glyphs .fig { font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: .05em; }
+
+.storm { display: flex; flex-direction: column; }
+.storm div {
+  font-size: clamp(26px, 8.4vw, 96px);
+  line-height: .98;
+  text-transform: uppercase;
+  letter-spacing: -.012em;
+  white-space: nowrap;
+}
+
+.axes { display: grid; grid-template-columns: repeat(auto-fit, minmax(228px, 1fr)); gap: 20px 34px; margin-bottom: 22px; }
+.axis-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
+input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 20px; background: none; cursor: pointer; margin: 0;
+}
+input[type="range"]::-webkit-slider-runnable-track { height: 1px; background: var(--rule-strong); }
+input[type="range"]::-moz-range-track { height: 1px; background: var(--rule-strong); }
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 3px; height: 17px; background: var(--ink); border: 0; border-radius: 0; margin-top: -8px;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 3px; height: 17px; background: var(--ink); border: 0; border-radius: 0;
+}
+.axis-demo {
+  font-size: clamp(30px, 9.6vw, 116px);
+  line-height: 1.02;
+  text-transform: uppercase;
+  letter-spacing: -.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+/* ============================================================
+   FILE ROWS  (PDF / font zip / tool link)
+   ============================================================ */
+.rows { border-top: 1px solid var(--rule); }
+.row {
+  border-bottom: 1px solid var(--rule);
+  padding: 17px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  color: inherit;
+  text-decoration: none;
+  background: none;
+  border-left: 0; border-right: 0; border-top: 0;
+  width: 100%;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.row-l { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.row-name { font-size: clamp(15px,2vw,19px); font-weight: 700; font-stretch: 96%; letter-spacing: -.005em; }
+.row-meta { font-size: 10.5px; font-weight: 500; font-stretch: 78%; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+.row-cta {
+  font-size: 10.5px; font-weight: 700; font-stretch: 80%;
+  letter-spacing: .14em; text-transform: uppercase;
+  border: 1px solid var(--ink); padding: 9px 15px; white-space: nowrap;
+  transition: background .12s, color .12s;
+}
+.row:hover .row-cta { background: var(--ink); color: var(--paper); }
+
+/* ============================================================
+   06 — VISUAL LOOM
+   ============================================================ */
+.loom { border-top: 1px solid var(--rule); padding-top: 30px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(28px,5vw,64px); align-items: start; }
+@media (max-width: 860px) { .loom { grid-template-columns: 1fr; } }
+.loom p { margin: 0 0 1em; max-width: 48ch; }
+.loom p:last-of-type { margin-bottom: 0; }
+.loom-lead { font-size: clamp(17px,2.3vw,23px); font-weight: 600; font-stretch: 100%; line-height: 1.34; letter-spacing: -.008em; }
+
+/* ============================================================
+   FOOT
+   ============================================================ */
+.foot { padding: 44px 0 60px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+/* ---------- a11y ---------- */
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+.vh {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ══════════════════════════ MASTHEAD ══════════════════════════ -->
+<header class="mast">
+  <div class="wrap mast-row">
+    <div>
+      <h1>Prismdrifter</h1>
+      <p class="mast-sub">Brand assets. Pick a colour and a size, then download. Vector source is available on every asset.</p>
+    </div>
+    <button class="theme-btn" id="theme" type="button" aria-pressed="false">Dark</button>
+  </div>
+</header>
+
+<!-- ══════════════════════════ NAV ══════════════════════════ -->
+<nav class="nav" aria-label="Sections">
+  <div class="wrap nav-inner">
+    <a href="#story">01 Brand story</a>
+    <a href="#logos">02 Logos</a>
+    <a href="#alt">03 Alternate logos</a>
+    <a href="#illus">04 Illustrations</a>
+    <a href="#font">05 Font</a>
+    <a href="#loom">06 Visual Loom</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ═════════════ 01 BRAND STORY ═════════════ -->
+  <section class="sec" id="story">
+    <div class="sec-head"><span class="idx">01</span><h2>Brand story</h2></div>
+    <div class="story">
+      <div class="story-copy">
+        <p>PRISM is the triangle, DRIFTER is the spiral — direction and energy.</p>
+        <p>The spiral is force with nowhere to go; the triangle is the vessel that gives it a heading.</p>
+        <p>Stabilizing one inside the other creates a new third form, the consciousness that directs the craft.</p>
+        <p>A compass needle magnetized toward light and repelled by dark, existing in one and aimed at the other.</p>
+      </div>
+      <div class="rows">
+        <a class="row" id="pdfRow" href="assets/docs/Prismdrifter_Brand_Assets_01.pdf" download>
+          <span class="row-l">
+            <span class="row-name">Brand Assets</span>
+            <span class="row-meta" id="pdfMeta">PDF</span>
+          </span>
+          <span class="row-cta">Download</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ 02 LOGOS ═════════════ -->
+  <section class="sec" id="logos">
+    <div class="sec-head"><span class="idx">02</span><h2>Logos</h2></div>
+    <p class="sec-note">Primary marks. PNG exports are transparent; the number you pick is the longest edge.</p>
+    <div data-bulk="logos"></div>
+    <div class="grid" id="grid-logos"></div>
+  </section>
+
+  <!-- ═════════════ 03 ALTERNATE LOGOS ═════════════ -->
+  <section class="sec" id="alt">
+    <div class="sec-head"><span class="idx">03</span><h2>Alternate logos</h2></div>
+    <p class="sec-note">Secondary marks and horizontal lockups.</p>
+    <div data-bulk="alt"></div>
+    <div class="grid" id="grid-alt"></div>
+  </section>
+
+  <!-- ═════════════ 04 ILLUSTRATIONS ═════════════ -->
+  <section class="sec" id="illus">
+    <div class="sec-head"><span class="idx">04</span><h2>Illustrations</h2></div>
+    <p class="sec-note">Line artwork. Hairline strokes are thickened on small PNG exports so they stay solid; SVG downloads keep the original weight.</p>
+    <div data-bulk="illus"></div>
+    <div class="grid" id="grid-illus"></div>
+  </section>
+
+  <!-- ═════════════ 05 FONT ═════════════ -->
+  <section class="sec" id="font">
+    <div class="sec-head"><span class="idx">05</span><h2>Font</h2></div>
+    <p class="sec-note">Archivo. One variable file carries every weight from 100 to 900 and every width from 62 to 125.</p>
+
+    <div class="spec">
+      <div class="spec-blk">
+        <p class="lbl spec-ttl">Character set</p>
+        <p class="glyphs">
+          ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+          <span class="lc">abcdefghijklmnopqrstuvwxyz</span><br>
+          <span class="fig">0123456789</span>
+        </p>
+      </div>
+
+      <div class="spec-blk">
+        <p class="lbl spec-ttl">Weight and width range</p>
+        <div class="storm" id="storm"></div>
+      </div>
+
+      <div class="spec-blk">
+        <p class="lbl spec-ttl">Try the axes</p>
+        <div class="axes">
+          <div>
+            <div class="axis-top">
+              <label class="lbl" for="axW">Weight</label>
+              <span class="lbl num" id="axWv">500</span>
+            </div>
+            <input type="range" id="axW" min="100" max="900" step="1" value="500">
+          </div>
+          <div>
+            <div class="axis-top">
+              <label class="lbl" for="axD">Width</label>
+              <span class="lbl num" id="axDv">100</span>
+            </div>
+            <input type="range" id="axD" min="62" max="125" step="1" value="100">
+          </div>
+        </div>
+        <div class="axis-demo" id="axDemo">Prismdrifter</div>
+      </div>
+
+      <div class="spec-blk">
+        <div class="rows">
+          <button class="row" id="fontRow" type="button">
+            <span class="row-l">
+              <span class="row-name">Archivo</span>
+              <span class="row-meta" id="fontMeta">Roman + italic variable · SIL Open Font License 1.1</span>
+            </span>
+            <span class="row-cta" id="fontCta">Download ZIP</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ 06 VISUAL LOOM ═════════════ -->
+  <section class="sec" id="loom">
+    <div class="sec-head"><span class="idx">06</span><h2>Visual Loom</h2></div>
+    <div class="loom">
+      <div>
+        <p class="loom-lead">A procedural pattern generator built for Prismdrifter, for producing on-brand textures and graphics without building each one by hand.</p>
+        <p>Every output derives from a single black-and-white gradient, subdivided and layered by a fixed rule set. Random Look generates a full composition in one click; sliders adjust it layer by layer, or drag on the canvas to drift the layers against each other. Exports as SVG or PNG at multiple sizes.</p>
+        <p>Use it for background textures, print graphics, social support graphics, and anything else that comes up.</p>
+      </div>
+      <div class="rows">
+        <a class="row" href="https://ivanvidovic.github.io/loomrift/" target="_blank" rel="noopener">
+          <span class="row-l">
+            <span class="row-name">Open Visual Loom</span>
+            <span class="row-meta">ivanvidovic.github.io/loomrift</span>
+          </span>
+          <span class="row-cta">Open</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span class="lbl">Prismdrifter — Independent avant-garde clothing designer</span>
+    <span class="lbl">Portland, Oregon</span>
+  </div>
+
+</main>
+
+<script>
+"use strict";
+
+/* ══════════════════════════════════════════════════════════════
+   CONFIG
+   ══════════════════════════════════════════════════════════════ */
+const SIZES        = [256, 512, 1024, 2048, 4096];
+const SIZE_MAX     = 8192;
+const SIZE_MIN     = 16;
+const STROKE_FLOOR = 1.5;      // rendered px — thinner strokes get scaled up
+const DEFAULT_SIZE = 1024;
+
+const FONT_FILES = [
+  'Archivo-VariableFont_wdth,wght.ttf',
+  'Archivo-Italic-VariableFont_wdth,wght.ttf',
+  'OFL.txt'
+];
+
+const GROUPS = {
+  logos: { dir: 'assets/logos/', items: [
+    ['Prismdrifter_Logo_A.svg', 'Logo A'],
+    ['Prismdrifter_Logo_B.svg', 'Logo B'],
+    ['Prismdrifter_Logo_C.svg', 'Logo C'],
+    ['Prismdrifter_Logo_D.svg', 'Logo D']
+  ]},
+  alt: { dir: 'assets/logos/', items: [
+    ['Prismdrifter_Alt_Logo_01.svg', 'Alt 01'],
+    ['Prismdrifter_Alt_Logo_02.svg', 'Alt 02'],
+    ['Prismdrifter_Alt_Logo_03.svg', 'Alt 03'],
+    ['Prismdrifter_Alt_Logo_04.svg', 'Alt 04'],
+    ['Prismdrifter_Alt_Logo_05.svg', 'Alt 05'],
+    ['Prismdrifter_Alt_Logo_06.svg', 'Alt 06'],
+    ['Prismdrifter_Alt_Logo_07.svg', 'Alt 07']
+  ]},
+  illus: { dir: 'assets/illustrations/', items: [
+    ['Illustration_A_-_Butterfly.svg',   'A — Butterfly'],
+    ['Illustration_B_-_Radial.svg',      'B — Radial'],
+    ['Illustration_C_-_Radial.svg',      'C — Radial'],
+    ['Illustration_D_-_Logo_Heart.svg',  'D — Logo Heart'],
+    ['Illustration_E_-_Reflection.svg',  'E — Reflection'],
+    ['Illustration_F_-_Reflection.svg',  'F — Reflection'],
+    ['Illustration_G_-_Reflection.svg',  'G — Reflection'],
+    ['Illustration_H_-_Reflection.svg',  'H — Reflection'],
+    ['Illustration_I_-_Chain_Links.svg', 'I — Chain Links'],
+    ['Illustration_J_-_Arrow.svg',       'J — Arrow'],
+    ['Illustration_K_-_Arrow.svg',       'K — Arrow']
+  ]}
+};
+
+/* ══════════════════════════════════════════════════════════════
+   SVG PIPELINE
+   ══════════════════════════════════════════════════════════════ */
+
+/* Files carry no transforms, no inherited stroke-width, no CSS and no
+   gradients, so colour and stroke maths resolve from attributes alone. */
+
+function parseViewBox(svg) {
+  const vb = (svg.getAttribute('viewBox') || '').trim().split(/[\s,]+/).map(Number);
+  if (vb.length === 4 && vb.every(n => isFinite(n))) return { w: vb[2], h: vb[3] };
+  return { w: 1000, h: 1000 };
+}
+
+/* Elements inherit fill from the root unless they declare their own.
+   `none` stays none. url(...) references are left alone. */
+function recolor(svg, color) {
+  // Root carries the inherited default. Only claim it if it isn't already
+  // spoken for by `none` or a paint reference.
+  const rf = svg.getAttribute('fill');
+  if (!rf || (rf !== 'none' && !rf.startsWith('url('))) svg.setAttribute('fill', color);
+  const rs = svg.getAttribute('stroke');
+  if (rs && rs !== 'none' && !rs.startsWith('url(')) svg.setAttribute('stroke', color);
+
+  for (const el of svg.querySelectorAll('*')) {
+    const f = el.getAttribute('fill');
+    if (f && f !== 'none' && !f.startsWith('url(')) el.setAttribute('fill', color);
+    const s = el.getAttribute('stroke');
+    if (s && s !== 'none' && !s.startsWith('url(')) el.setAttribute('stroke', color);
+  }
+}
+
+/* Scale any stroke that would render below the floor up to it.
+   Strokes already at or above the floor are untouched. */
+function compensateStrokes(svg, scale) {
+  for (const el of svg.querySelectorAll('[stroke]')) {
+    if (el.getAttribute('stroke') === 'none') continue;
+    const w = parseFloat(el.getAttribute('stroke-width'));
+    if (!isFinite(w) || w <= 0) continue;
+    const rendered = w * scale;
+    if (rendered < STROKE_FLOOR) el.setAttribute('stroke-width', String(w * (STROKE_FLOOR / rendered)));
+  }
+}
+
+/* Duplicate ids across inlined files are harmless here but still invalid.
+   Namespace them, and rewrite any reference that points at them. */
+function namespaceIds(svg, key) {
+  const map = new Map();
+  for (const el of svg.querySelectorAll('[id]')) {
+    const old = el.id;
+    const next = key + '__' + old;
+    map.set(old, next);
+    el.id = next;
+  }
+  if (svg.id) { map.set(svg.id, key + '__' + svg.id); svg.id = key + '__' + svg.id; }
+  if (!map.size) return;
+  const walk = [svg, ...svg.querySelectorAll('*')];
+  for (const el of walk) {
+    for (const attr of Array.from(el.attributes)) {
+      if (attr.value.includes('url(#')) {
+        el.setAttribute(attr.name, attr.value.replace(/url\(#([^)]+)\)/g,
+          (m, id) => map.has(id) ? 'url(#' + map.get(id) + ')' : m));
+      } else if (attr.name === 'href' || attr.name === 'xlink:href') {
+        const id = attr.value.startsWith('#') ? attr.value.slice(1) : null;
+        if (id && map.has(id)) el.setAttribute(attr.name, '#' + map.get(id));
+      }
+    }
+  }
+}
+
+const svgCache = new Map();
+async function loadSVG(path) {
+  if (svgCache.has(path)) return svgCache.get(path);
+  const p = fetch(path)
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+    .then(t => {
+      const doc = new DOMParser().parseFromString(t, 'image/svg+xml');
+      if (doc.querySelector('parsererror')) throw new Error('parse');
+      return doc.documentElement;
+    });
+  svgCache.set(path, p);
+  return p;
+}
+
+/* Build a coloured, correctly sized copy ready for download or rasterising. */
+function prepare(source, { color, size, compensate }) {
+  const svg = source.cloneNode(true);
+  const vb = parseViewBox(svg);
+  const scale = size / Math.max(vb.w, vb.h);
+  const w = Math.max(1, Math.round(vb.w * scale));
+  const h = Math.max(1, Math.round(vb.h * scale));
+  recolor(svg, color);
+  if (compensate) compensateStrokes(svg, scale);
+  svg.setAttribute('width', String(w));
+  svg.setAttribute('height', String(h));
+  if (!svg.getAttribute('xmlns')) svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+  return { svg, w, h };
+}
+
+function serialize(svg) {
+  return '<?xml version="1.0" encoding="UTF-8"?>\n' + new XMLSerializer().serializeToString(svg);
+}
+
+/* Past a browser's canvas ceiling, drawImage quietly does nothing and the
+   export saves as an empty file. Read a cross through the middle: if the
+   small reference render has ink there and the full-size one doesn't, the
+   draw was dropped. */
+function hasInk(ctx, w, h) {
+  try {
+    const row = ctx.getImageData(0, Math.floor(h / 2), w, 1).data;
+    for (let i = 3; i < row.length; i += 4) if (row[i] !== 0) return true;
+    const col = ctx.getImageData(Math.floor(w / 2), 0, 1, h).data;
+    for (let i = 3; i < col.length; i += 4) if (col[i] !== 0) return true;
+    return false;
+  } catch (e) {
+    return true;   // read blocked — assume the draw landed
+  }
+}
+
+function draw(img, w, h) {
+  const cv = document.createElement('canvas');
+  cv.width = w; cv.height = h;
+  const ctx = cv.getContext('2d');
+  ctx.drawImage(img, 0, 0, w, h);
+  return { cv, ctx };
+}
+
+async function toPNG(source, color, size) {
+  const { svg, w, h } = prepare(source, { color, size, compensate: true });
+  const url = URL.createObjectURL(new Blob([serialize(svg)], { type: 'image/svg+xml;charset=utf-8' }));
+  try {
+    const img = new Image();
+    await new Promise((res, rej) => {
+      img.onload = res;
+      img.onerror = () => rej(new Error('render'));
+      img.src = url;
+    });
+
+    const full = draw(img, w, h);
+    if (w * h > 4096 * 4096) {
+      const ref = draw(img, 64, Math.max(1, Math.round(64 * h / w)));
+      if (hasInk(ref.ctx, ref.cv.width, ref.cv.height) && !hasInk(full.ctx, w, h)) {
+        throw new Error('oversize');
+      }
+    }
+
+    const blob = await new Promise(r => full.cv.toBlob(r, 'image/png'));
+    if (!blob) throw new Error('encode');
+    return blob;
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
+function saveBlob(blob, name) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   NAMING
+   ══════════════════════════════════════════════════════════════ */
+function colorName(hex) {
+  const h = hex.toLowerCase();
+  if (h === '#000000') return 'Black';
+  if (h === '#ffffff') return 'White';
+  return h.replace('#', '').toUpperCase();
+}
+function baseName(file) { return file.replace(/\.svg$/i, ''); }
+
+/* ══════════════════════════════════════════════════════════════
+   CARDS
+   ══════════════════════════════════════════════════════════════ */
+const cards = [];
+
+function luminance(hex) {
+  const n = parseInt(hex.slice(1), 16);
+  const f = v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); };
+  return .2126 * f(n >> 16 & 255) + .7152 * f(n >> 8 & 255) + .0722 * f(n & 255);
+}
+
+function buildCard(group, file, label) {
+  const key = group + '_' + baseName(file);
+  const path = GROUPS[group].dir + file;
+
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="card-top">
+      <span class="card-name">${label}</span>
+      <span class="card-dim" data-dim>—</span>
+    </div>
+    <div class="stage" data-stage><span class="lbl">Loading</span></div>
+    <div class="ctl">
+      <div class="ctl-row" data-colors>
+        <span class="lbl" style="margin-right:2px">Colour</span>
+        <button class="sw sw-k" type="button" data-color="#000000" aria-label="Black" aria-pressed="true"></button>
+        <button class="sw sw-w" type="button" data-color="#ffffff" aria-label="White" aria-pressed="false"></button>
+        <span class="sw sw-c" data-custom-wrap>
+          <input type="color" value="#7a7a7a" aria-label="Custom colour" data-custom>
+        </span>
+      </div>
+      <div class="ctl-row" data-sizes>
+        ${SIZES.map(s => `<button class="sz" type="button" data-size="${s}" aria-pressed="${s === DEFAULT_SIZE}">${s}</button>`).join('')}
+        <input class="szc" type="number" min="${SIZE_MIN}" max="${SIZE_MAX}" placeholder="px" aria-label="Custom size in pixels" data-szc>
+      </div>
+    </div>
+    <div class="out" data-out></div>
+    <div class="dl">
+      <button type="button" data-png disabled>PNG</button>
+      <button type="button" class="ghost" data-svg disabled>SVG</button>
+    </div>`;
+
+  const state = {
+    key, path, file, label, group,
+    color: '#000000',
+    size: DEFAULT_SIZE,
+    source: null,
+    el: card
+  };
+
+  const stage  = card.querySelector('[data-stage]');
+  const dimEl  = card.querySelector('[data-dim]');
+  const outEl  = card.querySelector('[data-out]');
+  const pngBtn = card.querySelector('[data-png]');
+  const svgBtn = card.querySelector('[data-svg]');
+  const szcEl  = card.querySelector('[data-szc]');
+  const custom = card.querySelector('[data-custom]');
+
+  function exportDims() {
+    if (!state.source) return null;
+    const vb = parseViewBox(state.source);
+    const scale = state.size / Math.max(vb.w, vb.h);
+    return {
+      w: Math.max(1, Math.round(vb.w * scale)),
+      h: Math.max(1, Math.round(vb.h * scale)),
+      scale
+    };
+  }
+
+  function paintPreview() {
+    if (!state.source) return;
+    const clone = state.source.cloneNode(true);
+    namespaceIds(clone, state.key);
+    recolor(clone, state.color);
+    clone.removeAttribute('width');
+    clone.removeAttribute('height');
+    clone.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    stage.replaceChildren(clone);
+    // Backdrop always contrasts the mark, so white assets stay visible.
+    stage.style.setProperty('--stage-bg', luminance(state.color) > 0.5 ? '#0a0a0a' : '#fafafa');
+  }
+
+  function syncOut() {
+    const d = exportDims();
+    if (!d) return;
+    dimEl.textContent = d.w + ' × ' + d.h;
+    let note = 'PNG · transparent · ' + colorName(state.color).toLowerCase();
+    // Report stroke compensation when it will actually kick in.
+    let thinnest = Infinity;
+    for (const el of state.source.querySelectorAll('[stroke]')) {
+      if (el.getAttribute('stroke') === 'none') continue;
+      const w = parseFloat(el.getAttribute('stroke-width'));
+      if (isFinite(w) && w > 0) thinnest = Math.min(thinnest, w * d.scale);
+    }
+    if (thinnest < STROKE_FLOOR) note += ' · strokes boosted to ' + STROKE_FLOOR + 'px';
+    outEl.textContent = note;
+  }
+
+  const customWrap = card.querySelector('[data-custom-wrap]');
+
+  function setColor(hex) {
+    state.color = hex;
+    let matched = false;
+    card.querySelectorAll('[data-color]').forEach(b => {
+      const hit = b.dataset.color.toLowerCase() === hex.toLowerCase();
+      if (hit) matched = true;
+      b.setAttribute('aria-pressed', String(hit));
+    });
+    customWrap.classList.toggle('on', !matched);
+    paintPreview();
+    syncOut();
+  }
+
+  function setSize(px, fromCustom) {
+    state.size = px;
+    card.querySelectorAll('[data-size]').forEach(b =>
+      b.setAttribute('aria-pressed', String(!fromCustom && Number(b.dataset.size) === px)));
+    if (!fromCustom) szcEl.value = '';
+    syncOut();
+  }
+
+  card.querySelectorAll('[data-color]').forEach(b =>
+    b.addEventListener('click', () => setColor(b.dataset.color)));
+
+  custom.addEventListener('input', () => {
+    card.querySelectorAll('[data-color]').forEach(b => b.setAttribute('aria-pressed', 'false'));
+    setColor(custom.value);
+  });
+
+  card.querySelectorAll('[data-size]').forEach(b =>
+    b.addEventListener('click', () => setSize(Number(b.dataset.size), false)));
+
+  szcEl.addEventListener('input', () => {
+    const v = Math.round(Number(szcEl.value));
+    if (!isFinite(v) || v < SIZE_MIN) return;
+    setSize(Math.min(v, SIZE_MAX), true);
+  });
+  szcEl.addEventListener('blur', () => {
+    if (!szcEl.value) return;
+    const v = Math.min(Math.max(Math.round(Number(szcEl.value)) || SIZE_MIN, SIZE_MIN), SIZE_MAX);
+    szcEl.value = v;
+    setSize(v, true);
+  });
+
+  pngBtn.addEventListener('click', async () => {
+    const restore = pngBtn.textContent;
+    pngBtn.disabled = true; pngBtn.textContent = 'Rendering';
+    try {
+      const blob = await toPNG(state.source, state.color, state.size);
+      const d = exportDims();
+      saveBlob(blob, `${baseName(state.file)}_${colorName(state.color)}_${d.w}x${d.h}.png`);
+    } catch (e) {
+      outEl.textContent = 'PNG export failed. Try a smaller size.';
+    } finally {
+      pngBtn.disabled = false; pngBtn.textContent = restore;
+    }
+  });
+
+  svgBtn.addEventListener('click', () => {
+    // Vector has no pixel size, so no stroke compensation is applied.
+    const { svg } = prepare(state.source, { color: state.color, size: state.size, compensate: false });
+    svg.removeAttribute('width');
+    svg.removeAttribute('height');
+    saveBlob(new Blob([serialize(svg)], { type: 'image/svg+xml;charset=utf-8' }),
+      `${baseName(state.file)}_${colorName(state.color)}.svg`);
+  });
+
+  loadSVG(path).then(src => {
+    state.source = src;
+    const vb = parseViewBox(src);
+    if (vb.w / vb.h > 2) {
+      card.classList.add('wide');
+      stage.style.aspectRatio = vb.w + ' / ' + vb.h;
+    }
+    paintPreview();
+    syncOut();
+    pngBtn.disabled = false;
+    svgBtn.disabled = false;
+  }).catch(() => {
+    stage.classList.add('err');
+    stage.replaceChildren(Object.assign(document.createElement('span'),
+      { textContent: 'Not found — ' + path }));
+    dimEl.textContent = '—';
+    outEl.textContent = 'Add this file to the repo to enable downloads.';
+  });
+
+  state.setColor = setColor;
+  state.setSize = setSize;
+  cards.push(state);
+  return card;
+}
+
+/* ── section-level “apply to all” ─────────────────────────────── */
+function buildBulk(group, mount) {
+  mount.className = 'bulk';
+  mount.innerHTML = `
+    <span class="lbl">Set all</span>
+    <div class="bulk-grp">
+      <button class="sw sw-k" type="button" data-bcolor="#000000" aria-label="All black" aria-pressed="false"></button>
+      <button class="sw sw-w" type="button" data-bcolor="#ffffff" aria-label="All white" aria-pressed="false"></button>
+      <span class="sw sw-c"><input type="color" value="#7a7a7a" aria-label="All custom colour" data-bcustom></span>
+    </div>
+    <div class="bulk-grp" data-bsizes>
+      ${SIZES.map(s => `<button class="sz" type="button" data-bsize="${s}">${s}</button>`).join('')}
+    </div>`;
+
+  const mine = () => cards.filter(c => c.group === group);
+  mount.querySelectorAll('[data-bcolor]').forEach(b =>
+    b.addEventListener('click', () => mine().forEach(c => c.setColor(b.dataset.bcolor))));
+  mount.querySelector('[data-bcustom]').addEventListener('input', e =>
+    mine().forEach(c => c.setColor(e.target.value)));
+  mount.querySelectorAll('[data-bsize]').forEach(b =>
+    b.addEventListener('click', () => mine().forEach(c => c.setSize(Number(b.dataset.bsize), false))));
+}
+
+for (const group of Object.keys(GROUPS)) {
+  const grid = document.getElementById('grid-' + group);
+  for (const [file, label] of GROUPS[group].items) grid.appendChild(buildCard(group, file, label));
+  buildBulk(group, document.querySelector(`[data-bulk="${group}"]`));
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FONT — specimen + ZIP
+   ══════════════════════════════════════════════════════════════ */
+const STORM = [
+  ['Darkcloud',   900, 125],
+  ['Stormsystem', 700, 110],
+  ['Tornado',     560,  96],
+  ['Windswept',   420,  82],
+  ['Rainstorm',   300,  71],
+  ['Hurricane',   180,  62]
+];
+const stormEl = document.getElementById('storm');
+for (const [word, wght, wdth] of STORM) {
+  const d = document.createElement('div');
+  d.textContent = word;
+  d.style.fontVariationSettings = `"wght" ${wght}, "wdth" ${wdth}`;
+  stormEl.appendChild(d);
+}
+
+const axW = document.getElementById('axW');
+const axD = document.getElementById('axD');
+const axWv = document.getElementById('axWv');
+const axDv = document.getElementById('axDv');
+const axDemo = document.getElementById('axDemo');
+function syncAxes() {
+  axWv.textContent = axW.value;
+  axDv.textContent = axD.value;
+  axDemo.style.fontVariationSettings = `"wght" ${axW.value}, "wdth" ${axD.value}`;
+}
+axW.addEventListener('input', syncAxes);
+axD.addEventListener('input', syncAxes);
+syncAxes();
+
+/* ── minimal store-only ZIP writer (no dependency, no build step) ── */
+const CRC = (() => {
+  const t = new Uint32Array(256);
+  for (let i = 0; i < 256; i++) {
+    let c = i;
+    for (let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+    t[i] = c >>> 0;
+  }
+  return t;
+})();
+function crc32(buf) {
+  let c = 0xFFFFFFFF;
+  for (let i = 0; i < buf.length; i++) c = CRC[(c ^ buf[i]) & 0xFF] ^ (c >>> 8);
+  return (c ^ 0xFFFFFFFF) >>> 0;
+}
+function buildZip(files) {
+  const enc = new TextEncoder();
+  const parts = [], central = [];
+  let offset = 0;
+  for (const f of files) {
+    const name = enc.encode(f.name);
+    const crc = crc32(f.data);
+    const size = f.data.length;
+
+    const lh = new Uint8Array(30 + name.length);
+    const lv = new DataView(lh.buffer);
+    lv.setUint32(0, 0x04034b50, true);
+    lv.setUint16(4, 20, true);
+    lv.setUint16(8, 0, true);            // stored
+    lv.setUint16(12, 0x21, true);        // 1980-01-01
+    lv.setUint32(14, crc, true);
+    lv.setUint32(18, size, true);
+    lv.setUint32(22, size, true);
+    lv.setUint16(26, name.length, true);
+    lh.set(name, 30);
+    parts.push(lh, f.data);
+
+    const cd = new Uint8Array(46 + name.length);
+    const cv = new DataView(cd.buffer);
+    cv.setUint32(0, 0x02014b50, true);
+    cv.setUint16(4, 20, true);
+    cv.setUint16(6, 20, true);
+    cv.setUint16(10, 0, true);
+    cv.setUint16(14, 0x21, true);
+    cv.setUint32(16, crc, true);
+    cv.setUint32(20, size, true);
+    cv.setUint32(24, size, true);
+    cv.setUint16(28, name.length, true);
+    cv.setUint32(42, offset, true);
+    cd.set(name, 46);
+    central.push(cd);
+
+    offset += lh.length + size;
+  }
+  const cdStart = offset;
+  let cdSize = 0;
+  for (const c of central) { parts.push(c); cdSize += c.length; }
+
+  const end = new Uint8Array(22);
+  const ev = new DataView(end.buffer);
+  ev.setUint32(0, 0x06054b50, true);
+  ev.setUint16(8, files.length, true);
+  ev.setUint16(10, files.length, true);
+  ev.setUint32(12, cdSize, true);
+  ev.setUint32(16, cdStart, true);
+  parts.push(end);
+
+  return new Blob(parts, { type: 'application/zip' });
+}
+
+const fontRow = document.getElementById('fontRow');
+const fontCta = document.getElementById('fontCta');
+const fontMeta = document.getElementById('fontMeta');
+fontRow.addEventListener('click', async () => {
+  const restore = fontCta.textContent;
+  fontRow.disabled = true; fontCta.textContent = 'Packing';
+  try {
+    const files = await Promise.all(FONT_FILES.map(async n => {
+      const r = await fetch('assets/fonts/' + n);
+      if (!r.ok) throw new Error(n);
+      return { name: 'Archivo/' + n, data: new Uint8Array(await r.arrayBuffer()) };
+    }));
+    saveBlob(buildZip(files), 'Archivo.zip');
+  } catch (e) {
+    fontMeta.textContent = 'Font files missing from assets/fonts/ — ' + e.message;
+  } finally {
+    fontRow.disabled = false; fontCta.textContent = restore;
+  }
+});
+
+/* Report the PDF size once, so the row is honest about the download. */
+fetch('assets/docs/Prismdrifter_Brand_Assets_01.pdf', { method: 'HEAD' })
+  .then(r => {
+    const meta = document.getElementById('pdfMeta');
+    if (!r.ok) { meta.textContent = 'PDF — not found in assets/docs/'; return; }
+    const len = Number(r.headers.get('content-length'));
+    meta.textContent = len ? `PDF · ${(len / 1048576).toFixed(1)} MB` : 'PDF';
+  })
+  .catch(() => {});
+
+/* ══════════════════════════════════════════════════════════════
+   THEME + NAV
+   ══════════════════════════════════════════════════════════════ */
+const root = document.documentElement;
+const themeBtn = document.getElementById('theme');
+function setTheme(dark) {
+  root.setAttribute('data-theme', dark ? 'dark' : 'light');
+  themeBtn.textContent = dark ? 'Light' : 'Dark';
+  themeBtn.setAttribute('aria-pressed', String(dark));
+}
+setTheme(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+themeBtn.addEventListener('click', () => setTheme(root.getAttribute('data-theme') !== 'dark'));
+
+const links = [...document.querySelectorAll('.nav a')];
+const spy = new IntersectionObserver(entries => {
+  for (const e of entries) {
+    if (!e.isIntersecting) continue;
+    links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id));
+  }
+}, { rootMargin: '-30% 0px -60% 0px' });
+document.querySelectorAll('.sec').forEach(s => spy.observe(s));
+</script>
+
+</body>
+</html>
