@@ -1089,18 +1089,6 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
 </style>
-
-<script>
-/* Runs before the body renders. Without this the theme would only be applied
-   once the main script executes at the end of the document, so reloading in
-   dark mode would flash a white page first. Light is the default for a first
-   visit; storage access is wrapped because Safari private mode can throw. */
-(function () {
-  var t = 'light';
-  try { if (localStorage.getItem('prismdrifter-theme') === 'dark') t = 'dark'; } catch (e) {}
-  document.documentElement.setAttribute('data-theme', t);
-})();
-</script>
 </head>
 
 <body>
@@ -2599,8 +2587,6 @@ document.addEventListener('keydown', e => {
    ══════════════════════════════════════════════════════════════ */
 const root = document.documentElement;
 const themeBtn = document.getElementById('theme');
-const THEME_KEY = 'prismdrifter-theme';
-
 function setTheme(dark) {
   // Graphics default to the theme's ink: black on white, white on black.
   cards.forEach(c => c.applyTheme && c.applyTheme(dark));
@@ -2609,13 +2595,8 @@ function setTheme(dark) {
   const next = dark ? 'light' : 'dark';
   themeBtn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
   themeBtn.setAttribute('title', 'Switch to ' + next + ' theme');
-  // Private browsing can throw on write, which shouldn't break the toggle.
-  try { localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light'); } catch (e) {}
 }
-
-/* The inline script in <head> has already applied the stored choice, so read
-   it back off the element rather than re-reading storage and risking a flip. */
-setTheme(root.getAttribute('data-theme') === 'dark');
+setTheme(false);
 themeBtn.addEventListener('click', () => setTheme(root.getAttribute('data-theme') !== 'dark'));
 
 const links = [...document.querySelectorAll('.nav a')];
