@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Prismdrifter — Brand Assets</title>
-<meta name="description" content="Logos, illustrations, typeface and brand documentation for Prismdrifter.">
+<meta name="description" content="Logos, illustrations, motion, typeface and brand documentation for Prismdrifter.">
 
 <style>
 /* ============================================================
@@ -441,6 +441,160 @@ body {
   min-height: 1.4em;
 }
 
+
+/* ============================================================
+   04 — MOTION
+   ============================================================ */
+.motion-grid .card { min-width: 0; }
+
+.motion-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border: 1px solid var(--rule);
+  background: var(--field);
+  overflow: hidden;
+  cursor: pointer;
+  color: #fff;
+}
+.motion-stage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.motion-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.06);
+  transition: background .12s;
+}
+.motion-play {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  width: 42px;
+  height: 42px;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.72);
+  background: rgba(0,0,0,.46);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+.motion-play svg { width: 15px; height: 15px; margin-left: 2px; }
+
+.motion-variant {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+}
+.motion-variant .lbl { margin-right: 2px; }
+.motion-only {
+  font-size: 10.5px;
+  font-weight: 600;
+  font-stretch: 78%;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.motion-actions {
+  display: grid;
+  grid-template-columns: .72fr 1.28fr;
+  gap: 8px;
+  margin-top: auto;
+}
+.motion-action {
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  min-height: 39px;
+  padding: 10px 8px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration: none;
+  text-align: center;
+  font: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  font-stretch: 80%;
+  letter-spacing: .12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity .12s, background .12s, color .12s;
+}
+.motion-action.ghost {
+  background: none;
+  color: var(--ink);
+}
+.motion-action[disabled],
+.motion-action[aria-disabled="true"] {
+  opacity: .28;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Motion uses a dedicated player overlay so the PDF preview remains untouched. */
+.motion-lb {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  display: grid;
+  place-items: center;
+  padding: 3.5vh 3vw;
+}
+.motion-lb[hidden] { display: none; }
+.motion-lb-back {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.9);
+}
+.motion-lb-shell {
+  position: relative;
+  width: min(1100px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.motion-lb-x {
+  align-self: flex-end;
+  font: inherit;
+  font-size: 24px;
+  line-height: 1;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: #fff;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  opacity: .65;
+  transition: opacity .12s;
+}
+.motion-lb-frame-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #000;
+}
+.motion-lb-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 /* ============================================================
    05 — FONT
    ============================================================ */
@@ -582,6 +736,8 @@ input[type="range"]::-moz-range-thumb {
 
   .dl button { padding: 15px 8px; }
   .doc-btn, .row-cta { padding: 14px 20px; }
+  .motion-action { min-height: 46px; padding: 14px 8px; }
+  .motion-stage { min-height: 44px; }
   .theme-btn { width: 42px; height: 42px; }
   .ico { width: 19px; height: 19px; }
 
@@ -628,6 +784,9 @@ input[type="range"]::-moz-range-thumb {
   .sz:hover { color: var(--ink); border-color: var(--rule-strong); }
   .dl button:hover { opacity: .72; }
   .row:hover .row-cta { background: var(--ink); color: var(--paper); }
+  .motion-stage:hover::after { background: rgba(0,0,0,.16); }
+  .motion-action:hover { opacity: .72; }
+  .motion-lb-x:hover { opacity: 1; }
 }
 
 /* ---------- a11y ---------- */
@@ -661,6 +820,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
       <a href="#logos">Logos</a>
       <a href="#alt">Alternate logos</a>
       <a href="#illus">Illustrations</a>
+      <a href="#motion">Motion</a>
       <a href="#font">Font</a>
       <a href="#loom">Visual Loom</a>
     </div>
@@ -717,7 +877,15 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     <div class="grid" id="grid-illus"></div>
   </section>
 
-  <!-- ═════════════ 04 FONT ═════════════ -->
+
+  <!-- ═════════════ 04 MOTION ═════════════ -->
+  <section class="sec" id="motion">
+    <div class="sec-head"><h2>Motion</h2></div>
+    <p class="sec-note">Motion assets for social, digital, projection, and other moving brand applications.</p>
+    <div class="grid motion-grid" id="grid-motion"></div>
+  </section>
+
+  <!-- ═════════════ 05 FONT ═════════════ -->
   <section class="sec" id="font">
     <div class="sec-head"><h2>Font</h2></div>
     <p class="sec-note">Archivo is the primary brand typeface, with a flexible range of weights and widths for both display and functional use.</p>
@@ -768,7 +936,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     </div>
   </section>
 
-  <!-- ═════════════ 05 VISUAL LOOM ═════════════ -->
+  <!-- ═════════════ 06 VISUAL LOOM ═════════════ -->
   <section class="sec" id="loom">
     <div class="sec-head"><h2>Visual Loom</h2></div>
     <div class="loom">
@@ -806,6 +974,21 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   <div class="lb-shell" role="dialog" aria-modal="true" aria-label="Brand Assets Overview">
     <button class="lb-x" id="lbClose" type="button" aria-label="Close preview">&times;</button>
     <iframe class="lb-frame" id="lbFrame" title="Brand Assets Overview PDF"></iframe>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════ MOTION LIGHTBOX ══════════════════════════ -->
+<div class="motion-lb" id="motionLb" hidden>
+  <div class="motion-lb-back" data-motion-close></div>
+  <div class="motion-lb-shell" role="dialog" aria-modal="true" aria-label="Motion preview">
+    <button class="motion-lb-x" id="motionLbClose" type="button" aria-label="Close motion preview">&times;</button>
+    <div class="motion-lb-frame-wrap">
+      <iframe class="motion-lb-frame" id="motionLbFrame"
+              title="Prismdrifter motion preview"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen></iframe>
+    </div>
   </div>
 </div>
 
@@ -857,6 +1040,129 @@ const GROUPS = {
     ['Illustration_K_-_Arrow.svg',       'K — Arrow']
   ]}
 };
+
+
+/* Motion cards are intentionally separate from GROUPS because they are Vimeo-
+   hosted assets rather than generated SVG/PNG downloads.
+
+   Paste the FULL Vimeo page URL into each vimeo field later. Full URLs are
+   preferred so an unlisted video hash is preserved automatically. */
+const MOTION_ITEMS = [
+  {
+    label: '04 — Orb With Arrows A 01',
+    bw:    { image: '04_Orb_With_Arrows_A_01.jpg',       vimeo: '' },
+    color: { image: '04_Orb_With_Arrows_A_01_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '06 — Cherub Wings A 01',
+    bw:    { image: '06_Cherub_Wings_A_01.jpg',       vimeo: '' },
+    color: { image: '06_Cherub_Wings_A_01_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '06 — Cherub Wings B 01',
+    bw:    { image: '06_Cherub_Wings_B_01.jpg',       vimeo: '' },
+    color: { image: '06_Cherub_Wings_B_Color.jpg',    vimeo: '' }
+  },
+  {
+    label: '06 — Cherub Wings C 01',
+    bw:    { image: '06_Cherub_Wings_C_01.jpg',       vimeo: '' },
+    color: { image: '06_Cherub_Wings_C_Color.jpg',    vimeo: '' }
+  },
+  {
+    label: '07 — Compound Bow A 01',
+    bw:    { image: '07_Compound_Bow_A_01.jpg',       vimeo: '' },
+    color: { image: '07_Compound_Bow_A_01_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '07 — Compound Bow A 02',
+    bw:    { image: '07_Compound_Bow_A_02.jpg',       vimeo: '' },
+    color: { image: '07_Compound_Bow_A_02_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '08 — Dove Wings A 01',
+    bw:    { image: '08_Dove_Wings_A_01.jpg',       vimeo: '' },
+    color: { image: '08_Dove_Wings_A_01_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '08 — Dove Wings B 01',
+    bw:    { image: '08_Dove_Wings_B_01.jpg',       vimeo: '' },
+    color: { image: '08_Dove_Wings_B_01_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '09 — Smoke A 01',
+    bw:    { image: '09_Smoke_A_01.jpg',       vimeo: '' },
+    color: { image: '09_Smoke_A_01_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '09 — Smoke B 01',
+    bw:    { image: '09_Smoke_B_01.jpg',       vimeo: '' },
+    color: { image: '09_Smoke_B_01_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '09 — Smoke C 01',
+    bw:    { image: '09_Smoke_C_01.jpg',       vimeo: '' },
+    color: { image: '09_Smoke_C_01_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '10 — Black Angel Wings A 01',
+    bw:    { image: '10_Black_Angel_Wings_A_01.jpg',       vimeo: '' },
+    color: { image: '10_Black_Angel_Wings_A_01_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '10 — Black Angel Wings A 02',
+    bw:    { image: '10_Black_Angel_Wings_A_02.jpg',       vimeo: '' },
+    color: { image: '10_Black_Angel_Wings_A_02_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '11 — Breathing Darkness And Light A 01',
+    bw:    { image: '11_Breathing_Darkness_And_Light_A_01.jpg',       vimeo: '' },
+    color: { image: '11_Breathing_Darkness_And_Light_A_01_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '11 — Breathing Darkness And Light A 02',
+    bw:    { image: '11_Breathing_Darkness_And_Light_A_02.jpg',       vimeo: '' },
+    color: { image: '11_Breathing_Darkness_And_Light_A_02_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '12 — Electrical Surge A 01',
+    bw:    { image: '12_Electrical_Surge_A_01.jpg',       vimeo: '' },
+    color: { image: '12_Electrical_Surge_A_01_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '12 — Electrical Surge B 01',
+    bw:    { image: '12_Electrical_Surge_B_01.jpg',       vimeo: '' },
+    color: { image: '12_Electrical_Surge_B_01_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '12 — Electrical Surge B 02',
+    bw:    { image: '12_Electrical_Surge_B_02.jpg',       vimeo: '' },
+    color: { image: '12_Electrical_Surge_B_02_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '13 — Black Goo A 01',
+    bw:    { image: '13_Black_Goo_A_01.jpg',       vimeo: '' },
+    color: { image: '13_Black_Goo_A_01_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '13 — Black Goo B 01',
+    bw:    { image: '13_Black_Goo_B_01.jpg',       vimeo: '' },
+    color: { image: '13_Black_Goo_B_01_Color.jpg', vimeo: '' }
+  },
+  {
+    label: '14 — Water A 01',
+    bw:    { image: '14_Water_A_01.jpg', vimeo: '' }
+  },
+  {
+    label: '14 — Water B 01',
+    bw:    { image: '14_Water_B_01.jpg', vimeo: '' }
+  },
+  {
+    label: '14 — Water C 01',
+    bw:    { image: '14_Water_C_01.jpg', vimeo: '' }
+  }
+];
+
+const MOTION_DIR = 'assets/motion/';
 
 /* ══════════════════════════════════════════════════════════════
    SVG PIPELINE
@@ -1254,6 +1560,183 @@ for (const group of Object.keys(GROUPS)) {
   buildBulk(group, document.querySelector(`[data-bulk="${group}"]`));
 }
 
+
+/* ══════════════════════════════════════════════════════════════
+   MOTION — cards + Vimeo preview
+   ══════════════════════════════════════════════════════════════ */
+const motionGrid = document.getElementById('grid-motion');
+const motionLb = document.getElementById('motionLb');
+const motionLbFrame = document.getElementById('motionLbFrame');
+const motionLbClose = document.getElementById('motionLbClose');
+let motionReturn = null;
+
+/* Accepts normal Vimeo page URLs, unlisted URLs with a hash, Showcase video
+   URLs, or player.vimeo.com URLs and converts them into an autoplaying embed. */
+function vimeoEmbedURL(pageURL) {
+  if (!pageURL) return '';
+  let u;
+  try { u = new URL(pageURL); } catch (e) { return ''; }
+
+  const parts = u.pathname.split('/').filter(Boolean);
+  let id = '';
+  let hash = u.searchParams.get('h') || '';
+
+  if (u.hostname.includes('player.vimeo.com')) {
+    const i = parts.indexOf('video');
+    if (i >= 0 && parts[i + 1]) id = parts[i + 1];
+  } else {
+    const vi = parts.indexOf('video');
+    if (vi >= 0 && parts[vi + 1]) {
+      id = parts[vi + 1];
+      if (!hash && parts[vi + 2]) hash = parts[vi + 2];
+    } else {
+      const ii = parts.findIndex(p => /^\d{6,12}$/.test(p));
+      if (ii >= 0) {
+        id = parts[ii];
+        if (!hash && parts[ii + 1] && /^[a-zA-Z0-9]+$/.test(parts[ii + 1])) {
+          hash = parts[ii + 1];
+        }
+      }
+    }
+  }
+
+  if (!/^\d{6,12}$/.test(id)) return '';
+
+  const q = new URLSearchParams({
+    autoplay: '1',
+    loop: '1',
+    muted: '1',
+    autopause: '0',
+    title: '0',
+    byline: '0',
+    portrait: '0'
+  });
+  if (hash) q.set('h', hash);
+  return `https://player.vimeo.com/video/${id}?${q.toString()}`;
+}
+
+function openMotionLB(pageURL, trigger) {
+  const embed = vimeoEmbedURL(pageURL);
+  if (!embed) return;
+
+  motionReturn = trigger || document.activeElement;
+  motionLbFrame.src = embed;
+  motionLb.hidden = false;
+
+  const bar = window.innerWidth - document.documentElement.clientWidth;
+  document.body.style.overflow = 'hidden';
+  if (bar > 0) document.body.style.paddingRight = bar + 'px';
+
+  motionLbClose.focus();
+}
+
+function closeMotionLB() {
+  motionLb.hidden = true;
+  motionLbFrame.removeAttribute('src');
+  document.body.style.overflow = '';
+  document.body.style.paddingRight = '';
+  if (motionReturn && motionReturn.focus) motionReturn.focus();
+  motionReturn = null;
+}
+
+motionLbClose.addEventListener('click', closeMotionLB);
+motionLb.querySelector('[data-motion-close]').addEventListener('click', closeMotionLB);
+
+function buildMotionCard(item) {
+  const hasColor = !!item.color;
+
+  const card = document.createElement('div');
+  card.className = 'card motion-card';
+
+  card.innerHTML = `
+    <div class="card-top">
+      <span class="card-name">${item.label}</span>
+      <span class="card-dim">960 × 720</span>
+    </div>
+
+    <button class="motion-stage" type="button" data-motion-play aria-label="Play ${item.label}">
+      <img data-motion-image alt="${item.label} preview" loading="lazy">
+      <span class="motion-play" aria-hidden="true">
+        <svg viewBox="0 0 20 20" fill="currentColor">
+          <path d="M5.5 3.5 16 10 5.5 16.5Z"/>
+        </svg>
+      </span>
+    </button>
+
+    <div class="motion-variant">
+      ${hasColor ? `
+        <span class="lbl">Version</span>
+        <button class="sz" type="button" data-motion-variant="bw" aria-pressed="true">B&amp;W</button>
+        <button class="sz" type="button" data-motion-variant="color" aria-pressed="false">Color</button>
+      ` : `
+        <span class="lbl">Version</span>
+        <span class="motion-only">B&amp;W only</span>
+      `}
+    </div>
+
+    <div class="motion-actions">
+      <button class="motion-action" type="button" data-motion-open>Play</button>
+      <a class="motion-action ghost" data-motion-page target="_blank" rel="noopener">View / Download ↗</a>
+    </div>`;
+
+  const image = card.querySelector('[data-motion-image]');
+  const stage = card.querySelector('[data-motion-play]');
+  const play = card.querySelector('[data-motion-open]');
+  const page = card.querySelector('[data-motion-page]');
+  let variant = 'bw';
+
+  function current() {
+    return variant === 'color' && item.color ? item.color : item.bw;
+  }
+
+  function sync() {
+    const v = current();
+    image.src = MOTION_DIR + v.image;
+
+    const ready = !!v.vimeo;
+    stage.disabled = !ready;
+    play.disabled = !ready;
+
+    if (ready) {
+      page.href = v.vimeo;
+      page.removeAttribute('aria-disabled');
+      page.removeAttribute('tabindex');
+    } else {
+      page.removeAttribute('href');
+      page.setAttribute('aria-disabled', 'true');
+      page.setAttribute('tabindex', '-1');
+    }
+
+    card.querySelectorAll('[data-motion-variant]').forEach(btn => {
+      btn.setAttribute('aria-pressed', String(btn.dataset.motionVariant === variant));
+    });
+  }
+
+  function open(trigger) {
+    const v = current();
+    if (v.vimeo) openMotionLB(v.vimeo, trigger);
+  }
+
+  stage.addEventListener('click', () => open(stage));
+  play.addEventListener('click', () => open(play));
+
+  card.querySelectorAll('[data-motion-variant]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      variant = btn.dataset.motionVariant;
+      sync();
+    });
+  });
+
+  image.addEventListener('error', () => {
+    image.alt = 'Preview image not found: ' + image.src.split('/').pop();
+  });
+
+  sync();
+  return card;
+}
+
+for (const item of MOTION_ITEMS) motionGrid.appendChild(buildMotionCard(item));
+
 /* ══════════════════════════════════════════════════════════════
    FONT — specimen + ZIP
    ══════════════════════════════════════════════════════════════ */
@@ -1573,7 +2056,9 @@ pdfPreview.addEventListener('click', () => {
 lbClose.addEventListener('click', closeLB);
 lb.querySelector('[data-lb-close]').addEventListener('click', closeLB);
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && !lb.hidden) closeLB();
+  if (e.key !== 'Escape') return;
+  if (!motionLb.hidden) closeMotionLB();
+  else if (!lb.hidden) closeLB();
 });
 
 /* ══════════════════════════════════════════════════════════════

@@ -241,43 +241,35 @@ body {
 /* ============================================================
    PDF LIGHTBOX
    ============================================================ */
-.lb { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; }
+.lb { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 3.5vh 3vw; }
 .lb[hidden] { display: none; }
-.lb-back { position: absolute; inset: 0; background: rgba(0,0,0,.78); }
-.lb-panel {
+.lb-back { position: absolute; inset: 0; background: rgba(0,0,0,.84); }
+.lb-shell {
   position: relative;
-  width: min(1100px, 94vw);
-  height: min(88vh, 100%);
+  width: min(1100px, 100%);
+  height: 100%;
   display: flex;
   flex-direction: column;
-  background: var(--paper);
-  border: 1px solid var(--rule-strong);
+  gap: 7px;
 }
-.lb-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 11px 14px;
-  border-bottom: 1px solid var(--rule);
-}
-.lb-acts { display: flex; gap: 8px; }
-.lb-btn {
+/* Sits on the backdrop above the document, not on a bar across it. Fixed
+   white because the backdrop is dark in both themes. */
+.lb-x {
+  align-self: flex-end;
   font: inherit;
-  font-size: 10.5px;
-  font-weight: 700;
-  font-stretch: 80%;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--ink);
-  text-decoration: none;
+  font-size: 24px;
+  line-height: 1;
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  padding: 0;
+  color: #fff;
   background: none;
-  border: 1px solid var(--rule-strong);
-  padding: 8px 14px;
+  border: 0;
   cursor: pointer;
-  transition: background .12s, color .12s;
+  opacity: .65;
+  transition: opacity .12s;
 }
-.lb-frame { flex: 1 1 auto; width: 100%; border: 0; background: var(--field); }
+.lb-frame { flex: 1 1 auto; width: 100%; border: 0; background: #fff; }
 
 /* ============================================================
    SECTIONS
@@ -632,7 +624,7 @@ input[type="range"]::-moz-range-thumb {
   .theme-btn:hover { color: var(--ink); }
   .doc-btn:hover { background: var(--ink); color: var(--paper); }
   .doc-btn.solid:hover { background: none; color: var(--ink); }
-  .lb-btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .lb-x:hover { opacity: 1; }
   .sz:hover { color: var(--ink); border-color: var(--rule-strong); }
   .dl button:hover { opacity: .72; }
   .row:hover .row-cta { background: var(--ink); color: var(--paper); }
@@ -658,7 +650,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   <div class="wrap">
     <h1 class="vh" id="markFallback">Prismdrifter</h1>
     <div class="mark" id="mark" role="img" aria-label="Prismdrifter"></div>
-    <p class="mast-sub">Everything needed to apply the brand: marks, illustrations, typeface, and a pattern generator for anything not already here.</p>
+    <p class="mast-sub">A collection of Prismdrifter logos, artwork, typography, and tools for creating consistent brand materials.</p>
   </div>
 </header>
 
@@ -704,7 +696,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   <!-- ═════════════ 01 LOGOS ═════════════ -->
   <section class="sec" id="logos">
     <div class="sec-head"><h2>Logos</h2></div>
-    <p class="sec-note">Primary marks. PNG exports are transparent; the number you pick is the longest edge.</p>
+    <p class="sec-note">Primary marks for standard brand applications across print and digital.</p>
     <div data-bulk="logos"></div>
     <div class="grid" id="grid-logos"></div>
   </section>
@@ -712,7 +704,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   <!-- ═════════════ 02 ALTERNATE LOGOS ═════════════ -->
   <section class="sec" id="alt">
     <div class="sec-head"><h2>Alternate logos</h2></div>
-    <p class="sec-note">Secondary marks and horizontal lockups.</p>
+    <p class="sec-note">Secondary marks and horizontal lockups for layouts where the primary marks aren’t the best fit.</p>
     <div data-bulk="alt"></div>
     <div class="grid" id="grid-alt"></div>
   </section>
@@ -720,7 +712,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   <!-- ═════════════ 03 ILLUSTRATIONS ═════════════ -->
   <section class="sec" id="illus">
     <div class="sec-head"><h2>Illustrations</h2></div>
-    <p class="sec-note">Line artwork. Hairline strokes are thickened on small PNG exports so they stay solid; SVG downloads keep the original weight.</p>
+    <p class="sec-note">Supporting line artwork for adding character and visual detail across brand applications.</p>
     <div data-bulk="illus"></div>
     <div class="grid" id="grid-illus"></div>
   </section>
@@ -728,7 +720,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   <!-- ═════════════ 04 FONT ═════════════ -->
   <section class="sec" id="font">
     <div class="sec-head"><h2>Font</h2></div>
-    <p class="sec-note">Archivo. One variable file carries every weight from 100 to 900 and every width from 62 to 125.</p>
+    <p class="sec-note">Archivo is the primary brand typeface, with a flexible range of weights and widths for both display and functional use.</p>
 
     <div class="spec">
       <div class="spec-blk">
@@ -781,9 +773,9 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     <div class="sec-head"><h2>Visual Loom</h2></div>
     <div class="loom">
       <div>
-        <p class="loom-lead">A procedural pattern generator built for Prismdrifter, for producing on-brand textures and graphics without building each one by hand.</p>
-        <p>Every output derives from a single black-and-white gradient, subdivided and layered by a fixed rule set. Random Look generates a full composition in one click; sliders adjust it layer by layer, or drag on the canvas to drift the layers against each other. Exports as SVG or PNG at multiple sizes.</p>
-        <p>Use it for background textures, print graphics, social support graphics, and anything else that comes up.</p>
+        <p class="loom-lead">A procedural tool for generating custom Prismdrifter compositions.</p>
+        <p>Every output begins with a single black-and-white gradient, subdivided and layered through a fixed procedural rule set. Generate a complete composition with Random Look, then refine individual layers with the controls or drag directly on the canvas to shift them against one another. Export as SVG or PNG at multiple sizes.</p>
+        <p>Use it for background textures, print graphics, social assets, and other supporting brand visuals.</p>
       </div>
       <div class="loom-r">
         <img class="loom-shot" id="loomShot" src="assets/images/visual_loom.png"
@@ -807,6 +799,15 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   </div>
 
 </main>
+
+<!-- ══════════════════════════ PDF LIGHTBOX ══════════════════════════ -->
+<div class="lb" id="lb" hidden>
+  <div class="lb-back" data-lb-close></div>
+  <div class="lb-shell" role="dialog" aria-modal="true" aria-label="Brand Assets Overview">
+    <button class="lb-x" id="lbClose" type="button" aria-label="Close preview">&times;</button>
+    <iframe class="lb-frame" id="lbFrame" title="Brand Assets Overview PDF"></iframe>
+  </div>
+</div>
 
 <script>
 "use strict";
@@ -1544,7 +1545,10 @@ function canFramePDF() {
 
 function openLB() {
   lbReturn = document.activeElement;
-  lbFrame.src = PDF_SRC;          // deferred so 1.2MB isn't fetched on page load
+  // PDF Open Parameters: Chrome and Edge honour these and drop the viewer's
+  // toolbar, side panel and scrollbar, leaving just the pages. FitH opens at
+  // page width so it scrolls like a document.
+  lbFrame.src = PDF_SRC + '#toolbar=0&navpanes=0&scrollbar=0&view=FitH';
   lb.hidden = false;
   // Compensate for the vanishing scrollbar so the page doesn't jump.
   const bar = window.innerWidth - document.documentElement.clientWidth;
@@ -1632,22 +1636,6 @@ const spy = new IntersectionObserver(entries => {
 }, { rootMargin: '-30% 0px -60% 0px' });
 document.querySelectorAll('.sec').forEach(s => spy.observe(s));
 </script>
-
-<!-- ══════════════════════════ PDF LIGHTBOX ══════════════════════════ -->
-<div class="lb" id="lb" hidden>
-  <div class="lb-back" data-lb-close></div>
-  <div class="lb-panel" role="dialog" aria-modal="true" aria-label="Brand Assets Overview">
-    <div class="lb-bar">
-      <span class="lbl">Brand Assets Overview</span>
-      <span class="lb-acts">
-        <a class="lb-btn" id="lbOpen" href="assets/docs/Prismdrifter_Brand_Assets_01.pdf"
-           target="_blank" rel="noopener">New tab</a>
-        <button class="lb-btn" id="lbClose" type="button">Close</button>
-      </span>
-    </div>
-    <iframe class="lb-frame" id="lbFrame" title="Brand Assets Overview PDF"></iframe>
-  </div>
-</div>
 
 </body>
 </html>
