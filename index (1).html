@@ -808,22 +808,6 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 
 </main>
 
-<!-- ══════════════════════════ PDF LIGHTBOX ══════════════════════════ -->
-<div class="lb" id="lb" hidden>
-  <div class="lb-back" data-lb-close></div>
-  <div class="lb-panel" role="dialog" aria-modal="true" aria-label="Brand Assets Overview">
-    <div class="lb-bar">
-      <span class="lbl">Brand Assets Overview</span>
-      <span class="lb-acts">
-        <a class="lb-btn" id="lbOpen" href="assets/docs/Prismdrifter_Brand_Assets_01.pdf"
-           target="_blank" rel="noopener">New tab</a>
-        <button class="lb-btn" id="lbClose" type="button">Close</button>
-      </span>
-    </div>
-    <iframe class="lb-frame" id="lbFrame" title="Brand Assets Overview PDF"></iframe>
-  </div>
-</div>
-
 <script>
 "use strict";
 
@@ -1648,6 +1632,22 @@ const spy = new IntersectionObserver(entries => {
 }, { rootMargin: '-30% 0px -60% 0px' });
 document.querySelectorAll('.sec').forEach(s => spy.observe(s));
 </script>
+
+<!-- ══════════════════════════ PDF LIGHTBOX ══════════════════════════ -->
+<div class="lb" id="lb" hidden>
+  <div class="lb-back" data-lb-close></div>
+  <div class="lb-panel" role="dialog" aria-modal="true" aria-label="Brand Assets Overview">
+    <div class="lb-bar">
+      <span class="lbl">Brand Assets Overview</span>
+      <span class="lb-acts">
+        <a class="lb-btn" id="lbOpen" href="assets/docs/Prismdrifter_Brand_Assets_01.pdf"
+           target="_blank" rel="noopener">New tab</a>
+        <button class="lb-btn" id="lbClose" type="button">Close</button>
+      </span>
+    </div>
+    <iframe class="lb-frame" id="lbFrame" title="Brand Assets Overview PDF"></iframe>
+  </div>
+</div>
 
 </body>
 </html>
