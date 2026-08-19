@@ -109,8 +109,8 @@ body {
 .mark { width: 100%; }
 .mark svg { display: block; width: 100%; height: auto; }
 .mast-sub {
-  margin: clamp(18px,2.6vw,28px) auto 0;
-  max-width: 52ch;
+  margin: clamp(10px,1.4vw,16px) auto 0;
+  max-width: 62ch;
   text-align: center;
   text-wrap: balance;
   font-size: clamp(14px,1.5vw,17px);
@@ -287,7 +287,9 @@ body {
   background: var(--stage-bg, transparent);
   overflow: hidden;
 }
-.card.wide .stage { padding: 3% 6%; }
+/* These artboards already carry their own margin (2.46% each side, 17.6%
+   top and bottom), so extra stage padding only shrinks the mark. */
+.card.wide .stage { padding: 0; }
 .stage svg { width: 100%; height: 100%; display: block; }
 .stage.err {
   border-style: dashed;
@@ -603,7 +605,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   <div class="wrap">
     <h1 class="vh" id="markFallback">Prismdrifter</h1>
     <div class="mark" id="mark" role="img" aria-label="Prismdrifter"></div>
-    <p class="mast-sub">Brand assets. Pick a color and a size, then download. Vector source is available on every asset.</p>
+    <p class="mast-sub">Logos, illustrations and the brand typeface. Every asset downloads as a transparent PNG up to 8192px, or as editable SVG, in black, white or a custom color. Sizes are set by the longest edge.</p>
   </div>
 </header>
 
@@ -1422,6 +1424,27 @@ fetch('assets/docs/Prismdrifter_Brand_Assets_01.pdf', { method: 'HEAD' })
    ══════════════════════════════════════════════════════════════ */
 const markHost = document.getElementById('mark');
 
+/* The artboard is padded: on the horizontal lockup the ink starts 99.81 units
+   in on a 4060-unit box, so at 100% width it sits 2.46% short of each edge and
+   misses the content grid. getBBox reports the real ink extent in user units,
+   measured by the browser's own geometry engine, so cropping the viewBox to it
+   lands the mark flush without hardcoding numbers for one file. Must run after
+   insertion — getBBox needs the element rendered. */
+function tightenViewBox(svg) {
+  let box;
+  try { box = svg.getBBox(); } catch (e) { return; }
+  if (!box || box.width <= 0 || box.height <= 0) return;
+  // getBBox measures geometry only, so half of any stroke falls outside it.
+  let pad = 0;
+  for (const el of svg.querySelectorAll('[stroke]')) {
+    if (el.getAttribute('stroke') === 'none') continue;
+    const w = parseFloat(el.getAttribute('stroke-width'));
+    if (isFinite(w) && w > 0) pad = Math.max(pad, w / 2);
+  }
+  svg.setAttribute('viewBox',
+    `${box.x - pad} ${box.y - pad} ${box.width + pad * 2} ${box.height + pad * 2}`);
+}
+
 loadSVG('assets/logos/Prismdrifter_Alt_Logo_06.svg').then(src => {
   const svg = src.cloneNode(true);
   namespaceIds(svg, 'mark');
@@ -1429,6 +1452,7 @@ loadSVG('assets/logos/Prismdrifter_Alt_Logo_06.svg').then(src => {
   svg.removeAttribute('width');
   svg.removeAttribute('height');
   markHost.replaceChildren(svg);
+  tightenViewBox(svg);
 }).catch(() => {
   // Fall back to the typeset wordmark rather than an empty header.
   document.getElementById('markFallback').classList.remove('vh');
@@ -1465,6 +1489,13 @@ function syncNavEdges() {
 }
 navInner.addEventListener('scroll', syncNavEdges, { passive: true });
 window.addEventListener('resize', syncNavEdges);
+
+/* The links are set in Archivo with wide tracking. Measured against the
+   fallback font they're narrower and may not overflow at all, and a font swap
+   fires no resize event — so without these the fade never appears. Toggling a
+   mask changes no geometry, so observing the rail can't feed back. */
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncNavEdges);
+if (window.ResizeObserver) new ResizeObserver(syncNavEdges).observe(navInner);
 syncNavEdges();
 
 /* On a phone the rail is wider than the screen, so the current section's link
