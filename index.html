@@ -90,10 +90,10 @@ body {
    ============================================================ */
 .mast {
   border-bottom: 1px solid var(--rule);
-  padding: clamp(14px,2.2vw,26px) 0 clamp(16px,2.4vw,26px);
+  padding: clamp(14px,2.2vw,26px) 0 clamp(20px,3vw,32px);
 }
 .mast h1 {
-  margin: 0 var(--gutter);
+  margin: 0;
   font-size: clamp(34px, 7.4vw, 82px);
   font-weight: 100;
   font-stretch: 125%;
@@ -101,10 +101,20 @@ body {
   line-height: .9;
   text-transform: uppercase;
 }
-/* Sits outside .wrap so the lockup runs edge to edge. */
 .mark { width: 100%; }
 .mark svg { display: block; width: 100%; height: auto; }
-.mast-sub { margin: clamp(14px,2vw,22px) 0 0; max-width: 46ch; }
+.mast-sub {
+  margin: clamp(18px,2.6vw,28px) auto 0;
+  max-width: 52ch;
+  text-align: center;
+  text-wrap: balance;
+  font-size: clamp(14px,1.5vw,17px);
+  font-weight: 400;
+  font-stretch: 110%;
+  letter-spacing: .012em;
+  line-height: 1.5;
+  color: var(--dim);
+}
 
 .theme-btn {
   font: inherit;
@@ -168,21 +178,46 @@ body {
 :root[data-theme="light"] .ico-sun { display: none; }
 :root[data-theme="dark"] .ico-moon { display: none; }
 
-/* Document strip — utility scale, so it reads as a persistent resource
-   rather than a section that lost its heading. */
-.doc-strip { border-bottom: 1px solid var(--rule); }
-.doc-strip a {
+/* Document row. Deliberately unlike the nav above it: sentence-case name at
+   reading size, and a real button rather than another tracked link. */
+.doc {
+  border-bottom: 1px solid var(--rule);
+  padding: clamp(18px,2.6vw,26px) 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 12px 0;
-  color: var(--dim);
-  text-decoration: none;
-  transition: color .12s;
+  gap: 20px;
+  flex-wrap: wrap;
 }
-.doc-strip a:hover { color: var(--ink); }
-.doc-strip .doc-cta { border-bottom: 1px solid currentColor; padding-bottom: 1px; }
+.doc-l { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.doc-name {
+  font-size: clamp(16px,2vw,20px);
+  font-weight: 600;
+  font-stretch: 104%;
+  letter-spacing: -.006em;
+}
+.doc-meta {
+  font-size: 10.5px;
+  font-weight: 500;
+  font-stretch: 78%;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.doc-btn {
+  flex: none;
+  font-size: 10.5px;
+  font-weight: 700;
+  font-stretch: 80%;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid var(--ink);
+  padding: 10px 18px;
+  transition: background .12s, color .12s;
+}
+.doc-btn:hover { background: var(--ink); color: var(--paper); }
 
 /* ============================================================
    SECTIONS
@@ -498,10 +533,10 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 
 <!-- ══════════════════════════ MASTHEAD ══════════════════════════ -->
 <header class="mast">
-  <h1 class="vh" id="markFallback">Prismdrifter</h1>
-  <div class="mark" id="mark" role="img" aria-label="Prismdrifter"></div>
   <div class="wrap">
-    <p class="mast-sub">Brand assets. Pick a colour and a size, then download. Vector source is available on every asset.</p>
+    <h1 class="vh" id="markFallback">Prismdrifter</h1>
+    <div class="mark" id="mark" role="img" aria-label="Prismdrifter"></div>
+    <p class="mast-sub">Brand assets. Pick a color and a size, then download. Vector source is available on every asset.</p>
   </div>
 </header>
 
@@ -529,11 +564,14 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   </div>
 </nav>
 
-<div class="wrap doc-strip">
-  <a id="pdfRow" href="assets/docs/Prismdrifter_Brand_Assets_01.pdf" download>
-    <span class="lbl">Brand Assets Overview <span id="pdfMeta">PDF</span></span>
-    <span class="lbl doc-cta">Download</span>
-  </a>
+<div class="wrap">
+  <div class="doc">
+    <span class="doc-l">
+      <span class="doc-name">Brand Assets Overview</span>
+      <span class="doc-meta" id="pdfMeta">PDF</span>
+    </span>
+    <a class="doc-btn" id="pdfRow" href="assets/docs/Prismdrifter_Brand_Assets_01.pdf" download>Download</a>
+  </div>
 </div>
 
 <main class="wrap">
@@ -699,7 +737,7 @@ const GROUPS = {
    ══════════════════════════════════════════════════════════════ */
 
 /* Files carry no transforms, no inherited stroke-width, no CSS and no
-   gradients, so colour and stroke maths resolve from attributes alone. */
+   gradients, so color and stroke maths resolve from attributes alone. */
 
 function parseViewBox(svg) {
   const vb = (svg.getAttribute('viewBox') || '').trim().split(/[\s,]+/).map(Number);
@@ -777,7 +815,7 @@ async function loadSVG(path) {
   return p;
 }
 
-/* Build a coloured, correctly sized copy ready for download or rasterising. */
+/* Build a colored, correctly sized copy ready for download or rasterising. */
 function prepare(source, { color, size, compensate }) {
   const svg = source.cloneNode(true);
   const vb = parseViewBox(svg);
@@ -893,11 +931,11 @@ function buildCard(group, file, label) {
     <div class="stage" data-stage><span class="lbl">Loading</span></div>
     <div class="ctl">
       <div class="ctl-row" data-colors>
-        <span class="lbl" style="margin-right:2px">Colour</span>
+        <span class="lbl" style="margin-right:2px">Color</span>
         <button class="sw sw-k" type="button" data-color="#000000" aria-label="Black" aria-pressed="true"></button>
         <button class="sw sw-w" type="button" data-color="#ffffff" aria-label="White" aria-pressed="false"></button>
         <span class="sw sw-c" data-custom-wrap>
-          <input type="color" value="#7a7a7a" aria-label="Custom colour" data-custom>
+          <input type="color" value="#7a7a7a" aria-label="Custom color" data-custom>
         </span>
       </div>
       <div class="ctl-row" data-sizes>
@@ -1069,7 +1107,7 @@ function buildBulk(group, mount) {
     <div class="bulk-grp">
       <button class="sw sw-k" type="button" data-bcolor="#000000" aria-label="All black" aria-pressed="false"></button>
       <button class="sw sw-w" type="button" data-bcolor="#ffffff" aria-label="All white" aria-pressed="false"></button>
-      <span class="sw sw-c"><input type="color" value="#7a7a7a" aria-label="All custom colour" data-bcustom></span>
+      <span class="sw sw-c"><input type="color" value="#7a7a7a" aria-label="All custom color" data-bcustom></span>
     </div>
     <div class="bulk-grp" data-bsizes>
       ${SIZES.map(s => `<button class="sz" type="button" data-bsize="${s}">${s}</button>`).join('')}
