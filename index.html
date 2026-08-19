@@ -429,6 +429,16 @@ body {
   }
 }
 
+/* On mobile, F/G visually return to the same square preview treatment as the
+   other alternate logos. Their source artwork remains horizontal and simply
+   scales to fit inside the square stage. */
+@media (max-width: 860px) {
+  #grid-alt .alt-compact .stage {
+    aspect-ratio: 1 / 1 !important;
+    padding: 13% !important;
+  }
+}
+
 .card-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .card-name { font-size: 12.5px; font-weight: 700; font-stretch: 88%; letter-spacing: .04em; text-transform: uppercase; }
 .card-dim { font-size: 10.5px; font-weight: 500; font-stretch: 78%; letter-spacing: .09em; color: var(--dim); font-variant-numeric: tabular-nums; }
@@ -572,10 +582,14 @@ body {
   color: #fff;
 }
 .motion-stage img {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  max-width: none;
+  object-fit: cover !important;
+  object-position: center center;
 }
 .motion-stage::after {
   content: "";
