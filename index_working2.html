@@ -2613,49 +2613,15 @@ function revealNavLink(a) {
   });
 }
 
-/* Scroll position decides the active link, rather than waiting for a section
-   to cross a detection band. The band approach fails at the end of the page:
-   once you can't scroll any further, the last section's top may never reach
-   it, so Visual Loom could never light up on a tall window. Two explicit
-   rules cover the ends — bottom of page means the last section, top means the
-   first — and everything between picks the last section to pass the line. */
-const sections = [...document.querySelectorAll('.sec')];
-const SPY_LINE = 0.35;          // fraction of viewport height
-let spyQueued = false;
-
-function activeSectionId() {
-  const doc = document.documentElement;
-  if (window.scrollY + window.innerHeight >= doc.scrollHeight - 2) {
-    return sections[sections.length - 1].id;
+const spy = new IntersectionObserver(entries => {
+  for (const e of entries) {
+    if (!e.isIntersecting) continue;
+    const hit = links.find(a => a.getAttribute('href') === '#' + e.target.id);
+    links.forEach(a => a.classList.toggle('on', a === hit));
+    if (hit) revealNavLink(hit);
   }
-  if (window.scrollY <= 2) return sections[0].id;
-
-  const line = window.scrollY + window.innerHeight * SPY_LINE;
-  let hit = sections[0];
-  for (const s of sections) {
-    if (s.getBoundingClientRect().top + window.scrollY <= line) hit = s;
-  }
-  return hit.id;
-}
-
-function syncSpy() {
-  const id = activeSectionId();
-  const hit = links.find(a => a.getAttribute('href') === '#' + id);
-  if (hit && hit.classList.contains('on')) return;   // nothing changed
-  links.forEach(a => a.classList.toggle('on', a === hit));
-  if (hit) revealNavLink(hit);
-}
-
-function scheduleSpy() {
-  if (spyQueued) return;
-  spyQueued = true;
-  requestAnimationFrame(() => { spyQueued = false; syncSpy(); });
-}
-
-window.addEventListener('scroll', scheduleSpy, { passive: true });
-window.addEventListener('resize', scheduleSpy);
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncSpy);
-syncSpy();
+}, { rootMargin: '-30% 0px -60% 0px' });
+document.querySelectorAll('.sec').forEach(s => spy.observe(s));
 </script>
 
 </body>
