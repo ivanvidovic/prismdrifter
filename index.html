@@ -120,6 +120,19 @@ body {
   line-height: 1.5;
   color: var(--dim);
 }
+/* Wide enough for the sentence to hold one line, so it runs flush to both
+   edges under the lockup. Narrower than this it wraps and stays centred —
+   stretching a two-word last line to full width would look broken. */
+@media (min-width: 900px) {
+  .mast-sub {
+    max-width: none;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: clamp(15px, 1.62vw, 23px);
+  }
+  .mast-sub span { display: inline-block; white-space: nowrap; }
+}
 
 
 /* ============================================================
@@ -605,7 +618,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   <div class="wrap">
     <h1 class="vh" id="markFallback">Prismdrifter</h1>
     <div class="mark" id="mark" role="img" aria-label="Prismdrifter"></div>
-    <p class="mast-sub">Logos, illustrations and the brand typeface. Every asset downloads as a transparent PNG up to 8192px, or as editable SVG, in black, white or a custom color. Sizes are set by the longest edge.</p>
+    <p class="mast-sub" id="lead"><span id="leadText">Everything needed to apply the brand: marks, illustrations, typeface, and a pattern generator for anything not already here.</span></p>
   </div>
 </header>
 
@@ -1275,6 +1288,34 @@ function fitStorm(force) {
   });
 }
 
+/* The lead sentence sits flush edge to edge on one line. Prose justifies on
+   the word gaps rather than between letters — tracking a sentence out reads
+   as a headline, not a sentence. Only runs where the line doesn't wrap. */
+const leadEl = document.getElementById('lead');
+const leadText = document.getElementById('leadText');
+const leadOneLine = window.matchMedia('(min-width: 900px)');
+
+function fitLead() {
+  leadText.style.wordSpacing = '0px';
+  leadText.style.fontSize = '';
+  if (!leadOneLine.matches) return;
+
+  const measure = leadEl.clientWidth;
+  const gaps = leadText.textContent.trim().split(/\s+/).length - 1;
+  if (!measure || gaps < 1) return;
+
+  let natural = leadText.getBoundingClientRect().width;
+  if (natural <= 0) return;
+
+  // Shrink before spacing if the sentence overruns, so gaps never go negative.
+  if (natural > measure) {
+    const base = parseFloat(getComputedStyle(leadText).fontSize);
+    leadText.style.fontSize = (base * measure / natural) + 'px';
+    natural = leadText.getBoundingClientRect().width;
+  }
+  leadText.style.wordSpacing = ((measure - natural) / gaps) + 'px';
+}
+
 /* Resizing the words changes the stack's height, which re-triggers the
    observer. Only the measure matters, so ignore anything but a width change,
    and defer the write a frame so measuring and mutating never land in the
@@ -1282,13 +1323,19 @@ function fitStorm(force) {
 function scheduleFit() {
   if (queued) return;
   queued = true;
-  requestAnimationFrame(() => { queued = false; fitStorm(false); fitDemo(); });
+  requestAnimationFrame(() => { queued = false; fitStorm(false); fitDemo(); fitLead(); });
 }
 
 fitStorm(true);
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => fitStorm(true));
-if (window.ResizeObserver) new ResizeObserver(scheduleFit).observe(stormEl);
-else window.addEventListener('resize', scheduleFit);
+fitLead();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { fitStorm(true); fitLead(); });
+if (window.ResizeObserver) {
+  new ResizeObserver(scheduleFit).observe(stormEl);
+  new ResizeObserver(() => fitLead()).observe(leadEl);
+} else {
+  window.addEventListener('resize', scheduleFit);
+}
+leadOneLine.addEventListener('change', fitLead);
 
 const axW = document.getElementById('axW');
 const axD = document.getElementById('axD');
