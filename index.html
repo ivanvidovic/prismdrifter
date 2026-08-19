@@ -643,23 +643,46 @@ body {
 .spec-blk:last-child { border-bottom: 0; }
 .spec-ttl { margin: 0 0 16px; }
 
-.glyphgrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(clamp(42px, 5.6vw, 66px), 1fr));
-  gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
+.type-hero {
+  padding: clamp(8px,1vw,14px) 0 clamp(18px,2.2vw,28px);
 }
-.glyphgrid span {
-  background: var(--paper);
-  aspect-ratio: 1;
-  display: grid;
-  place-items: center;
-  font-size: clamp(16px, 2.3vw, 26px);
+.axis-demo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  line-height: .88;
+  letter-spacing: -.035em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.axis-demo span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.charset {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(9px,1.25vw,15px);
+}
+.charset-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  white-space: nowrap;
+  font-size: clamp(13px, 2.45vw, 34px);
   font-weight: 400;
   line-height: 1;
 }
-.glyphgrid span.fig { font-variant-numeric: tabular-nums; }
+.charset-row.nums {
+  font-size: clamp(17px, 2.75vw, 38px);
+  font-variant-numeric: tabular-nums;
+}
+.charset-row span {
+  flex: 0 0 auto;
+}
 
 /* One size for every line. With size locked, tracking is what fills the
    measure, so each word sits flush on both edges. */
@@ -674,7 +697,7 @@ body {
 }
 .storm span { display: inline-block; white-space: nowrap; }
 
-.axes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(228px, 100%), 1fr)); gap: 20px 34px; margin-bottom: 22px; }
+.axes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(228px, 100%), 1fr)); gap: 20px 34px; margin-top: 20px; }
 .axis-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
 input[type="range"] {
   -webkit-appearance: none; appearance: none;
@@ -689,15 +712,6 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-moz-range-thumb {
   width: 3px; height: 17px; background: var(--ink); border: 0; border-radius: 0;
 }
-.axis-demo {
-  line-height: 1.02;
-  text-transform: uppercase;
-  letter-spacing: -.02em;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.axis-demo span { display: inline-block; white-space: nowrap; }
-
 /* ============================================================
    FILE ROWS  (PDF / font zip / tool link)
    ============================================================ */
@@ -970,17 +984,10 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 
     <div class="spec">
       <div class="spec-blk">
-        <p class="lbl spec-ttl">Character set</p>
-        <div class="glyphgrid" id="glyphs"></div>
-      </div>
-
-      <div class="spec-blk">
-        <p class="lbl spec-ttl">Weight and width range</p>
-        <div class="storm" id="storm"></div>
-      </div>
-
-      <div class="spec-blk">
         <p class="lbl spec-ttl">Try the axes</p>
+        <div class="type-hero">
+          <div class="axis-demo" id="axDemoBox"><span id="axDemo">Archivo</span></div>
+        </div>
         <div class="axes">
           <div>
             <div class="axis-top">
@@ -997,7 +1004,16 @@ a:focus-visible, button:focus-visible, input:focus-visible {
             <input type="range" id="axD" min="62" max="125" step="1" value="100">
           </div>
         </div>
-        <div class="axis-demo" id="axDemoBox"><span id="axDemo">Prismdrifter</span></div>
+      </div>
+
+      <div class="spec-blk">
+        <p class="lbl spec-ttl">Character set</p>
+        <div class="charset" id="glyphs"></div>
+      </div>
+
+      <div class="spec-blk">
+        <p class="lbl spec-ttl">Weight and width range</p>
+        <div class="storm" id="storm"></div>
       </div>
 
       <div class="spec-blk">
@@ -1876,18 +1892,24 @@ for (const item of MOTION_ITEMS) motionGrid.appendChild(buildMotionCard(item));
 /* ══════════════════════════════════════════════════════════════
    FONT — specimen + ZIP
    ══════════════════════════════════════════════════════════════ */
-/* ── character set ── */
-const GLYPHS = [
-  ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-  ...'abcdefghijklmnopqrstuvwxyz',
-  ...'0123456789'
+/* ── character set ──
+   Each row uses flex space-between so the first and last glyph sit flush to
+   the measure and all spacing between characters is distributed automatically. */
+const CHARSET_ROWS = [
+  ['ABCDEFGHIJKLMNOPQRSTUVWXYZ', ''],
+  ['abcdefghijklmnopqrstuvwxyz', ''],
+  ['0123456789', 'nums']
 ];
 const glyphEl = document.getElementById('glyphs');
-for (const g of GLYPHS) {
-  const s = document.createElement('span');
-  s.textContent = g;
-  if (g >= '0' && g <= '9') s.className = 'fig';
-  glyphEl.appendChild(s);
+for (const [chars, cls] of CHARSET_ROWS) {
+  const row = document.createElement('div');
+  row.className = 'charset-row' + (cls ? ' ' + cls : '');
+  for (const g of chars) {
+    const s = document.createElement('span');
+    s.textContent = g;
+    row.appendChild(s);
+  }
+  glyphEl.appendChild(row);
 }
 
 /* ── weight and width range ──
@@ -1975,7 +1997,7 @@ const axDemoBox = document.getElementById('axDemoBox');
 
 /* At the wide, heavy end of the axes the word outgrows a phone's measure, so
    size follows the width available rather than a fixed clamp. */
-const DEMO_MAX = 116;
+const DEMO_MAX = 230;
 function fitDemo() {
   const box = axDemoBox.clientWidth;
   if (!box) return;
@@ -2213,7 +2235,7 @@ function setTheme(dark) {
   themeBtn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
   themeBtn.setAttribute('title', 'Switch to ' + next + ' theme');
 }
-setTheme(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+setTheme(false);
 themeBtn.addEventListener('click', () => setTheme(root.getAttribute('data-theme') !== 'dark'));
 
 const links = [...document.querySelectorAll('.nav a')];
