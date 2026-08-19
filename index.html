@@ -1976,11 +1976,18 @@ function vimeoEmbedURL(pageURL) {
 
   if (!/^\d{6,12}$/.test(id)) return '';
 
+  /* background=1 is what removes the "Click to unmute" overlay. It implies
+     autoplay, loop and muted in one flag, and turns off every player element.
+     Do NOT add muted=0 alongside it — that is Vimeo's documented way to run a
+     background video with sound, and it brings the unmute prompt straight back.
+     Trade-off: no scrub bar, no play/pause, no fullscreen button. Keyboard
+     controls still work. title/byline/portrait are redundant while background
+     is on, kept so switching it off doesn't reintroduce player chrome.
+     dnt=1 stops Vimeo setting tracking cookies. */
   const q = new URLSearchParams({
-    autoplay: '1',
-    loop: '1',
-    muted: '0',
+    background: '1',
     autopause: '0',
+    dnt: '1',
     title: '0',
     byline: '0',
     portrait: '0'

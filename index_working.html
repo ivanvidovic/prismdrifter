@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Prismdrifter — Brand Assets</title>
-<meta name="description" content="Logos, illustrations, typeface and brand documentation for Prismdrifter.">
+<meta name="description" content="Logos, illustrations, motion, typeface and brand documentation for Prismdrifter.">
 
 <style>
 /* ============================================================
@@ -95,7 +95,7 @@ body {
    ============================================================ */
 .mast {
   border-bottom: 1px solid var(--rule);
-  padding: clamp(14px,2.2vw,26px) 0 clamp(20px,3vw,32px);
+  padding: clamp(22px,3vw,36px) 0 clamp(26px,3.6vw,40px);
 }
 .mast h1 {
   margin: 0;
@@ -113,15 +113,14 @@ body {
    desktop and on every wrapped line down to a phone. Balancing the wrap first
    keeps the last line from being short enough to gap badly when stretched. */
 .mast-sub {
-  margin: clamp(10px,1.4vw,16px) auto 0;
+  margin: clamp(18px,2.4vw,28px) auto 0;
   text-align: justify;
   text-align-last: justify;
-  text-wrap: balance;
-  font-size: clamp(14px,1.35vw,19px);
-  font-weight: 400;
-  font-stretch: 110%;
+  font-size: 20px;
+  font-weight: 350;
+  font-stretch: 125%;
   letter-spacing: .012em;
-  line-height: 1.5;
+  line-height: 1.0;
   color: var(--dim);
 }
 
@@ -237,6 +236,11 @@ body {
   transition: background .12s, color .12s;
 }
 .doc-btn.solid { background: var(--ink); color: var(--paper); }
+.font-doc {
+  margin-top: clamp(16px,2.4vw,24px);
+  margin-bottom: 0;
+}
+.doc-btn:disabled { opacity: .35; cursor: default; }
 
 /* ============================================================
    PDF LIGHTBOX
@@ -315,6 +319,125 @@ body {
 }
 .card { background: var(--paper); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
 .card.wide { grid-column: 1 / -1; }
+
+/* Alternate Logos E/F/G
+   E is intentionally untouched: it remains one standard card in one standard
+   grid column, so its width, height, stage and artwork scale match A-D.
+   Only F/G adapt. On a four-column layout their wrapper spans columns 2-4 and
+   is size-contained, so it cannot make the shared row taller than E. */
+@media (min-width: 1180px) {
+  #grid-alt .alt-fg-stack {
+    grid-column: span 3;
+    display: grid;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+    contain: size;
+    background: var(--rule);
+  }
+
+  #grid-alt .alt-fg-stack .card.wide {
+    grid-column: auto;
+  }
+
+  #grid-alt .alt-fg-stack .alt-compact {
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    padding: 12px 14px;
+    gap: 8px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.72fr) minmax(290px, .9fr);
+    grid-template-rows: auto auto auto 1fr auto;
+    column-gap: 14px;
+    row-gap: 7px;
+  }
+
+  #grid-alt .alt-fg-stack .alt-compact .card-top {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    min-width: 0;
+  }
+
+  #grid-alt .alt-fg-stack .alt-compact .stage {
+    grid-column: 1;
+    grid-row: 2 / 6;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    aspect-ratio: auto !important;
+    padding: 5%;
+  }
+
+  #grid-alt .alt-fg-stack .alt-compact .ctl {
+    grid-column: 2;
+    grid-row: 2;
+    min-width: 0;
+    gap: 8px;
+    align-self: start;
+  }
+
+  #grid-alt .alt-fg-stack .alt-compact .ctl-row {
+    min-width: 0;
+  }
+
+  #grid-alt .alt-fg-stack .alt-compact .ctl-row[data-sizes] {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 5px;
+  }
+
+  #grid-alt .alt-fg-stack .alt-compact .ctl-row[data-sizes] .sz {
+    flex: 0 1 auto;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  #grid-alt .alt-fg-stack .alt-compact .ctl-row[data-sizes] .szc {
+    flex: 0 0 52px;
+    width: 52px;
+  }
+
+  #grid-alt .alt-fg-stack .alt-compact .out {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: start;
+    min-height: 1.4em;
+  }
+
+  #grid-alt .alt-fg-stack .alt-compact .dl {
+    grid-column: 2;
+    grid-row: 5;
+    align-self: end;
+    margin-top: 0;
+  }
+
+  #grid-alt .alt-fg-stack .alt-compact .dl button {
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+}
+
+/* Below the four-column desktop layout, remove the special wrapper from the
+   visual formatting tree so E/F/G fall back to the site's normal card rules. */
+@media (max-width: 1179px) {
+  #grid-alt .alt-fg-stack {
+    display: contents;
+  }
+}
+
+/* On mobile, F/G visually return to the same square preview treatment as the
+   other alternate logos. Their source artwork remains horizontal and simply
+   scales to fit inside the square stage. */
+@media (max-width: 860px) {
+  #grid-alt .alt-compact .stage {
+    aspect-ratio: 1 / 1 !important;
+    padding: 13% !important;
+  }
+}
 
 .card-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .card-name { font-size: 12.5px; font-weight: 700; font-stretch: 88%; letter-spacing: .04em; text-transform: uppercase; }
@@ -441,6 +564,228 @@ body {
   min-height: 1.4em;
 }
 
+
+/* ============================================================
+   04 — MOTION
+   ============================================================ */
+.motion-grid .card { min-width: 0; }
+
+.motion-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border: 1px solid var(--rule);
+  background: var(--field);
+  overflow: hidden;
+  cursor: pointer;
+  color: #fff;
+}
+.motion-stage img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover !important;
+  object-position: center center;
+}
+.motion-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.06);
+  transition: background .12s;
+}
+.motion-play {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  width: 34px;
+  height: 34px;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,.72));
+}
+.motion-play svg { width: 25px; height: 25px; margin-left: 3px; }
+
+.motion-variant {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+}
+.motion-variant .lbl { margin-right: 2px; }
+.motion-only {
+  font-size: 10.5px;
+  font-weight: 600;
+  font-stretch: 78%;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.motion-specs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  min-height: 16px;
+  color: var(--dim);
+  font-size: 10px;
+  font-weight: 600;
+  font-stretch: 78%;
+  letter-spacing: .08em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+.motion-specs span + span::before {
+  content: "·";
+  display: inline-block;
+  margin: 0 7px;
+  color: var(--rule-strong);
+}
+.motion-specs .is-loop {
+  color: var(--ink);
+}
+
+.motion-actions {
+  display: grid;
+  grid-template-columns: .72fr 1.28fr;
+  gap: 8px;
+  margin-top: auto;
+}
+.motion-action {
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  min-height: 39px;
+  padding: 10px 8px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration: none;
+  text-align: center;
+  font: inherit;
+  font-size: 10.5px;
+  font-weight: 700;
+  font-stretch: 80%;
+  letter-spacing: .12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity .12s, background .12s, color .12s;
+}
+.motion-action.ghost {
+  background: none;
+  color: var(--ink);
+}
+.motion-action[disabled],
+.motion-action[aria-disabled="true"] {
+  opacity: .28;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Motion uses a dedicated player overlay so the PDF preview remains untouched. */
+.motion-lb {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  display: grid;
+  place-items: center;
+  padding: 3.5vh 3vw;
+}
+.motion-lb[hidden] { display: none; }
+.motion-lb-back {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.9);
+}
+.motion-lb-shell {
+  position: relative;
+  width: min(1100px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.motion-lb-x {
+  align-self: flex-end;
+  font: inherit;
+  font-size: 24px;
+  line-height: 1;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: #fff;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  opacity: .65;
+  transition: opacity .12s;
+}
+.motion-lb-frame-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #000;
+}
+.motion-lb-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.motion-lb-nav {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: rgba(0,0,0,.52);
+  color: #fff;
+  font: inherit;
+  font-size: 25px;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+  opacity: .72;
+  transition: opacity .12s, background .12s;
+}
+.motion-lb-nav.prev { left: 0; }
+.motion-lb-nav.next { right: 0; }
+.motion-lb-nav:disabled {
+  display: none;
+}
+.motion-lb-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  color: rgba(255,255,255,.82);
+  font-size: 10.5px;
+  font-weight: 600;
+  font-stretch: 78%;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+.motion-lb-count {
+  color: rgba(255,255,255,.52);
+  font-variant-numeric: tabular-nums;
+}
+
 /* ============================================================
    05 — FONT
    ============================================================ */
@@ -449,23 +794,47 @@ body {
 .spec-blk:last-child { border-bottom: 0; }
 .spec-ttl { margin: 0 0 16px; }
 
-.glyphgrid {
+.type-hero {
+  padding: clamp(8px,1vw,14px) 0 clamp(18px,2.2vw,28px);
+}
+.axis-demo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  line-height: .88;
+  letter-spacing: -.035em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.axis-demo span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.charset {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(clamp(42px, 5.6vw, 66px), 1fr));
+  grid-template-columns: repeat(19, minmax(0, 1fr));
   gap: 1px;
   background: var(--rule);
   border: 1px solid var(--rule);
 }
-.glyphgrid span {
-  background: var(--paper);
-  aspect-ratio: 1;
+.charset span {
+  min-width: 0;
+  aspect-ratio: 1 / 1;
   display: grid;
   place-items: center;
-  font-size: clamp(16px, 2.3vw, 26px);
+  background: var(--paper);
+  font-size: clamp(15px, 2vw, 28px);
   font-weight: 400;
   line-height: 1;
 }
-.glyphgrid span.fig { font-variant-numeric: tabular-nums; }
+.charset span.fig {
+  font-variant-numeric: tabular-nums;
+}
+.charset .mobile-glyph {
+  display: none;
+}
 
 /* One size for every line. With size locked, tracking is what fills the
    measure, so each word sits flush on both edges. */
@@ -480,7 +849,7 @@ body {
 }
 .storm span { display: inline-block; white-space: nowrap; }
 
-.axes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(228px, 100%), 1fr)); gap: 20px 34px; margin-bottom: 22px; }
+.axes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(228px, 100%), 1fr)); gap: 20px 34px; margin-top: 20px; }
 .axis-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
 input[type="range"] {
   -webkit-appearance: none; appearance: none;
@@ -495,15 +864,6 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-moz-range-thumb {
   width: 3px; height: 17px; background: var(--ink); border: 0; border-radius: 0;
 }
-.axis-demo {
-  line-height: 1.02;
-  text-transform: uppercase;
-  letter-spacing: -.02em;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.axis-demo span { display: inline-block; white-space: nowrap; }
-
 /* ============================================================
    FILE ROWS  (PDF / font zip / tool link)
    ============================================================ */
@@ -539,31 +899,101 @@ input[type="range"]::-moz-range-thumb {
    06 — VISUAL LOOM
    ============================================================ */
 .loom { border-top: 1px solid var(--rule); padding-top: 24px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(28px,5vw,64px); align-items: stretch; }
-.loom-r { display: flex; flex-direction: column; min-height: 0; }
-.loom p { margin: 0 0 1em; max-width: 48ch; }
+.loom-l,
+.loom-r { min-width: 0; min-height: 0; }
+.loom-l { display: flex; flex-direction: column; }
+.loom-r { display: flex; flex-direction: column; }
+.loom p { margin: 0 0 1em; max-width: none; width: 100%; }
 .loom p:last-of-type { margin-bottom: 0; }
 .loom-lead { font-size: clamp(17px,2.3vw,23px); font-weight: 600; font-stretch: 100%; line-height: 1.34; letter-spacing: -.008em; }
-/* Basis of 0 keeps the shot from inflating the row; it takes whatever height
-   the text column sets and crops the overflow rather than letterboxing. */
+.loom-link { margin-top: 22px; }
+
+.loom-gallery {
+  position: relative;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  margin-bottom: 0;
+  background: var(--field);
+}
 .loom-shot {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
-  flex: 1 1 0;
-  min-height: 170px;
+  height: 100%;
   object-fit: cover;
   object-position: center;
-  border: 1px solid var(--rule);
-  margin-bottom: 22px;
+  opacity: 0;
+  transition: opacity 1.15s ease;
 }
+.loom-shot.is-active { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .loom-shot { transition: none; }
+}
+
 @media (max-width: 860px) {
-  .loom { grid-template-columns: 1fr; }
-  .loom-shot { flex: 0 0 auto; height: auto; min-height: 0; object-fit: contain; }
+  .loom { grid-template-columns: 1fr; align-items: start; }
+  .loom-l,
+  .loom-r,
+  .loom p,
+  .loom-lead {
+    width: 100%;
+    max-width: none;
+  }
+  .loom-link { margin-top: 18px; }
+  /* On mobile the gallery follows the copy/link in DOM order and stays the
+     final Visual Loom content before the footer. Keep the established wide crop. */
+  .loom-gallery {
+    flex: none;
+    aspect-ratio: 7 / 2;
+    min-height: 0;
+  }
+
+  .motion-lb-nav {
+    top: auto;
+    bottom: 0;
+    transform: none;
+    width: 48px;
+    height: 48px;
+  }
 }
 
 /* ============================================================
    FOOT
    ============================================================ */
-.foot { padding: 30px 0 46px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.foot {
+  border-top: 1px solid var(--rule);
+  padding: 22px 0 46px;
+  display: grid;
+  grid-template-columns: repeat(4, max-content);
+  align-items: baseline;
+  justify-content: space-between;
+  column-gap: clamp(16px, 2.4vw, 34px);
+  row-gap: 8px;
+}
+.foot a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule-strong);
+}
+.foot a:hover { border-bottom-color: var(--ink); }
+
+@media (max-width: 900px) {
+  .foot {
+    grid-template-columns: minmax(0, 1fr) max-content;
+  }
+}
+
+@media (max-width: 560px) {
+  .foot {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+}
 
 /* ============================================================
    TOUCH + NARROW SCREENS
@@ -582,6 +1012,9 @@ input[type="range"]::-moz-range-thumb {
 
   .dl button { padding: 15px 8px; }
   .doc-btn, .row-cta { padding: 14px 20px; }
+  .motion-action { min-height: 46px; padding: 14px 8px; }
+  .motion-stage { min-height: 44px; }
+  .motion-lb-nav { opacity: .9; }
   .theme-btn { width: 42px; height: 42px; }
   .ico { width: 19px; height: 19px; }
 
@@ -595,6 +1028,17 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @media (max-width: 640px) {
+  .charset { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+  .charset span { font-size: clamp(11px, 3.6vw, 17px); }
+  .charset .mobile-glyph { display: grid; }
+
+  /* Same six-word layout, just scaled up on phones. fitStorm() continues
+     to distribute each word edge-to-edge without changing its arrangement. */
+  .storm div {
+    font-size: clamp(31px, 8vw, 40px);
+    line-height: 1.08;
+  }
+
   /* Trim the dead space after each nav link so more of the rail is visible
      before it needs scrolling. */
   .nav a { padding: 14px 0 13px; margin-right: 22px; letter-spacing: .12em; }
@@ -628,6 +1072,10 @@ input[type="range"]::-moz-range-thumb {
   .sz:hover { color: var(--ink); border-color: var(--rule-strong); }
   .dl button:hover { opacity: .72; }
   .row:hover .row-cta { background: var(--ink); color: var(--paper); }
+  .motion-stage:hover::after { background: rgba(0,0,0,.16); }
+  .motion-action:hover { opacity: .72; }
+  .motion-lb-x:hover { opacity: 1; }
+  .motion-lb-nav:hover { opacity: 1; background: rgba(0,0,0,.72); }
 }
 
 /* ---------- a11y ---------- */
@@ -650,7 +1098,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   <div class="wrap">
     <h1 class="vh" id="markFallback">Prismdrifter</h1>
     <div class="mark" id="mark" role="img" aria-label="Prismdrifter"></div>
-    <p class="mast-sub">A collection of Prismdrifter logos, artwork, typography, and tools for creating consistent brand materials.</p>
+    <p class="mast-sub">A collection of raw visual materials and tools for building the brand through iteration and use.</p>
   </div>
 </header>
 
@@ -659,9 +1107,10 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   <div class="wrap nav-bar">
     <div class="nav-inner">
       <a href="#logos">Logos</a>
+      <a href="#font">Font</a>
       <a href="#alt">Alternate logos</a>
       <a href="#illus">Illustrations</a>
-      <a href="#font">Font</a>
+      <a href="#motion">Motion</a>
       <a href="#loom">Visual Loom</a>
     </div>
     <button class="theme-btn" id="theme" type="button" aria-label="Switch to dark theme">
@@ -702,39 +1151,16 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   </section>
 
   <!-- ═════════════ 02 ALTERNATE LOGOS ═════════════ -->
-  <section class="sec" id="alt">
-    <div class="sec-head"><h2>Alternate logos</h2></div>
-    <p class="sec-note">Secondary marks and horizontal lockups for layouts where the primary marks aren’t the best fit.</p>
-    <div data-bulk="alt"></div>
-    <div class="grid" id="grid-alt"></div>
-  </section>
-
-  <!-- ═════════════ 03 ILLUSTRATIONS ═════════════ -->
-  <section class="sec" id="illus">
-    <div class="sec-head"><h2>Illustrations</h2></div>
-    <p class="sec-note">Supporting line artwork for adding character and visual detail across brand applications.</p>
-    <div data-bulk="illus"></div>
-    <div class="grid" id="grid-illus"></div>
-  </section>
-
-  <!-- ═════════════ 04 FONT ═════════════ -->
   <section class="sec" id="font">
     <div class="sec-head"><h2>Font</h2></div>
     <p class="sec-note">Archivo is the primary brand typeface, with a flexible range of weights and widths for both display and functional use.</p>
 
     <div class="spec">
       <div class="spec-blk">
-        <p class="lbl spec-ttl">Character set</p>
-        <div class="glyphgrid" id="glyphs"></div>
-      </div>
-
-      <div class="spec-blk">
-        <p class="lbl spec-ttl">Weight and width range</p>
-        <div class="storm" id="storm"></div>
-      </div>
-
-      <div class="spec-blk">
         <p class="lbl spec-ttl">Try the axes</p>
+        <div class="type-hero">
+          <div class="axis-demo" id="axDemoBox"><span id="axDemo">Archivo</span></div>
+        </div>
         <div class="axes">
           <div>
             <div class="axis-top">
@@ -751,36 +1177,62 @@ a:focus-visible, button:focus-visible, input:focus-visible {
             <input type="range" id="axD" min="62" max="125" step="1" value="100">
           </div>
         </div>
-        <div class="axis-demo" id="axDemoBox"><span id="axDemo">Prismdrifter</span></div>
       </div>
 
       <div class="spec-blk">
-        <div class="rows">
-          <button class="row" id="fontRow" type="button">
-            <span class="row-l">
-              <span class="row-name">Archivo</span>
-              <span class="row-meta" id="fontMeta">Roman + italic variable · SIL Open Font License 1.1</span>
-            </span>
-            <span class="row-cta" id="fontCta">Download ZIP</span>
-          </button>
-        </div>
+        <p class="lbl spec-ttl">Character set</p>
+        <div class="charset" id="glyphs"></div>
+      </div>
+
+      <div class="spec-blk">
+        <p class="lbl spec-ttl">Weight and width range</p>
+        <div class="storm" id="storm"></div>
+      </div>
+
+      <div class="doc font-doc">
+        <span class="doc-l">
+          <span class="doc-name">Archivo</span>
+          <span class="doc-meta" id="fontMeta">Roman + italic variable · SIL Open Font License 1.1</span>
+        </span>
+        <span class="doc-actions">
+          <button class="doc-btn solid" id="fontRow" type="button"><span id="fontCta">Download ZIP</span></button>
+        </span>
       </div>
     </div>
   </section>
 
-  <!-- ═════════════ 05 VISUAL LOOM ═════════════ -->
+  
+  <section class="sec" id="alt">
+    <div class="sec-head"><h2>Alternate logos</h2></div>
+    <p class="sec-note">Secondary marks and horizontal lockups for layouts where the primary marks aren’t the best fit.</p>
+    <div data-bulk="alt"></div>
+    <div class="grid" id="grid-alt"></div>
+  </section>
+
+  <!-- ═════════════ 03 ILLUSTRATIONS ═════════════ -->
+  <section class="sec" id="illus">
+    <div class="sec-head"><h2>Illustrations</h2></div>
+    <p class="sec-note">Supporting artwork for adding character and visual detail across brand applications.</p>
+    <div data-bulk="illus"></div>
+    <div class="grid" id="grid-illus"></div>
+  </section>
+
+
+  <!-- ═════════════ 04 MOTION ═════════════ -->
+  <section class="sec" id="motion">
+    <div class="sec-head"><h2>Motion</h2></div>
+    <p class="sec-note">Motion assets for social, digital, projection, and other moving brand applications.</p>
+    <div class="grid motion-grid" id="grid-motion"></div>
+  </section>
+
+  <!-- ═════════════ 05 FONT ═════════════ --><!-- ═════════════ 06 VISUAL LOOM ═════════════ -->
   <section class="sec" id="loom">
     <div class="sec-head"><h2>Visual Loom</h2></div>
     <div class="loom">
-      <div>
-        <p class="loom-lead">A procedural tool for generating custom Prismdrifter compositions.</p>
-        <p>Every output begins with a single black-and-white gradient, subdivided and layered through a fixed procedural rule set. Generate a complete composition with Random Look, then refine individual layers with the controls or drag directly on the canvas to shift them against one another. Export as SVG or PNG at multiple sizes.</p>
-        <p>Use it for background textures, print graphics, social assets, and other supporting brand visuals.</p>
-      </div>
-      <div class="loom-r">
-        <img class="loom-shot" id="loomShot" src="assets/images/visual_loom.png"
-             alt="Visual Loom interface showing a generated black and white pattern" loading="lazy">
-        <div class="rows">
+      <div class="loom-l">
+        <p class="loom-lead">A procedural tool for building textures and forms through the mathematical layering and weaving of simple graphic elements.</p>
+        <p>Every output begins with a single black-and-white gradient, subdivided and layered through a fixed procedural system. Generate a complete composition with Random Look, then refine individual layers with the controls or directly on the canvas. Export the results as SVG or PNG for use across print, digital, social, and other brand applications.</p>
+        <div class="rows loom-link">
           <a class="row" href="https://ivanvidovic.github.io/loomrift/" target="_blank" rel="noopener">
             <span class="row-l">
               <span class="row-name">Open Visual Loom</span>
@@ -790,12 +1242,23 @@ a:focus-visible, button:focus-visible, input:focus-visible {
           </a>
         </div>
       </div>
+      <div class="loom-r">
+        <div class="loom-gallery" id="loomGallery" aria-label="Visual Loom generated composition gallery">
+          <img class="loom-shot is-active" id="loomShotA"
+               src="assets/images/visual_loom_01.jpg"
+               alt="Visual Loom generated composition" loading="lazy">
+          <img class="loom-shot" id="loomShotB"
+               alt="" aria-hidden="true">
+        </div>
+      </div>
     </div>
   </section>
 
   <div class="foot">
-    <span class="lbl">Prismdrifter — Independent avant-garde clothing designer</span>
+    <span class="lbl"><a href="https://www.instagram.com/_prismdrifter_/" target="_blank" rel="noopener">Prismdrifter</a> — Independent avant-garde clothing designer</span>
     <span class="lbl">Portland, Oregon</span>
+    <span class="lbl">Last updated August 2026</span>
+    <span class="lbl">Maintained by <a href="https://www.instagram.com/ivanvidovic/" target="_blank" rel="noopener">Ivan Vidovic</a></span>
   </div>
 
 </main>
@@ -806,6 +1269,27 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   <div class="lb-shell" role="dialog" aria-modal="true" aria-label="Brand Assets Overview">
     <button class="lb-x" id="lbClose" type="button" aria-label="Close preview">&times;</button>
     <iframe class="lb-frame" id="lbFrame" title="Brand Assets Overview PDF"></iframe>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════ MOTION LIGHTBOX ══════════════════════════ -->
+<div class="motion-lb" id="motionLb" hidden>
+  <div class="motion-lb-back" data-motion-close></div>
+  <div class="motion-lb-shell" role="dialog" aria-modal="true" aria-label="Motion preview">
+    <button class="motion-lb-x" id="motionLbClose" type="button" aria-label="Close motion preview">&times;</button>
+    <div class="motion-lb-frame-wrap">
+      <iframe class="motion-lb-frame" id="motionLbFrame"
+              title="Prismdrifter motion preview"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen></iframe>
+      <button class="motion-lb-nav prev" id="motionLbPrev" type="button" aria-label="Previous motion video">←</button>
+      <button class="motion-lb-nav next" id="motionLbNext" type="button" aria-label="Next motion video">→</button>
+    </div>
+    <div class="motion-lb-meta">
+      <span id="motionLbLabel"></span>
+      <span class="motion-lb-count" id="motionLbCount"></span>
+    </div>
   </div>
 </div>
 
@@ -820,6 +1304,7 @@ const SIZE_MAX     = 8192;
 const SIZE_MIN     = 16;
 const STROKE_FLOOR = 1.5;      // rendered px — thinner strokes get scaled up
 const DEFAULT_SIZE = 1024;
+const stillMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 const FONT_FILES = [
   'Archivo-VariableFont_wdth,wght.ttf',
@@ -835,28 +1320,178 @@ const GROUPS = {
     ['Prismdrifter_Logo_D.svg', 'Logo D']
   ]},
   alt: { dir: 'assets/logos/', items: [
-    ['Prismdrifter_Alt_Logo_01.svg', 'Alt 01'],
-    ['Prismdrifter_Alt_Logo_02.svg', 'Alt 02'],
-    ['Prismdrifter_Alt_Logo_03.svg', 'Alt 03'],
-    ['Prismdrifter_Alt_Logo_04.svg', 'Alt 04'],
-    ['Prismdrifter_Alt_Logo_05.svg', 'Alt 05'],
-    ['Prismdrifter_Alt_Logo_06.svg', 'Alt 06'],
-    ['Prismdrifter_Alt_Logo_07.svg', 'Alt 07']
+    ['Prismdrifter_Alt_Logo_01.svg', 'Alt Logo A'],
+    ['Prismdrifter_Alt_Logo_02.svg', 'Alt Logo B'],
+    ['Prismdrifter_Alt_Logo_03.svg', 'Alt Logo C'],
+    ['Prismdrifter_Alt_Logo_04.svg', 'Alt Logo D'],
+    ['Prismdrifter_Alt_Logo_05.svg', 'Alt Logo E'],
+    ['Prismdrifter_Alt_Logo_06.svg', 'Alt Logo F'],
+    ['Prismdrifter_Alt_Logo_07.svg', 'Alt Logo G']
   ]},
   illus: { dir: 'assets/illustrations/', items: [
-    ['Illustration_A_-_Butterfly.svg',   'A — Butterfly'],
-    ['Illustration_B_-_Radial.svg',      'B — Radial'],
-    ['Illustration_C_-_Radial.svg',      'C — Radial'],
-    ['Illustration_D_-_Logo_Heart.svg',  'D — Logo Heart'],
-    ['Illustration_E_-_Reflection.svg',  'E — Reflection'],
-    ['Illustration_F_-_Reflection.svg',  'F — Reflection'],
-    ['Illustration_G_-_Reflection.svg',  'G — Reflection'],
-    ['Illustration_H_-_Reflection.svg',  'H — Reflection'],
-    ['Illustration_I_-_Chain_Links.svg', 'I — Chain Links'],
-    ['Illustration_J_-_Arrow.svg',       'J — Arrow'],
-    ['Illustration_K_-_Arrow.svg',       'K — Arrow']
+    ['Illustration_A_-_Butterfly.svg',   'Butterfly A'],
+    ['Illustration_B_-_Radial.svg',      'Radial A'],
+    ['Illustration_C_-_Radial.svg',      'Radial B'],
+    ['Illustration_D_-_Logo_Heart.svg',  'Logo Heart A'],
+    ['Illustration_E_-_Reflection.svg',  'Reflection A'],
+    ['Illustration_F_-_Reflection.svg',  'Reflection B'],
+    ['Illustration_G_-_Reflection.svg',  'Reflection C'],
+    ['Illustration_H_-_Reflection.svg',  'Reflection D'],
+    ['Illustration_I_-_Chain_Links.svg', 'Chain Links A'],
+    ['Illustration_J_-_Arrow.svg',       'Arrow A'],
+    ['Illustration_K_-_Arrow.svg',       'Arrow B']
   ]}
 };
+
+
+/* Motion cards are intentionally separate from GROUPS because they are Vimeo-
+   hosted assets rather than generated SVG/PNG downloads.
+
+   Paste the FULL Vimeo page URL into each vimeo field later. Full URLs are
+   preferred so an unlisted video hash is preserved automatically. */
+const MOTION_ITEMS = [
+  {
+    label: 'Orb With Arrows A 01',
+    loop: true, duration: 10,
+    bw:    { image: '04_Orb_With_Arrows_A_01.jpg',       vimeo: 'https://vimeo.com/1218807003/9a30738866' },
+    color: { image: '04_Orb_With_Arrows_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804026/a18848b9e5' }
+  },
+  {
+    label: 'Cherub Wings A 01',
+    loop: true, duration: 10,
+    bw:    { image: '06_Cherub_Wings_A_01.jpg',       vimeo: 'https://vimeo.com/1218807006/3e76f5668b' },
+    color: { image: '06_Cherub_Wings_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804025/5d1ccba923' }
+  },
+  {
+    label: 'Cherub Wings B 01',
+    loop: true, duration: 10,
+    bw:    { image: '06_Cherub_Wings_B_01.jpg',       vimeo: 'https://vimeo.com/1218807005/5aad06b9fc' },
+    color: { image: '06_Cherub_Wings_B_Color.jpg',    vimeo: 'https://vimeo.com/1218804023/0e20c4737e' }
+  },
+  {
+    label: 'Cherub Wings C 01',
+    loop: true, duration: 10,
+    bw:    { image: '06_Cherub_Wings_C_01.jpg',       vimeo: 'https://vimeo.com/1218808112/bbd9ee730e' },
+    color: { image: '06_Cherub_Wings_C_Color.jpg',    vimeo: 'https://vimeo.com/1218804024/5a2eface94' }
+  },
+  {
+    label: 'Compound Bow A 01',
+    loop: false, duration: 30,
+    bw:    { image: '07_Compound_Bow_A_01.jpg',       vimeo: 'https://vimeo.com/1218807004/c642a1eb46' },
+    color: { image: '07_Compound_Bow_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804049/a23d2d63f0' }
+  },
+  {
+    label: 'Compound Bow A 02',
+    loop: false, duration: 30,
+    bw:    { image: '07_Compound_Bow_A_02.jpg',       vimeo: 'https://vimeo.com/1218807022/6948bfcaae' },
+    color: { image: '07_Compound_Bow_A_02_Color.jpg', vimeo: 'https://vimeo.com/1218804051/0ab6e4764b' }
+  },
+  {
+    label: 'Dove Wings A 01',
+    loop: true, duration: 5,
+    bw:    { image: '08_Dove_Wings_A_01.jpg',       vimeo: 'https://vimeo.com/1218807023/56881d99b4' },
+    color: { image: '08_Dove_Wings_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804054/eaafa9d078' }
+  },
+  {
+    label: 'Dove Wings B 01',
+    loop: true, duration: 5,
+    bw:    { image: '08_Dove_Wings_B_01.jpg',       vimeo: 'https://vimeo.com/1218807021/b7ee8acd64' },
+    color: { image: '08_Dove_Wings_B_01_Color.jpg', vimeo: 'https://vimeo.com/1218804052/fb9c291122' }
+  },
+  {
+    label: 'Smoke A 01',
+    loop: true, duration: 30,
+    bw:    { image: '09_Smoke_A_01.jpg',       vimeo: 'https://vimeo.com/1218807036/972b784a53' },
+    color: { image: '09_Smoke_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804075/7b4755e222' }
+  },
+  {
+    label: 'Smoke B 01',
+    loop: true, duration: 30,
+    bw:    { image: '09_Smoke_B_01.jpg',       vimeo: 'https://vimeo.com/1218807037/01af409f06' },
+    color: { image: '09_Smoke_B_01_Color.jpg', vimeo: 'https://vimeo.com/1218804076/b63253273e' }
+  },
+  {
+    label: 'Smoke C 01',
+    loop: true, duration: 30,
+    bw:    { image: '09_Smoke_C_01.jpg',       vimeo: 'https://vimeo.com/1218807038/031c47b0cb' },
+    color: { image: '09_Smoke_C_01_Color.jpg', vimeo: 'https://vimeo.com/1218804082/d87e58833a' }
+  },
+  {
+    label: 'Black Angel Wings A 01',
+    loop: true, duration: 5,
+    bw:    { image: '10_Black_Angel_Wings_A_01.jpg',       vimeo: 'https://vimeo.com/1218807050/a7da2a3bfa' },
+    color: { image: '10_Black_Angel_Wings_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804087/b04e9ca020' }
+  },
+  {
+    label: 'Black Angel Wings A 02',
+    loop: true, duration: 5,
+    bw:    { image: '10_Black_Angel_Wings_A_02.jpg',       vimeo: 'https://vimeo.com/1218807064/66870e4e1e' },
+    color: { image: '10_Black_Angel_Wings_A_02_Color.jpg', vimeo: 'https://vimeo.com/1218804102/a1f2afd625' }
+  },
+  {
+    label: 'Breathing Darkness & Light A 01',
+    loop: true, duration: 10,
+    bw:    { image: '11_Breathing_Darkness_And_Light_A_01.jpg',       vimeo: 'https://vimeo.com/1218807089/9d5c890abe' },
+    color: { image: '11_Breathing_Darkness_And_Light_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804110/3278d47e38' }
+  },
+  {
+    label: 'Breathing Darkness & Light A 02',
+    loop: true, duration: 10,
+    bw:    { image: '11_Breathing_Darkness_And_Light_A_02.jpg',       vimeo: 'https://vimeo.com/1218807090/8972ff10f9' },
+    color: { image: '11_Breathing_Darkness_And_Light_A_02_Color.jpg', vimeo: 'https://vimeo.com/1218804111/18307c0176' }
+  },
+  {
+    label: 'Electrical Surge A 01',
+    loop: false, duration: 30,
+    bw:    { image: '12_Electrical_Surge_A_01.jpg',       vimeo: 'https://vimeo.com/1218807091/94cf06fa9e' },
+    color: { image: '12_Electrical_Surge_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804113/f96164891b' }
+  },
+  {
+    label: 'Electrical Surge B 01',
+    loop: true, duration: 30,
+    bw:    { image: '12_Electrical_Surge_B_01.jpg',       vimeo: 'https://vimeo.com/1218807103/66e026a06d' },
+    color: { image: '12_Electrical_Surge_B_01_Color.jpg', vimeo: 'https://vimeo.com/1218804114/0804ec2993' }
+  },
+  {
+    label: 'Electrical Surge B 02',
+    loop: true, duration: 30,
+    bw:    { image: '12_Electrical_Surge_B_02.jpg',       vimeo: 'https://vimeo.com/1218807119/a4ac5694d5' },
+    color: { image: '12_Electrical_Surge_B_02_Color.jpg', vimeo: 'https://vimeo.com/1218804129/ee40d285ef' }
+  },
+  {
+    label: 'Black Goo A 01',
+    loop: true, duration: 30,
+    bw:    { image: '13_Black_Goo_A_01.jpg',       vimeo: 'https://vimeo.com/1218807121/36069b138e' },
+    color: { image: '13_Black_Goo_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804130/5a64c5e2a7' }
+  },
+  {
+    label: 'Black Goo B 01',
+    loop: true, duration: 30,
+    bw:    { image: '13_Black_Goo_B_01.jpg',       vimeo: 'https://vimeo.com/1218807140/8778499225' },
+    color: { image: '13_Black_Goo_B_01_Color.jpg', vimeo: 'https://vimeo.com/1218804145/d3f2e65476' }
+  },
+  {
+    label: 'Water A 01',
+    loop: true, duration: 5,
+    bw:    { image: '14_Water_A_01.jpg', vimeo: 'https://vimeo.com/1218807147/9ca29aacc3' }
+  },
+  {
+    label: 'Water B 01',
+    loop: true, duration: 5,
+    bw:    { image: '14_Water_B_01.jpg', vimeo: 'https://vimeo.com/1218807169/4dd0a569db' }
+  },
+  {
+    label: 'Water C 01',
+    loop: true, duration: 5,
+    bw:    { image: '14_Water_C_01.jpg', vimeo: 'https://vimeo.com/1218807170/35e097dea5' }
+  }
+];
+
+const MOTION_DIR = 'assets/motion/';
+
+/* Optional playback fallback. Left empty because all Prismdrifter Vimeo URLs
+   are now assigned in MOTION_ITEMS. */
+const MOTION_DEMO_VIMEO = '';
 
 /* ══════════════════════════════════════════════════════════════
    SVG PIPELINE
@@ -1250,24 +1885,293 @@ function buildBulk(group, mount) {
 
 for (const group of Object.keys(GROUPS)) {
   const grid = document.getElementById('grid-' + group);
-  for (const [file, label] of GROUPS[group].items) grid.appendChild(buildCard(group, file, label));
+
+  if (group === 'alt') {
+    const items = GROUPS[group].items;
+
+    /* A-E are ordinary cards. E is not wrapped, resized, restyled or measured. */
+    for (const [file, label] of items.slice(0, 5)) {
+      grid.appendChild(buildCard(group, file, label));
+    }
+
+    /* F/G take the remaining three columns beside E on wide screens.
+       They are the only cards that receive the compact half-height treatment. */
+    const fgStack = document.createElement('div');
+    fgStack.className = 'alt-fg-stack';
+
+    const fCard = buildCard(group, items[5][0], items[5][1]);
+    const gCard = buildCard(group, items[6][0], items[6][1]);
+
+    fCard.classList.add('alt-compact');
+    gCard.classList.add('alt-compact');
+
+    fgStack.append(fCard, gCard);
+    grid.appendChild(fgStack);
+  } else {
+    for (const [file, label] of GROUPS[group].items) {
+      grid.appendChild(buildCard(group, file, label));
+    }
+  }
+
   buildBulk(group, document.querySelector(`[data-bulk="${group}"]`));
 }
+
+
+/* ══════════════════════════════════════════════════════════════
+   MOTION — cards + Vimeo preview
+   ══════════════════════════════════════════════════════════════ */
+const motionGrid = document.getElementById('grid-motion');
+const motionLb = document.getElementById('motionLb');
+const motionLbFrame = document.getElementById('motionLbFrame');
+const motionLbClose = document.getElementById('motionLbClose');
+const motionLbPrev = document.getElementById('motionLbPrev');
+const motionLbNext = document.getElementById('motionLbNext');
+const motionLbLabel = document.getElementById('motionLbLabel');
+const motionLbCount = document.getElementById('motionLbCount');
+let motionReturn = null;
+let motionIndex = -1;
+
+/* Flatten the 23 cards into the 43 actual Vimeo videos so Next/Previous moves
+   through every B&W and Color asset in gallery order. */
+const MOTION_PLAYLIST = MOTION_ITEMS.flatMap(item => {
+  const out = [];
+  if (item.bw && item.bw.vimeo) {
+    out.push({ label: item.label, variant: 'B&W', pageURL: item.bw.vimeo });
+  }
+  if (item.color && item.color.vimeo) {
+    out.push({ label: item.label, variant: 'Color', pageURL: item.color.vimeo });
+  }
+  return out;
+});
+
+/* Accepts normal Vimeo page URLs, unlisted URLs with a hash, Showcase video
+   URLs, or player.vimeo.com URLs and converts them into an autoplaying embed. */
+function vimeoEmbedURL(pageURL) {
+  if (!pageURL) return '';
+  let u;
+  try { u = new URL(pageURL); } catch (e) { return ''; }
+
+  const parts = u.pathname.split('/').filter(Boolean);
+  let id = '';
+  let hash = u.searchParams.get('h') || '';
+
+  if (u.hostname.includes('player.vimeo.com')) {
+    const i = parts.indexOf('video');
+    if (i >= 0 && parts[i + 1]) id = parts[i + 1];
+  } else {
+    const vi = parts.indexOf('video');
+    if (vi >= 0 && parts[vi + 1]) {
+      id = parts[vi + 1];
+      if (!hash && parts[vi + 2]) hash = parts[vi + 2];
+    } else {
+      const ii = parts.findIndex(p => /^\d{6,12}$/.test(p));
+      if (ii >= 0) {
+        id = parts[ii];
+        if (!hash && parts[ii + 1] && /^[a-zA-Z0-9]+$/.test(parts[ii + 1])) {
+          hash = parts[ii + 1];
+        }
+      }
+    }
+  }
+
+  if (!/^\d{6,12}$/.test(id)) return '';
+
+  const q = new URLSearchParams({
+    autoplay: '1',
+    loop: '1',
+    muted: '0',
+    autopause: '0',
+    title: '0',
+    byline: '0',
+    portrait: '0'
+  });
+  if (hash) q.set('h', hash);
+  return `https://player.vimeo.com/video/${id}?${q.toString()}`;
+}
+
+function syncMotionLB() {
+  const item = MOTION_PLAYLIST[motionIndex];
+  if (!item) return;
+
+  const embed = vimeoEmbedURL(item.pageURL);
+  if (!embed) return;
+
+  motionLbFrame.src = embed;
+  motionLbLabel.textContent = item.label + ' · ' + item.variant;
+  motionLbCount.textContent = (motionIndex + 1) + ' / ' + MOTION_PLAYLIST.length;
+
+  motionLbPrev.disabled = motionIndex <= 0;
+  motionLbNext.disabled = motionIndex >= MOTION_PLAYLIST.length - 1;
+}
+
+function openMotionLB(pageURL, trigger) {
+  const index = MOTION_PLAYLIST.findIndex(item => item.pageURL === pageURL);
+  if (index < 0) return;
+
+  motionReturn = trigger || document.activeElement;
+  motionIndex = index;
+  motionLb.hidden = false;
+
+  const bar = window.innerWidth - document.documentElement.clientWidth;
+  document.body.style.overflow = 'hidden';
+  if (bar > 0) document.body.style.paddingRight = bar + 'px';
+
+  syncMotionLB();
+  motionLbClose.focus();
+}
+
+function stepMotionLB(delta) {
+  const next = motionIndex + delta;
+  if (next < 0 || next >= MOTION_PLAYLIST.length) return;
+  motionIndex = next;
+  syncMotionLB();
+}
+
+function closeMotionLB() {
+  motionLb.hidden = true;
+  motionLbFrame.removeAttribute('src');
+  document.body.style.overflow = '';
+  document.body.style.paddingRight = '';
+  motionIndex = -1;
+  if (motionReturn && motionReturn.focus) motionReturn.focus();
+  motionReturn = null;
+}
+
+motionLbClose.addEventListener('click', closeMotionLB);
+motionLbPrev.addEventListener('click', () => stepMotionLB(-1));
+motionLbNext.addEventListener('click', () => stepMotionLB(1));
+motionLb.querySelector('[data-motion-close]').addEventListener('click', closeMotionLB);
+
+function buildMotionCard(item) {
+  const hasColor = !!item.color;
+
+  const card = document.createElement('div');
+  card.className = 'card motion-card';
+
+  card.innerHTML = `
+    <div class="card-top">
+      <span class="card-name">${item.label}</span>
+    </div>
+
+    <button class="motion-stage" type="button" data-motion-play aria-label="Play ${item.label}">
+      <img data-motion-image alt="${item.label} preview" loading="lazy">
+      <span class="motion-play" aria-hidden="true">
+        <svg viewBox="0 0 20 20" fill="currentColor">
+          <path d="M5.5 3.5 16 10 5.5 16.5Z"/>
+        </svg>
+      </span>
+    </button>
+
+    <div class="motion-variant">
+      ${hasColor ? `
+        <span class="lbl">Version</span>
+        <button class="sz" type="button" data-motion-variant="bw" aria-pressed="true">B&amp;W</button>
+        <button class="sz" type="button" data-motion-variant="color" aria-pressed="false">Color</button>
+      ` : `
+        <span class="lbl">Version</span>
+        <span class="motion-only">B&amp;W only</span>
+      `}
+    </div>
+
+    <div class="motion-specs" aria-label="Motion specifications">
+      <span>2880 × 2160</span>
+      <span>4:3</span>
+      <span>30 fps</span>
+      <span>${item.duration} sec</span>
+      <span class="${item.loop ? 'is-loop' : ''}">${item.loop ? 'Loop' : 'Non-loop'}</span>
+    </div>
+
+    <div class="motion-actions">
+      <button class="motion-action" type="button" data-motion-open>Play</button>
+      <a class="motion-action ghost" data-motion-page target="_blank" rel="noopener">View / Download ↗</a>
+    </div>`;
+
+  const image = card.querySelector('[data-motion-image]');
+  const stage = card.querySelector('[data-motion-play]');
+  const play = card.querySelector('[data-motion-open]');
+  const page = card.querySelector('[data-motion-page]');
+  let variant = 'bw';
+
+  function current() {
+    return variant === 'color' && item.color ? item.color : item.bw;
+  }
+
+  function sync() {
+    const v = current();
+    image.src = MOTION_DIR + v.image;
+
+    const hasRealVimeo = !!v.vimeo;
+    const canPreview = hasRealVimeo || !!MOTION_DEMO_VIMEO;
+    stage.disabled = !canPreview;
+    play.disabled = !canPreview;
+
+    if (hasRealVimeo) {
+      page.href = v.vimeo;
+      page.removeAttribute('aria-disabled');
+      page.removeAttribute('tabindex');
+    } else {
+      page.removeAttribute('href');
+      page.setAttribute('aria-disabled', 'true');
+      page.setAttribute('tabindex', '-1');
+    }
+
+    card.querySelectorAll('[data-motion-variant]').forEach(btn => {
+      btn.setAttribute('aria-pressed', String(btn.dataset.motionVariant === variant));
+    });
+  }
+
+  function open(trigger) {
+    const v = current();
+    const previewURL = v.vimeo || MOTION_DEMO_VIMEO;
+    if (previewURL) openMotionLB(previewURL, trigger);
+  }
+
+  stage.addEventListener('click', () => open(stage));
+  play.addEventListener('click', () => open(play));
+
+  card.querySelectorAll('[data-motion-variant]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      variant = btn.dataset.motionVariant;
+      sync();
+    });
+  });
+
+  image.addEventListener('error', () => {
+    image.alt = 'Preview image not found: ' + image.src.split('/').pop();
+  });
+
+  sync();
+  return card;
+}
+
+for (const item of MOTION_ITEMS) motionGrid.appendChild(buildMotionCard(item));
 
 /* ══════════════════════════════════════════════════════════════
    FONT — specimen + ZIP
    ══════════════════════════════════════════════════════════════ */
-/* ── character set ── */
+/* ── character set ──
+   Each row uses flex space-between so the first and last glyph sit flush to
+   the measure and all spacing between characters is distributed automatically. */
 const GLYPHS = [
   ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
   ...'abcdefghijklmnopqrstuvwxyz',
-  ...'0123456789'
+  ...'0123456789',
+  '&', '@', '!', '?', '#', '$', '%', '+', '-', '=', '/', '\\', '(', ')'
 ];
 const glyphEl = document.getElementById('glyphs');
 for (const g of GLYPHS) {
   const s = document.createElement('span');
   s.textContent = g;
   if (g >= '0' && g <= '9') s.className = 'fig';
+  glyphEl.appendChild(s);
+}
+
+/* Hidden on desktop so the 19 × 4 grid remains exact. On mobile these four
+   symbols complete the 8-column grid instead of leaving gray empty cells. */
+for (const g of ['[', ']', '{', '}']) {
+  const s = document.createElement('span');
+  s.className = 'mobile-glyph';
+  s.textContent = g;
   glyphEl.appendChild(s);
 }
 
@@ -1356,7 +2260,7 @@ const axDemoBox = document.getElementById('axDemoBox');
 
 /* At the wide, heavy end of the axes the word outgrows a phone's measure, so
    size follows the width available rather than a fixed clamp. */
-const DEMO_MAX = 116;
+const DEMO_MAX = 230;
 function fitDemo() {
   const box = axDemoBox.clientWidth;
   if (!box) return;
@@ -1521,8 +2425,79 @@ loadSVG('assets/logos/Prismdrifter_Alt_Logo_06.svg').then(src => {
   markHost.remove();
 });
 
-const loomShot = document.getElementById('loomShot');
-loomShot.addEventListener('error', () => loomShot.remove());
+/* ══════════════════════════════════════════════════════════════
+   VISUAL LOOM — crossfading gallery
+   ══════════════════════════════════════════════════════════════ */
+const LOOM_IMAGES = Array.from({ length: 11 }, (_, i) =>
+  `assets/images/visual_loom_${String(i + 1).padStart(2, '0')}.jpg`
+);
+
+const loomGallery = document.getElementById('loomGallery');
+const loomShots = [
+  document.getElementById('loomShotA'),
+  document.getElementById('loomShotB')
+];
+
+let loomIndex = 0;
+let loomLayer = 0;
+let loomTimer = null;
+
+function preloadLoomImage(index) {
+  const img = new Image();
+  img.src = LOOM_IMAGES[index % LOOM_IMAGES.length];
+}
+
+function advanceLoom() {
+  const nextIndex = (loomIndex + 1) % LOOM_IMAGES.length;
+  const nextLayer = 1 - loomLayer;
+  const incoming = loomShots[nextLayer];
+  const outgoing = loomShots[loomLayer];
+
+  incoming.src = LOOM_IMAGES[nextIndex];
+
+  const reveal = () => {
+    incoming.classList.add('is-active');
+    outgoing.classList.remove('is-active');
+    loomIndex = nextIndex;
+    loomLayer = nextLayer;
+    preloadLoomImage((loomIndex + 1) % LOOM_IMAGES.length);
+  };
+
+  if (incoming.complete) reveal();
+  else incoming.addEventListener('load', reveal, { once: true });
+}
+
+function startLoomGallery() {
+  if (loomTimer || stillMotion.matches) return;
+  preloadLoomImage(1);
+  loomTimer = setInterval(advanceLoom, 4200);
+}
+
+function stopLoomGallery() {
+  if (!loomTimer) return;
+  clearInterval(loomTimer);
+  loomTimer = null;
+}
+
+loomShots.forEach(img => {
+  img.addEventListener('error', () => {
+    // Skip a missing frame rather than leaving a broken-image icon in the stage.
+    img.removeAttribute('src');
+  });
+});
+
+if (!stillMotion.matches && 'IntersectionObserver' in window) {
+  const loomObserver = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (entry.target !== loomGallery) continue;
+      if (entry.isIntersecting) startLoomGallery();
+      else stopLoomGallery();
+    }
+  }, { threshold: 0.12 });
+  loomObserver.observe(loomGallery);
+} else if (!stillMotion.matches) {
+  startLoomGallery();
+}
 
 /* ══════════════════════════════════════════════════════════════
    PDF LIGHTBOX
@@ -1573,6 +2548,12 @@ pdfPreview.addEventListener('click', () => {
 lbClose.addEventListener('click', closeLB);
 lb.querySelector('[data-lb-close]').addEventListener('click', closeLB);
 document.addEventListener('keydown', e => {
+  if (!motionLb.hidden) {
+    if (e.key === 'Escape') closeMotionLB();
+    else if (e.key === 'ArrowLeft') stepMotionLB(-1);
+    else if (e.key === 'ArrowRight') stepMotionLB(1);
+    return;
+  }
   if (e.key === 'Escape' && !lb.hidden) closeLB();
 });
 
@@ -1588,12 +2569,11 @@ function setTheme(dark) {
   themeBtn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
   themeBtn.setAttribute('title', 'Switch to ' + next + ' theme');
 }
-setTheme(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+setTheme(false);
 themeBtn.addEventListener('click', () => setTheme(root.getAttribute('data-theme') !== 'dark'));
 
 const links = [...document.querySelectorAll('.nav a')];
 const navInner = document.querySelector('.nav-inner');
-const stillMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 /* Fade whichever edge has links hidden past it. */
 function syncNavEdges() {
