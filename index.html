@@ -629,6 +629,30 @@ body {
   color: var(--dim);
 }
 
+.motion-specs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  min-height: 16px;
+  color: var(--dim);
+  font-size: 10px;
+  font-weight: 600;
+  font-stretch: 78%;
+  letter-spacing: .08em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+.motion-specs span + span::before {
+  content: "·";
+  display: inline-block;
+  margin: 0 7px;
+  color: var(--rule-strong);
+}
+.motion-specs .is-loop {
+  color: var(--ink);
+}
+
 .motion-actions {
   display: grid;
   grid-template-columns: .72fr 1.28fr;
@@ -1312,114 +1336,137 @@ const GROUPS = {
 const MOTION_ITEMS = [
   {
     label: 'Orb With Arrows A 01',
+    loop: true, duration: 10,
     bw:    { image: '04_Orb_With_Arrows_A_01.jpg',       vimeo: 'https://vimeo.com/1218807003/9a30738866' },
     color: { image: '04_Orb_With_Arrows_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804026/a18848b9e5' }
   },
   {
     label: 'Cherub Wings A 01',
+    loop: true, duration: 10,
     bw:    { image: '06_Cherub_Wings_A_01.jpg',       vimeo: 'https://vimeo.com/1218807006/3e76f5668b' },
     color: { image: '06_Cherub_Wings_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804025/5d1ccba923' }
   },
   {
     label: 'Cherub Wings B 01',
+    loop: true, duration: 10,
     bw:    { image: '06_Cherub_Wings_B_01.jpg',       vimeo: 'https://vimeo.com/1218807005/5aad06b9fc' },
     color: { image: '06_Cherub_Wings_B_Color.jpg',    vimeo: 'https://vimeo.com/1218804023/0e20c4737e' }
   },
   {
     label: 'Cherub Wings C 01',
+    loop: true, duration: 10,
     bw:    { image: '06_Cherub_Wings_C_01.jpg',       vimeo: 'https://vimeo.com/1218808112/bbd9ee730e' },
     color: { image: '06_Cherub_Wings_C_Color.jpg',    vimeo: 'https://vimeo.com/1218804024/5a2eface94' }
   },
   {
     label: 'Compound Bow A 01',
+    loop: false, duration: 30,
     bw:    { image: '07_Compound_Bow_A_01.jpg',       vimeo: 'https://vimeo.com/1218807004/c642a1eb46' },
     color: { image: '07_Compound_Bow_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804049/a23d2d63f0' }
   },
   {
     label: 'Compound Bow A 02',
+    loop: false, duration: 30,
     bw:    { image: '07_Compound_Bow_A_02.jpg',       vimeo: 'https://vimeo.com/1218807022/6948bfcaae' },
     color: { image: '07_Compound_Bow_A_02_Color.jpg', vimeo: 'https://vimeo.com/1218804051/0ab6e4764b' }
   },
   {
     label: 'Dove Wings A 01',
+    loop: true, duration: 5,
     bw:    { image: '08_Dove_Wings_A_01.jpg',       vimeo: 'https://vimeo.com/1218807023/56881d99b4' },
     color: { image: '08_Dove_Wings_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804054/eaafa9d078' }
   },
   {
     label: 'Dove Wings B 01',
+    loop: true, duration: 5,
     bw:    { image: '08_Dove_Wings_B_01.jpg',       vimeo: 'https://vimeo.com/1218807021/b7ee8acd64' },
     color: { image: '08_Dove_Wings_B_01_Color.jpg', vimeo: 'https://vimeo.com/1218804052/fb9c291122' }
   },
   {
     label: 'Smoke A 01',
+    loop: true, duration: 30,
     bw:    { image: '09_Smoke_A_01.jpg',       vimeo: 'https://vimeo.com/1218807036/972b784a53' },
     color: { image: '09_Smoke_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804075/7b4755e222' }
   },
   {
     label: 'Smoke B 01',
+    loop: true, duration: 30,
     bw:    { image: '09_Smoke_B_01.jpg',       vimeo: 'https://vimeo.com/1218807037/01af409f06' },
     color: { image: '09_Smoke_B_01_Color.jpg', vimeo: 'https://vimeo.com/1218804076/b63253273e' }
   },
   {
     label: 'Smoke C 01',
+    loop: true, duration: 30,
     bw:    { image: '09_Smoke_C_01.jpg',       vimeo: 'https://vimeo.com/1218807038/031c47b0cb' },
     color: { image: '09_Smoke_C_01_Color.jpg', vimeo: 'https://vimeo.com/1218804082/d87e58833a' }
   },
   {
     label: 'Black Angel Wings A 01',
+    loop: true, duration: 5,
     bw:    { image: '10_Black_Angel_Wings_A_01.jpg',       vimeo: 'https://vimeo.com/1218807050/a7da2a3bfa' },
     color: { image: '10_Black_Angel_Wings_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804087/b04e9ca020' }
   },
   {
     label: 'Black Angel Wings A 02',
+    loop: true, duration: 5,
     bw:    { image: '10_Black_Angel_Wings_A_02.jpg',       vimeo: 'https://vimeo.com/1218807064/66870e4e1e' },
     color: { image: '10_Black_Angel_Wings_A_02_Color.jpg', vimeo: 'https://vimeo.com/1218804102/a1f2afd625' }
   },
   {
     label: 'Breathing Darkness & Light A 01',
+    loop: true, duration: 10,
     bw:    { image: '11_Breathing_Darkness_And_Light_A_01.jpg',       vimeo: 'https://vimeo.com/1218807089/9d5c890abe' },
     color: { image: '11_Breathing_Darkness_And_Light_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804110/3278d47e38' }
   },
   {
     label: 'Breathing Darkness & Light A 02',
+    loop: true, duration: 10,
     bw:    { image: '11_Breathing_Darkness_And_Light_A_02.jpg',       vimeo: 'https://vimeo.com/1218807090/8972ff10f9' },
     color: { image: '11_Breathing_Darkness_And_Light_A_02_Color.jpg', vimeo: 'https://vimeo.com/1218804111/18307c0176' }
   },
   {
     label: 'Electrical Surge A 01',
+    loop: false, duration: 30,
     bw:    { image: '12_Electrical_Surge_A_01.jpg',       vimeo: 'https://vimeo.com/1218807091/94cf06fa9e' },
     color: { image: '12_Electrical_Surge_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804113/f96164891b' }
   },
   {
     label: 'Electrical Surge B 01',
+    loop: true, duration: 30,
     bw:    { image: '12_Electrical_Surge_B_01.jpg',       vimeo: 'https://vimeo.com/1218807103/66e026a06d' },
     color: { image: '12_Electrical_Surge_B_01_Color.jpg', vimeo: 'https://vimeo.com/1218804114/0804ec2993' }
   },
   {
     label: 'Electrical Surge B 02',
+    loop: true, duration: 30,
     bw:    { image: '12_Electrical_Surge_B_02.jpg',       vimeo: 'https://vimeo.com/1218807119/a4ac5694d5' },
     color: { image: '12_Electrical_Surge_B_02_Color.jpg', vimeo: 'https://vimeo.com/1218804129/ee40d285ef' }
   },
   {
     label: 'Black Goo A 01',
+    loop: true, duration: 30,
     bw:    { image: '13_Black_Goo_A_01.jpg',       vimeo: 'https://vimeo.com/1218807121/36069b138e' },
     color: { image: '13_Black_Goo_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804130/5a64c5e2a7' }
   },
   {
     label: 'Black Goo B 01',
+    loop: true, duration: 30,
     bw:    { image: '13_Black_Goo_B_01.jpg',       vimeo: 'https://vimeo.com/1218807140/8778499225' },
     color: { image: '13_Black_Goo_B_01_Color.jpg', vimeo: 'https://vimeo.com/1218804145/d3f2e65476' }
   },
   {
     label: 'Water A 01',
+    loop: true, duration: 5,
     bw:    { image: '14_Water_A_01.jpg', vimeo: 'https://vimeo.com/1218807147/9ca29aacc3' }
   },
   {
     label: 'Water B 01',
+    loop: true, duration: 5,
     bw:    { image: '14_Water_B_01.jpg', vimeo: 'https://vimeo.com/1218807169/4dd0a569db' }
   },
   {
     label: 'Water C 01',
+    loop: true, duration: 5,
     bw:    { image: '14_Water_C_01.jpg', vimeo: 'https://vimeo.com/1218807170/35e097dea5' }
   }
 ];
@@ -1988,7 +2035,6 @@ function buildMotionCard(item) {
   card.innerHTML = `
     <div class="card-top">
       <span class="card-name">${item.label}</span>
-      <span class="card-dim">960 × 720</span>
     </div>
 
     <button class="motion-stage" type="button" data-motion-play aria-label="Play ${item.label}">
@@ -2009,6 +2055,14 @@ function buildMotionCard(item) {
         <span class="lbl">Version</span>
         <span class="motion-only">B&amp;W only</span>
       `}
+    </div>
+
+    <div class="motion-specs" aria-label="Motion specifications">
+      <span>2880 × 2160</span>
+      <span>4:3</span>
+      <span>30 fps</span>
+      <span>${item.duration} sec</span>
+      <span class="${item.loop ? 'is-loop' : ''}">${item.loop ? 'Loop' : 'Non-loop'}</span>
     </div>
 
     <div class="motion-actions">
