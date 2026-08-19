@@ -52,7 +52,7 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+html { scroll-behavior: smooth; scroll-padding-top: 62px; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
@@ -88,9 +88,12 @@ body {
 /* ============================================================
    MASTHEAD
    ============================================================ */
-.mast { border-bottom: 1px solid var(--rule); padding: clamp(28px,5vw,56px) 0 0; }
+.mast {
+  border-bottom: 1px solid var(--rule);
+  padding: clamp(14px,2.2vw,26px) 0 clamp(16px,2.4vw,26px);
+}
 .mast h1 {
-  margin: 0;
+  margin: 0 var(--gutter);
   font-size: clamp(34px, 7.4vw, 82px);
   font-weight: 100;
   font-stretch: 125%;
@@ -98,19 +101,10 @@ body {
   line-height: .9;
   text-transform: uppercase;
 }
+/* Sits outside .wrap so the lockup runs edge to edge. */
 .mark { width: 100%; }
 .mark svg { display: block; width: 100%; height: auto; }
-.mast-row {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-  margin-top: clamp(22px,3.4vw,36px);
-}
-.mast-sub { margin: 0; max-width: 46ch; flex: 1 1 300px; }
-.mast-doc { margin-top: clamp(24px,4vw,40px); }
-.mast-doc .row { border-bottom: 0; }
+.mast-sub { margin: clamp(14px,2vw,22px) 0 0; max-width: 46ch; }
 
 .theme-btn {
   font: inherit;
@@ -137,7 +131,8 @@ body {
   background: var(--paper);
   border-bottom: 1px solid var(--rule);
 }
-.nav-inner { display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
+.nav-bar { display: flex; align-items: center; gap: 18px; }
+.nav-inner { flex: 1 1 auto; min-width: 0; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
 .nav-inner::-webkit-scrollbar { display: none; }
 .nav a {
   flex: none;
@@ -156,13 +151,48 @@ body {
 }
 .nav a:hover, .nav a.on { color: var(--ink); border-bottom-color: var(--ink); }
 
+.theme-btn {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 34px; height: 34px;
+  padding: 0;
+  color: var(--ink);
+  background: none;
+  border: 1px solid var(--rule-strong);
+  cursor: pointer;
+  transition: background .12s, color .12s;
+}
+.theme-btn:hover { background: var(--ink); color: var(--paper); }
+.ico { width: 17px; height: 17px; display: block; }
+:root[data-theme="light"] .ico-sun { display: none; }
+:root[data-theme="dark"] .ico-moon { display: none; }
+
+/* Document strip — utility scale, so it reads as a persistent resource
+   rather than a section that lost its heading. */
+.doc-strip { border-bottom: 1px solid var(--rule); }
+.doc-strip a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  color: var(--dim);
+  text-decoration: none;
+  transition: color .12s;
+}
+.doc-strip a:hover { color: var(--ink); }
+.doc-strip .doc-cta { border-bottom: 1px solid currentColor; padding-bottom: 1px; }
+
 /* ============================================================
    SECTIONS
    ============================================================ */
-.sec { padding: clamp(48px, 7vw, 96px) 0; border-bottom: 1px solid var(--rule); }
+/* Asymmetric: the rule sits close under the content it closes, and the
+   breathing room goes above the next heading instead. */
+.sec { padding: clamp(34px, 4.6vw, 62px) 0 clamp(16px, 2.2vw, 26px); border-bottom: 1px solid var(--rule); }
 .sec:last-of-type { border-bottom: 0; }
 
-.sec-head { margin-bottom: 8px; }
+.sec-head { margin-bottom: 6px; }
 .sec-head h2 {
   margin: 0;
   font-size: clamp(26px, 4.6vw, 52px);
@@ -172,7 +202,7 @@ body {
   line-height: 1;
   text-transform: uppercase;
 }
-.sec-note { margin: 0 0 30px; max-width: 62ch; color: var(--dim); font-size: 14px; }
+.sec-note { margin: 0 0 22px; max-width: 62ch; color: var(--dim); font-size: 14px; }
 
 /* ============================================================
    ASSET SECTIONS
@@ -181,7 +211,7 @@ body {
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
   padding: 12px 0;
-  margin-bottom: 26px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   gap: 26px;
@@ -328,7 +358,7 @@ body {
    05 — FONT
    ============================================================ */
 .spec { border-top: 1px solid var(--rule); }
-.spec-blk { border-bottom: 1px solid var(--rule); padding: 26px 0; }
+.spec-blk { border-bottom: 1px solid var(--rule); padding: 22px 0; }
 .spec-blk:last-child { border-bottom: 0; }
 .spec-ttl { margin: 0 0 16px; }
 
@@ -423,7 +453,7 @@ input[type="range"]::-moz-range-thumb {
 /* ============================================================
    06 — VISUAL LOOM
    ============================================================ */
-.loom { border-top: 1px solid var(--rule); padding-top: 30px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(28px,5vw,64px); align-items: stretch; }
+.loom { border-top: 1px solid var(--rule); padding-top: 24px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(28px,5vw,64px); align-items: stretch; }
 .loom-r { display: flex; flex-direction: column; min-height: 0; }
 .loom p { margin: 0 0 1em; max-width: 48ch; }
 .loom p:last-of-type { margin-bottom: 0; }
@@ -449,7 +479,7 @@ input[type="range"]::-moz-range-thumb {
 /* ============================================================
    FOOT
    ============================================================ */
-.foot { padding: 44px 0 60px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.foot { padding: 30px 0 46px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 
 /* ---------- a11y ---------- */
 a:focus-visible, button:focus-visible, input:focus-visible {
@@ -468,35 +498,43 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 
 <!-- ══════════════════════════ MASTHEAD ══════════════════════════ -->
 <header class="mast">
+  <h1 class="vh" id="markFallback">Prismdrifter</h1>
+  <div class="mark" id="mark" role="img" aria-label="Prismdrifter"></div>
   <div class="wrap">
-    <h1 class="vh" id="markFallback">Prismdrifter</h1>
-    <div class="mark" id="mark" role="img" aria-label="Prismdrifter"></div>
-    <div class="mast-row">
-      <p class="mast-sub">Brand assets. Pick a colour and a size, then download. Vector source is available on every asset.</p>
-      <button class="theme-btn" id="theme" type="button" aria-pressed="false">Dark</button>
-    </div>
-    <div class="rows mast-doc">
-      <a class="row" id="pdfRow" href="assets/docs/Prismdrifter_Brand_Assets_01.pdf" download>
-        <span class="row-l">
-          <span class="row-name">Brand Assets</span>
-          <span class="row-meta" id="pdfMeta">PDF</span>
-        </span>
-        <span class="row-cta">Download</span>
-      </a>
-    </div>
+    <p class="mast-sub">Brand assets. Pick a colour and a size, then download. Vector source is available on every asset.</p>
   </div>
 </header>
 
 <!-- ══════════════════════════ NAV ══════════════════════════ -->
 <nav class="nav" aria-label="Sections">
-  <div class="wrap nav-inner">
-    <a href="#logos">Logos</a>
-    <a href="#alt">Alternate logos</a>
-    <a href="#illus">Illustrations</a>
-    <a href="#font">Font</a>
-    <a href="#loom">Visual Loom</a>
+  <div class="wrap nav-bar">
+    <div class="nav-inner">
+      <a href="#logos">Logos</a>
+      <a href="#alt">Alternate logos</a>
+      <a href="#illus">Illustrations</a>
+      <a href="#font">Font</a>
+      <a href="#loom">Visual Loom</a>
+    </div>
+    <button class="theme-btn" id="theme" type="button" aria-label="Switch to dark theme">
+      <svg class="ico ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20.6 14.7A8.7 8.7 0 0 1 9.3 3.4a8.7 8.7 0 1 0 11.3 11.3Z"/>
+      </svg>
+      <svg class="ico ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.1"/>
+        <path d="M12 2.3v2.5M12 19.2v2.5M4.5 4.5l1.8 1.8M17.7 17.7l1.8 1.8M2.3 12h2.5M19.2 12h2.5M4.5 19.5l1.8-1.8M17.7 6.3l1.8-1.8"/>
+      </svg>
+    </button>
   </div>
 </nav>
+
+<div class="wrap doc-strip">
+  <a id="pdfRow" href="assets/docs/Prismdrifter_Brand_Assets_01.pdf" download>
+    <span class="lbl">Brand Assets Overview <span id="pdfMeta">PDF</span></span>
+    <span class="lbl doc-cta">Download</span>
+  </a>
+</div>
 
 <main class="wrap">
 
@@ -1263,35 +1301,14 @@ fetch('assets/docs/Prismdrifter_Brand_Assets_01.pdf', { method: 'HEAD' })
    MASTHEAD MARK
    ══════════════════════════════════════════════════════════════ */
 const markHost = document.getElementById('mark');
-let markSrc = null, markWidth = 0, markQueued = false;
 
-/* Spanning the full measure, the outline lockup's 10-unit stroke renders
-   around 3px on a desktop column but drops under 1px on a phone, where it
-   washes out to grey. Same floor as the exports, recomputed on resize. */
-function fitMark(force) {
-  if (!markSrc) return;
-  const w = markHost.clientWidth;
-  if (!w || (!force && w === markWidth)) return;
-  markWidth = w;
-  const svg = markSrc.cloneNode(true);
+loadSVG('assets/logos/Prismdrifter_Alt_Logo_06.svg').then(src => {
+  const svg = src.cloneNode(true);
   namespaceIds(svg, 'mark');
   recolor(svg, 'currentColor');   // follows the theme: black on light, white on dark
-  compensateStrokes(svg, w / parseViewBox(svg).w);
   svg.removeAttribute('width');
   svg.removeAttribute('height');
   markHost.replaceChildren(svg);
-}
-function scheduleMark() {
-  if (markQueued) return;
-  markQueued = true;
-  requestAnimationFrame(() => { markQueued = false; fitMark(false); });
-}
-
-loadSVG('assets/logos/Prismdrifter_Alt_Logo_07.svg').then(src => {
-  markSrc = src;
-  fitMark(true);
-  if (window.ResizeObserver) new ResizeObserver(scheduleMark).observe(markHost);
-  else window.addEventListener('resize', scheduleMark);
 }).catch(() => {
   // Fall back to the typeset wordmark rather than an empty header.
   document.getElementById('markFallback').classList.remove('vh');
@@ -1308,8 +1325,10 @@ const root = document.documentElement;
 const themeBtn = document.getElementById('theme');
 function setTheme(dark) {
   root.setAttribute('data-theme', dark ? 'dark' : 'light');
-  themeBtn.textContent = dark ? 'Light' : 'Dark';
-  themeBtn.setAttribute('aria-pressed', String(dark));
+  // The icon shows the theme you'd switch to, so the label names that too.
+  const next = dark ? 'light' : 'dark';
+  themeBtn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
+  themeBtn.setAttribute('title', 'Switch to ' + next + ' theme');
 }
 setTheme(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
 themeBtn.addEventListener('click', () => setTheme(root.getAttribute('data-theme') !== 'dark'));
