@@ -88,18 +88,23 @@ body {
 /* ============================================================
    MASTHEAD
    ============================================================ */
-.mast { border-bottom: 1px solid var(--rule); padding: clamp(28px,5vw,56px) 0 clamp(24px,4vw,40px); }
+.mast { border-bottom: 1px solid var(--rule); padding: clamp(28px,5vw,56px) 0 0; }
 .mast-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.mast-l { flex: 1 1 320px; min-width: 0; }
 .mast h1 {
   margin: 0;
   font-size: clamp(34px, 7.4vw, 82px);
-  font-weight: 800;
-  font-stretch: 118%;
-  letter-spacing: -.022em;
+  font-weight: 100;
+  font-stretch: 125%;
+  letter-spacing: -.004em;
   line-height: .9;
   text-transform: uppercase;
 }
-.mast-sub { margin: 14px 0 0; max-width: 46ch; }
+.mark { max-width: min(620px, 100%); }
+.mark svg { display: block; width: 100%; height: auto; }
+.mast-sub { margin: 20px 0 0; max-width: 46ch; }
+.mast-doc { margin-top: clamp(24px,4vw,40px); }
+.mast-doc .row { border-bottom: 0; }
 
 .theme-btn {
   font: inherit;
@@ -162,38 +167,14 @@ body {
 }
 .sec-head h2 {
   margin: 0;
-  font-size: clamp(24px, 4.2vw, 46px);
-  font-weight: 800;
-  font-stretch: 112%;
-  letter-spacing: -.016em;
+  font-size: clamp(26px, 4.6vw, 52px);
+  font-weight: 100;
+  font-stretch: 125%;
+  letter-spacing: -.004em;
   line-height: 1;
   text-transform: uppercase;
 }
 .sec-note { margin: 0 0 30px; max-width: 62ch; color: var(--dim); font-size: 14px; }
-
-/* ============================================================
-   01 — BRAND STORY
-   ============================================================ */
-.story {
-  border-top: 1px solid var(--rule);
-  padding-top: 30px;
-  display: grid;
-  grid-template-columns: minmax(0,1.55fr) minmax(0,1fr);
-  gap: clamp(30px, 6vw, 76px);
-  align-items: start;
-}
-@media (max-width: 860px) { .story { grid-template-columns: 1fr; } }
-
-.story-copy p {
-  margin: 0 0 .68em;
-  font-size: clamp(16px, 2.1vw, 22px);
-  font-weight: 400;
-  font-stretch: 96%;
-  line-height: 1.42;
-  letter-spacing: -.005em;
-  max-width: 40ch;
-}
-.story-copy p:last-child { margin-bottom: 0; }
 
 /* ============================================================
    ASSET SECTIONS
@@ -353,25 +334,35 @@ body {
 .spec-blk:last-child { border-bottom: 0; }
 .spec-ttl { margin: 0 0 16px; }
 
-.glyphs {
-  font-size: clamp(19px, 3.2vw, 34px);
-  font-weight: 500;
-  font-stretch: 100%;
-  letter-spacing: .015em;
-  line-height: 1.34;
-  word-break: break-word;
+.glyphgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(42px, 5.6vw, 66px), 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
 }
-.glyphs .lc { font-weight: 300; }
-.glyphs .fig { font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: .05em; }
+.glyphgrid span {
+  background: var(--paper);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  font-size: clamp(16px, 2.3vw, 26px);
+  font-weight: 400;
+  line-height: 1;
+}
+.glyphgrid span.fig { font-variant-numeric: tabular-nums; }
 
+/* Each word is scaled by JS until it spans the full measure, so the stack
+   sits flush on both edges and the width axis stays undistorted. */
 .storm { display: flex; flex-direction: column; }
 .storm div {
-  font-size: clamp(26px, 8.4vw, 96px);
-  line-height: .98;
+  line-height: .94;
   text-transform: uppercase;
-  letter-spacing: -.012em;
+  letter-spacing: 0;
   white-space: nowrap;
+  overflow: hidden;
 }
+.storm span { display: inline-block; white-space: nowrap; }
 
 .axes { display: grid; grid-template-columns: repeat(auto-fit, minmax(228px, 1fr)); gap: 20px 34px; margin-bottom: 22px; }
 .axis-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
@@ -437,6 +428,13 @@ input[type="range"]::-moz-range-thumb {
 @media (max-width: 860px) { .loom { grid-template-columns: 1fr; } }
 .loom p { margin: 0 0 1em; max-width: 48ch; }
 .loom p:last-of-type { margin-bottom: 0; }
+.loom-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  margin-bottom: 22px;
+}
 .loom-lead { font-size: clamp(17px,2.3vw,23px); font-weight: 600; font-stretch: 100%; line-height: 1.34; letter-spacing: -.008em; }
 
 /* ============================================================
@@ -461,88 +459,73 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 
 <!-- ══════════════════════════ MASTHEAD ══════════════════════════ -->
 <header class="mast">
-  <div class="wrap mast-row">
-    <div>
-      <h1>Prismdrifter</h1>
-      <p class="mast-sub">Brand assets. Pick a colour and a size, then download. Vector source is available on every asset.</p>
+  <div class="wrap">
+    <div class="mast-row">
+      <div class="mast-l">
+        <h1 class="vh" id="markFallback">Prismdrifter</h1>
+        <div class="mark" id="mark" role="img" aria-label="Prismdrifter"></div>
+        <p class="mast-sub">Brand assets. Pick a colour and a size, then download. Vector source is available on every asset.</p>
+      </div>
+      <button class="theme-btn" id="theme" type="button" aria-pressed="false">Dark</button>
     </div>
-    <button class="theme-btn" id="theme" type="button" aria-pressed="false">Dark</button>
+    <div class="rows mast-doc">
+      <a class="row" id="pdfRow" href="assets/docs/Prismdrifter_Brand_Assets_01.pdf" download>
+        <span class="row-l">
+          <span class="row-name">Brand Assets</span>
+          <span class="row-meta" id="pdfMeta">PDF</span>
+        </span>
+        <span class="row-cta">Download</span>
+      </a>
+    </div>
   </div>
 </header>
 
 <!-- ══════════════════════════ NAV ══════════════════════════ -->
 <nav class="nav" aria-label="Sections">
   <div class="wrap nav-inner">
-    <a href="#story">01 Brand story</a>
-    <a href="#logos">02 Logos</a>
-    <a href="#alt">03 Alternate logos</a>
-    <a href="#illus">04 Illustrations</a>
-    <a href="#font">05 Font</a>
-    <a href="#loom">06 Visual Loom</a>
+    <a href="#logos">01 Logos</a>
+    <a href="#alt">02 Alternate logos</a>
+    <a href="#illus">03 Illustrations</a>
+    <a href="#font">04 Font</a>
+    <a href="#loom">05 Visual Loom</a>
   </div>
 </nav>
 
 <main class="wrap">
 
-  <!-- ═════════════ 01 BRAND STORY ═════════════ -->
-  <section class="sec" id="story">
-    <div class="sec-head"><span class="idx">01</span><h2>Brand story</h2></div>
-    <div class="story">
-      <div class="story-copy">
-        <p>PRISM is the triangle, DRIFTER is the spiral — direction and energy.</p>
-        <p>The spiral is force with nowhere to go; the triangle is the vessel that gives it a heading.</p>
-        <p>Stabilizing one inside the other creates a new third form, the consciousness that directs the craft.</p>
-        <p>A compass needle magnetized toward light and repelled by dark, existing in one and aimed at the other.</p>
-      </div>
-      <div class="rows">
-        <a class="row" id="pdfRow" href="assets/docs/Prismdrifter_Brand_Assets_01.pdf" download>
-          <span class="row-l">
-            <span class="row-name">Brand Assets</span>
-            <span class="row-meta" id="pdfMeta">PDF</span>
-          </span>
-          <span class="row-cta">Download</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═════════════ 02 LOGOS ═════════════ -->
+  <!-- ═════════════ 01 LOGOS ═════════════ -->
   <section class="sec" id="logos">
-    <div class="sec-head"><span class="idx">02</span><h2>Logos</h2></div>
+    <div class="sec-head"><span class="idx">01</span><h2>Logos</h2></div>
     <p class="sec-note">Primary marks. PNG exports are transparent; the number you pick is the longest edge.</p>
     <div data-bulk="logos"></div>
     <div class="grid" id="grid-logos"></div>
   </section>
 
-  <!-- ═════════════ 03 ALTERNATE LOGOS ═════════════ -->
+  <!-- ═════════════ 02 ALTERNATE LOGOS ═════════════ -->
   <section class="sec" id="alt">
-    <div class="sec-head"><span class="idx">03</span><h2>Alternate logos</h2></div>
+    <div class="sec-head"><span class="idx">02</span><h2>Alternate logos</h2></div>
     <p class="sec-note">Secondary marks and horizontal lockups.</p>
     <div data-bulk="alt"></div>
     <div class="grid" id="grid-alt"></div>
   </section>
 
-  <!-- ═════════════ 04 ILLUSTRATIONS ═════════════ -->
+  <!-- ═════════════ 03 ILLUSTRATIONS ═════════════ -->
   <section class="sec" id="illus">
-    <div class="sec-head"><span class="idx">04</span><h2>Illustrations</h2></div>
+    <div class="sec-head"><span class="idx">03</span><h2>Illustrations</h2></div>
     <p class="sec-note">Line artwork. Hairline strokes are thickened on small PNG exports so they stay solid; SVG downloads keep the original weight.</p>
     <div data-bulk="illus"></div>
     <div class="grid" id="grid-illus"></div>
   </section>
 
-  <!-- ═════════════ 05 FONT ═════════════ -->
+  <!-- ═════════════ 04 FONT ═════════════ -->
   <section class="sec" id="font">
-    <div class="sec-head"><span class="idx">05</span><h2>Font</h2></div>
+    <div class="sec-head"><span class="idx">04</span><h2>Font</h2></div>
     <p class="sec-note">Archivo. One variable file carries every weight from 100 to 900 and every width from 62 to 125.</p>
 
     <div class="spec">
       <div class="spec-blk">
         <p class="lbl spec-ttl">Character set</p>
-        <p class="glyphs">
-          ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
-          <span class="lc">abcdefghijklmnopqrstuvwxyz</span><br>
-          <span class="fig">0123456789</span>
-        </p>
+        <div class="glyphgrid" id="glyphs"></div>
       </div>
 
       <div class="spec-blk">
@@ -585,23 +568,27 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     </div>
   </section>
 
-  <!-- ═════════════ 06 VISUAL LOOM ═════════════ -->
+  <!-- ═════════════ 05 VISUAL LOOM ═════════════ -->
   <section class="sec" id="loom">
-    <div class="sec-head"><span class="idx">06</span><h2>Visual Loom</h2></div>
+    <div class="sec-head"><span class="idx">05</span><h2>Visual Loom</h2></div>
     <div class="loom">
       <div>
         <p class="loom-lead">A procedural pattern generator built for Prismdrifter, for producing on-brand textures and graphics without building each one by hand.</p>
         <p>Every output derives from a single black-and-white gradient, subdivided and layered by a fixed rule set. Random Look generates a full composition in one click; sliders adjust it layer by layer, or drag on the canvas to drift the layers against each other. Exports as SVG or PNG at multiple sizes.</p>
         <p>Use it for background textures, print graphics, social support graphics, and anything else that comes up.</p>
       </div>
-      <div class="rows">
-        <a class="row" href="https://ivanvidovic.github.io/loomrift/" target="_blank" rel="noopener">
-          <span class="row-l">
-            <span class="row-name">Open Visual Loom</span>
-            <span class="row-meta">ivanvidovic.github.io/loomrift</span>
-          </span>
-          <span class="row-cta">Open</span>
-        </a>
+      <div>
+        <img class="loom-shot" id="loomShot" src="assets/images/visual_loom.png"
+             alt="Visual Loom interface showing a generated black and white pattern" loading="lazy">
+        <div class="rows">
+          <a class="row" href="https://ivanvidovic.github.io/loomrift/" target="_blank" rel="noopener">
+            <span class="row-l">
+              <span class="row-name">Open Visual Loom</span>
+              <span class="row-meta">ivanvidovic.github.io/loomrift</span>
+            </span>
+            <span class="row-cta">Open</span>
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -1061,21 +1048,73 @@ for (const group of Object.keys(GROUPS)) {
 /* ══════════════════════════════════════════════════════════════
    FONT — specimen + ZIP
    ══════════════════════════════════════════════════════════════ */
+/* ── character set ── */
+const GLYPHS = [
+  ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+  ...'abcdefghijklmnopqrstuvwxyz',
+  ...'0123456789'
+];
+const glyphEl = document.getElementById('glyphs');
+for (const g of GLYPHS) {
+  const s = document.createElement('span');
+  s.textContent = g;
+  if (g >= '0' && g <= '9') s.className = 'fig';
+  glyphEl.appendChild(s);
+}
+
+/* ── weight and width range ──
+   Lightest and narrowest at the top, heaviest and widest at the bottom.
+   Each word is scaled to span the full measure, so the stack reads flush
+   on both edges without distorting the width axis. */
 const STORM = [
-  ['Darkcloud',   900, 125],
-  ['Stormsystem', 700, 110],
-  ['Tornado',     560,  96],
-  ['Windswept',   420,  82],
+  ['Hurricane',   180,  62],
   ['Rainstorm',   300,  71],
-  ['Hurricane',   180,  62]
+  ['Windswept',   420,  82],
+  ['Tornado',     560,  96],
+  ['Stormsystem', 700, 110],
+  ['Darkcloud',   900, 125]
 ];
 const stormEl = document.getElementById('storm');
 for (const [word, wght, wdth] of STORM) {
-  const d = document.createElement('div');
-  d.textContent = word;
-  d.style.fontVariationSettings = `"wght" ${wght}, "wdth" ${wdth}`;
-  stormEl.appendChild(d);
+  const line = document.createElement('div');
+  const span = document.createElement('span');
+  span.textContent = word;
+  span.style.fontVariationSettings = `"wght" ${wght}, "wdth" ${wdth}`;
+  line.appendChild(span);
+  stormEl.appendChild(line);
 }
+
+const PROBE = 200;
+let lastWidth = 0;
+let queued = false;
+
+function fitStorm(force) {
+  const measure = stormEl.clientWidth;
+  if (!measure) return;
+  if (!force && measure === lastWidth) return;
+  lastWidth = measure;
+  for (const line of stormEl.children) {
+    const span = line.firstElementChild;
+    span.style.fontSize = PROBE + 'px';
+    const natural = span.getBoundingClientRect().width;
+    if (natural > 0) span.style.fontSize = (PROBE * measure / natural) + 'px';
+  }
+}
+
+/* Resizing the words changes the stack's height, which re-triggers the
+   observer. Only the measure matters, so ignore anything but a width change,
+   and defer the write a frame so measuring and mutating never land in the
+   same delivery. */
+function scheduleFit() {
+  if (queued) return;
+  queued = true;
+  requestAnimationFrame(() => { queued = false; fitStorm(false); });
+}
+
+fitStorm(true);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => fitStorm(true));
+if (window.ResizeObserver) new ResizeObserver(scheduleFit).observe(stormEl);
+else window.addEventListener('resize', scheduleFit);
 
 const axW = document.getElementById('axW');
 const axD = document.getElementById('axD');
@@ -1190,6 +1229,25 @@ fetch('assets/docs/Prismdrifter_Brand_Assets_01.pdf', { method: 'HEAD' })
     meta.textContent = len ? `PDF · ${(len / 1048576).toFixed(1)} MB` : 'PDF';
   })
   .catch(() => {});
+
+/* ══════════════════════════════════════════════════════════════
+   MASTHEAD MARK
+   ══════════════════════════════════════════════════════════════ */
+loadSVG('assets/logos/Prismdrifter_Alt_Logo_06.svg').then(src => {
+  const svg = src.cloneNode(true);
+  namespaceIds(svg, 'mark');
+  recolor(svg, 'currentColor');   // follows the theme: black on light, white on dark
+  svg.removeAttribute('width');
+  svg.removeAttribute('height');
+  document.getElementById('mark').replaceChildren(svg);
+}).catch(() => {
+  // Fall back to the typeset wordmark rather than an empty header.
+  document.getElementById('markFallback').classList.remove('vh');
+  document.getElementById('mark').remove();
+});
+
+const loomShot = document.getElementById('loomShot');
+loomShot.addEventListener('error', () => loomShot.remove());
 
 /* ══════════════════════════════════════════════════════════════
    THEME + NAV
