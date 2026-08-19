@@ -900,7 +900,7 @@ input[type="range"]::-moz-range-thumb {
    ============================================================ */
 .loom { border-top: 1px solid var(--rule); padding-top: 24px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(28px,5vw,64px); align-items: start; }
 .loom-r { display: flex; flex-direction: column; min-height: 0; }
-.loom p { margin: 0 0 1em; max-width: 48ch; }
+.loom p { margin: 0 0 1em; max-width: none; width: 100%; }
 .loom p:last-of-type { margin-bottom: 0; }
 .loom-lead { font-size: clamp(17px,2.3vw,23px); font-weight: 600; font-stretch: 100%; line-height: 1.34; letter-spacing: -.008em; }
 
@@ -932,6 +932,12 @@ input[type="range"]::-moz-range-thumb {
 
 @media (max-width: 860px) {
   .loom { grid-template-columns: 1fr; }
+  .loom > div:first-child,
+  .loom p,
+  .loom-lead {
+    width: 100%;
+    max-width: none;
+  }
   /* Keep the exact same landscape crop as desktop instead of reverting to the
      source image's square 1:1 ratio. */
   .loom-gallery { aspect-ratio: 7 / 2; }
@@ -1213,9 +1219,8 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     <div class="sec-head"><h2>Visual Loom</h2></div>
     <div class="loom">
       <div>
-        <p class="loom-lead">A procedural tool for generating custom Prismdrifter compositions.</p>
-        <p>Every output begins with a single black-and-white gradient, subdivided and layered through a fixed procedural rule set. Generate a complete composition with Random Look, then refine individual layers with the controls or drag directly on the canvas to shift them against one another. Export as SVG or PNG at multiple sizes.</p>
-        <p>Use it for background textures, print graphics, social assets, and other supporting brand visuals.</p>
+        <p class="loom-lead">A procedural tool for building textures and forms through the mathematical layering and weaving of simple graphic elements.</p>
+        <p>Every output begins with a single black-and-white gradient, subdivided and layered through a fixed procedural system. Generate a complete composition with Random Look, then refine individual layers with the controls or directly on the canvas. Export the results as SVG or PNG for use across print, digital, social, and other brand applications.</p>
       </div>
       <div class="loom-r">
         <div class="loom-gallery" id="loomGallery" aria-label="Visual Loom generated composition gallery">
