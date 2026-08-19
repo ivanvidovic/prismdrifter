@@ -592,6 +592,48 @@ body {
   height: 100%;
   border: 0;
 }
+.motion-lb-nav {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: rgba(0,0,0,.52);
+  color: #fff;
+  font: inherit;
+  font-size: 25px;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+  opacity: .72;
+  transition: opacity .12s, background .12s;
+}
+.motion-lb-nav.prev { left: 0; }
+.motion-lb-nav.next { right: 0; }
+.motion-lb-nav:disabled {
+  display: none;
+}
+.motion-lb-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  color: rgba(255,255,255,.82);
+  font-size: 10.5px;
+  font-weight: 600;
+  font-stretch: 78%;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+.motion-lb-count {
+  color: rgba(255,255,255,.52);
+  font-variant-numeric: tabular-nums;
+}
 
 /* ============================================================
    05 — FONT
@@ -710,6 +752,14 @@ input[type="range"]::-moz-range-thumb {
 @media (max-width: 860px) {
   .loom { grid-template-columns: 1fr; }
   .loom-shot { flex: 0 0 auto; height: auto; min-height: 0; object-fit: contain; }
+
+  .motion-lb-nav {
+    top: auto;
+    bottom: 0;
+    transform: none;
+    width: 48px;
+    height: 48px;
+  }
 }
 
 /* ============================================================
@@ -736,6 +786,7 @@ input[type="range"]::-moz-range-thumb {
   .doc-btn, .row-cta { padding: 14px 20px; }
   .motion-action { min-height: 46px; padding: 14px 8px; }
   .motion-stage { min-height: 44px; }
+  .motion-lb-nav { opacity: .9; }
   .theme-btn { width: 42px; height: 42px; }
   .ico { width: 19px; height: 19px; }
 
@@ -785,6 +836,7 @@ input[type="range"]::-moz-range-thumb {
   .motion-stage:hover::after { background: rgba(0,0,0,.16); }
   .motion-action:hover { opacity: .72; }
   .motion-lb-x:hover { opacity: 1; }
+  .motion-lb-nav:hover { opacity: 1; background: rgba(0,0,0,.72); }
 }
 
 /* ---------- a11y ---------- */
@@ -986,6 +1038,12 @@ a:focus-visible, button:focus-visible, input:focus-visible {
               title="Prismdrifter motion preview"
               allow="autoplay; fullscreen; picture-in-picture"
               allowfullscreen></iframe>
+      <button class="motion-lb-nav prev" id="motionLbPrev" type="button" aria-label="Previous motion video">←</button>
+      <button class="motion-lb-nav next" id="motionLbNext" type="button" aria-label="Next motion video">→</button>
+    </div>
+    <div class="motion-lb-meta">
+      <span id="motionLbLabel"></span>
+      <span class="motion-lb-count" id="motionLbCount"></span>
     </div>
   </div>
 </div>
@@ -1016,26 +1074,26 @@ const GROUPS = {
     ['Prismdrifter_Logo_D.svg', 'Logo D']
   ]},
   alt: { dir: 'assets/logos/', items: [
-    ['Prismdrifter_Alt_Logo_01.svg', 'Alt 01'],
-    ['Prismdrifter_Alt_Logo_02.svg', 'Alt 02'],
-    ['Prismdrifter_Alt_Logo_03.svg', 'Alt 03'],
-    ['Prismdrifter_Alt_Logo_04.svg', 'Alt 04'],
-    ['Prismdrifter_Alt_Logo_05.svg', 'Alt 05'],
-    ['Prismdrifter_Alt_Logo_06.svg', 'Alt 06'],
-    ['Prismdrifter_Alt_Logo_07.svg', 'Alt 07']
+    ['Prismdrifter_Alt_Logo_01.svg', 'Alt Logo A'],
+    ['Prismdrifter_Alt_Logo_02.svg', 'Alt Logo B'],
+    ['Prismdrifter_Alt_Logo_03.svg', 'Alt Logo C'],
+    ['Prismdrifter_Alt_Logo_04.svg', 'Alt Logo D'],
+    ['Prismdrifter_Alt_Logo_05.svg', 'Alt Logo E'],
+    ['Prismdrifter_Alt_Logo_06.svg', 'Alt Logo F'],
+    ['Prismdrifter_Alt_Logo_07.svg', 'Alt Logo G']
   ]},
   illus: { dir: 'assets/illustrations/', items: [
-    ['Illustration_A_-_Butterfly.svg',   'A — Butterfly'],
-    ['Illustration_B_-_Radial.svg',      'B — Radial'],
-    ['Illustration_C_-_Radial.svg',      'C — Radial'],
-    ['Illustration_D_-_Logo_Heart.svg',  'D — Logo Heart'],
-    ['Illustration_E_-_Reflection.svg',  'E — Reflection'],
-    ['Illustration_F_-_Reflection.svg',  'F — Reflection'],
-    ['Illustration_G_-_Reflection.svg',  'G — Reflection'],
-    ['Illustration_H_-_Reflection.svg',  'H — Reflection'],
-    ['Illustration_I_-_Chain_Links.svg', 'I — Chain Links'],
-    ['Illustration_J_-_Arrow.svg',       'J — Arrow'],
-    ['Illustration_K_-_Arrow.svg',       'K — Arrow']
+    ['Illustration_A_-_Butterfly.svg',   'Butterfly A'],
+    ['Illustration_B_-_Radial.svg',      'Radial A'],
+    ['Illustration_C_-_Radial.svg',      'Radial B'],
+    ['Illustration_D_-_Logo_Heart.svg',  'Logo Heart A'],
+    ['Illustration_E_-_Reflection.svg',  'Reflection A'],
+    ['Illustration_F_-_Reflection.svg',  'Reflection B'],
+    ['Illustration_G_-_Reflection.svg',  'Reflection C'],
+    ['Illustration_H_-_Reflection.svg',  'Reflection D'],
+    ['Illustration_I_-_Chain_Links.svg', 'Chain Links A'],
+    ['Illustration_J_-_Arrow.svg',       'Arrow A'],
+    ['Illustration_K_-_Arrow.svg',       'Arrow B']
   ]}
 };
 
@@ -1047,115 +1105,115 @@ const GROUPS = {
    preferred so an unlisted video hash is preserved automatically. */
 const MOTION_ITEMS = [
   {
-    label: '04 — Orb With Arrows A 01',
+    label: 'Orb With Arrows A 01',
     bw:    { image: '04_Orb_With_Arrows_A_01.jpg',       vimeo: 'https://vimeo.com/1218807003/9a30738866' },
     color: { image: '04_Orb_With_Arrows_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804026/a18848b9e5' }
   },
   {
-    label: '06 — Cherub Wings A 01',
+    label: 'Cherub Wings A 01',
     bw:    { image: '06_Cherub_Wings_A_01.jpg',       vimeo: 'https://vimeo.com/1218807006/3e76f5668b' },
     color: { image: '06_Cherub_Wings_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804025/5d1ccba923' }
   },
   {
-    label: '06 — Cherub Wings B 01',
+    label: 'Cherub Wings B 01',
     bw:    { image: '06_Cherub_Wings_B_01.jpg',       vimeo: 'https://vimeo.com/1218807005/5aad06b9fc' },
     color: { image: '06_Cherub_Wings_B_Color.jpg',    vimeo: 'https://vimeo.com/1218804023/0e20c4737e' }
   },
   {
-    label: '06 — Cherub Wings C 01',
+    label: 'Cherub Wings C 01',
     bw:    { image: '06_Cherub_Wings_C_01.jpg',       vimeo: 'https://vimeo.com/1218808112/bbd9ee730e' },
     color: { image: '06_Cherub_Wings_C_Color.jpg',    vimeo: 'https://vimeo.com/1218804024/5a2eface94' }
   },
   {
-    label: '07 — Compound Bow A 01',
+    label: 'Compound Bow A 01',
     bw:    { image: '07_Compound_Bow_A_01.jpg',       vimeo: 'https://vimeo.com/1218807004/c642a1eb46' },
     color: { image: '07_Compound_Bow_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804049/a23d2d63f0' }
   },
   {
-    label: '07 — Compound Bow A 02',
+    label: 'Compound Bow A 02',
     bw:    { image: '07_Compound_Bow_A_02.jpg',       vimeo: 'https://vimeo.com/1218807022/6948bfcaae' },
     color: { image: '07_Compound_Bow_A_02_Color.jpg', vimeo: 'https://vimeo.com/1218804051/0ab6e4764b' }
   },
   {
-    label: '08 — Dove Wings A 01',
+    label: 'Dove Wings A 01',
     bw:    { image: '08_Dove_Wings_A_01.jpg',       vimeo: 'https://vimeo.com/1218807023/56881d99b4' },
     color: { image: '08_Dove_Wings_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804054/eaafa9d078' }
   },
   {
-    label: '08 — Dove Wings B 01',
+    label: 'Dove Wings B 01',
     bw:    { image: '08_Dove_Wings_B_01.jpg',       vimeo: 'https://vimeo.com/1218807021/b7ee8acd64' },
     color: { image: '08_Dove_Wings_B_01_Color.jpg', vimeo: 'https://vimeo.com/1218804052/fb9c291122' }
   },
   {
-    label: '09 — Smoke A 01',
+    label: 'Smoke A 01',
     bw:    { image: '09_Smoke_A_01.jpg',       vimeo: 'https://vimeo.com/1218807036/972b784a53' },
     color: { image: '09_Smoke_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804075/7b4755e222' }
   },
   {
-    label: '09 — Smoke B 01',
+    label: 'Smoke B 01',
     bw:    { image: '09_Smoke_B_01.jpg',       vimeo: 'https://vimeo.com/1218807037/01af409f06' },
     color: { image: '09_Smoke_B_01_Color.jpg', vimeo: 'https://vimeo.com/1218804076/b63253273e' }
   },
   {
-    label: '09 — Smoke C 01',
+    label: 'Smoke C 01',
     bw:    { image: '09_Smoke_C_01.jpg',       vimeo: 'https://vimeo.com/1218807038/031c47b0cb' },
     color: { image: '09_Smoke_C_01_Color.jpg', vimeo: 'https://vimeo.com/1218804082/d87e58833a' }
   },
   {
-    label: '10 — Black Angel Wings A 01',
+    label: 'Black Angel Wings A 01',
     bw:    { image: '10_Black_Angel_Wings_A_01.jpg',       vimeo: 'https://vimeo.com/1218807050/a7da2a3bfa' },
     color: { image: '10_Black_Angel_Wings_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804087/b04e9ca020' }
   },
   {
-    label: '10 — Black Angel Wings A 02',
+    label: 'Black Angel Wings A 02',
     bw:    { image: '10_Black_Angel_Wings_A_02.jpg',       vimeo: 'https://vimeo.com/1218807064/66870e4e1e' },
     color: { image: '10_Black_Angel_Wings_A_02_Color.jpg', vimeo: 'https://vimeo.com/1218804102/a1f2afd625' }
   },
   {
-    label: '11 — Breathing Darkness And Light A 01',
+    label: 'Breathing Darkness And Light A 01',
     bw:    { image: '11_Breathing_Darkness_And_Light_A_01.jpg',       vimeo: 'https://vimeo.com/1218807089/9d5c890abe' },
     color: { image: '11_Breathing_Darkness_And_Light_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804110/3278d47e38' }
   },
   {
-    label: '11 — Breathing Darkness And Light A 02',
+    label: 'Breathing Darkness And Light A 02',
     bw:    { image: '11_Breathing_Darkness_And_Light_A_02.jpg',       vimeo: 'https://vimeo.com/1218807090/8972ff10f9' },
     color: { image: '11_Breathing_Darkness_And_Light_A_02_Color.jpg', vimeo: 'https://vimeo.com/1218804111/18307c0176' }
   },
   {
-    label: '12 — Electrical Surge A 01',
+    label: 'Electrical Surge A 01',
     bw:    { image: '12_Electrical_Surge_A_01.jpg',       vimeo: 'https://vimeo.com/1218807091/94cf06fa9e' },
     color: { image: '12_Electrical_Surge_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804113/f96164891b' }
   },
   {
-    label: '12 — Electrical Surge B 01',
+    label: 'Electrical Surge B 01',
     bw:    { image: '12_Electrical_Surge_B_01.jpg',       vimeo: 'https://vimeo.com/1218807103/66e026a06d' },
     color: { image: '12_Electrical_Surge_B_01_Color.jpg', vimeo: 'https://vimeo.com/1218804114/0804ec2993' }
   },
   {
-    label: '12 — Electrical Surge B 02',
+    label: 'Electrical Surge B 02',
     bw:    { image: '12_Electrical_Surge_B_02.jpg',       vimeo: 'https://vimeo.com/1218807119/a4ac5694d5' },
     color: { image: '12_Electrical_Surge_B_02_Color.jpg', vimeo: 'https://vimeo.com/1218804129/ee40d285ef' }
   },
   {
-    label: '13 — Black Goo A 01',
+    label: 'Black Goo A 01',
     bw:    { image: '13_Black_Goo_A_01.jpg',       vimeo: 'https://vimeo.com/1218807121/36069b138e' },
     color: { image: '13_Black_Goo_A_01_Color.jpg', vimeo: 'https://vimeo.com/1218804130/5a64c5e2a7' }
   },
   {
-    label: '13 — Black Goo B 01',
+    label: 'Black Goo B 01',
     bw:    { image: '13_Black_Goo_B_01.jpg',       vimeo: 'https://vimeo.com/1218807140/8778499225' },
     color: { image: '13_Black_Goo_B_01_Color.jpg', vimeo: 'https://vimeo.com/1218804145/d3f2e65476' }
   },
   {
-    label: '14 — Water A 01',
+    label: 'Water A 01',
     bw:    { image: '14_Water_A_01.jpg', vimeo: 'https://vimeo.com/1218807147/9ca29aacc3' }
   },
   {
-    label: '14 — Water B 01',
+    label: 'Water B 01',
     bw:    { image: '14_Water_B_01.jpg', vimeo: 'https://vimeo.com/1218807169/4dd0a569db' }
   },
   {
-    label: '14 — Water C 01',
+    label: 'Water C 01',
     bw:    { image: '14_Water_C_01.jpg', vimeo: 'https://vimeo.com/1218807170/35e097dea5' }
   }
 ];
@@ -1570,7 +1628,25 @@ const motionGrid = document.getElementById('grid-motion');
 const motionLb = document.getElementById('motionLb');
 const motionLbFrame = document.getElementById('motionLbFrame');
 const motionLbClose = document.getElementById('motionLbClose');
+const motionLbPrev = document.getElementById('motionLbPrev');
+const motionLbNext = document.getElementById('motionLbNext');
+const motionLbLabel = document.getElementById('motionLbLabel');
+const motionLbCount = document.getElementById('motionLbCount');
 let motionReturn = null;
+let motionIndex = -1;
+
+/* Flatten the 23 cards into the 43 actual Vimeo videos so Next/Previous moves
+   through every B&W and Color asset in gallery order. */
+const MOTION_PLAYLIST = MOTION_ITEMS.flatMap(item => {
+  const out = [];
+  if (item.bw && item.bw.vimeo) {
+    out.push({ label: item.label, variant: 'B&W', pageURL: item.bw.vimeo });
+  }
+  if (item.color && item.color.vimeo) {
+    out.push({ label: item.label, variant: 'Color', pageURL: item.color.vimeo });
+  }
+  return out;
+});
 
 /* Accepts normal Vimeo page URLs, unlisted URLs with a hash, Showcase video
    URLs, or player.vimeo.com URLs and converts them into an autoplaying embed. */
@@ -1607,7 +1683,7 @@ function vimeoEmbedURL(pageURL) {
   const q = new URLSearchParams({
     autoplay: '1',
     loop: '1',
-    muted: '1',
+    muted: '0',
     autopause: '0',
     title: '0',
     byline: '0',
@@ -1617,19 +1693,42 @@ function vimeoEmbedURL(pageURL) {
   return `https://player.vimeo.com/video/${id}?${q.toString()}`;
 }
 
-function openMotionLB(pageURL, trigger) {
-  const embed = vimeoEmbedURL(pageURL);
+function syncMotionLB() {
+  const item = MOTION_PLAYLIST[motionIndex];
+  if (!item) return;
+
+  const embed = vimeoEmbedURL(item.pageURL);
   if (!embed) return;
 
-  motionReturn = trigger || document.activeElement;
   motionLbFrame.src = embed;
+  motionLbLabel.textContent = item.label + ' · ' + item.variant;
+  motionLbCount.textContent = (motionIndex + 1) + ' / ' + MOTION_PLAYLIST.length;
+
+  motionLbPrev.disabled = motionIndex <= 0;
+  motionLbNext.disabled = motionIndex >= MOTION_PLAYLIST.length - 1;
+}
+
+function openMotionLB(pageURL, trigger) {
+  const index = MOTION_PLAYLIST.findIndex(item => item.pageURL === pageURL);
+  if (index < 0) return;
+
+  motionReturn = trigger || document.activeElement;
+  motionIndex = index;
   motionLb.hidden = false;
 
   const bar = window.innerWidth - document.documentElement.clientWidth;
   document.body.style.overflow = 'hidden';
   if (bar > 0) document.body.style.paddingRight = bar + 'px';
 
+  syncMotionLB();
   motionLbClose.focus();
+}
+
+function stepMotionLB(delta) {
+  const next = motionIndex + delta;
+  if (next < 0 || next >= MOTION_PLAYLIST.length) return;
+  motionIndex = next;
+  syncMotionLB();
 }
 
 function closeMotionLB() {
@@ -1637,11 +1736,14 @@ function closeMotionLB() {
   motionLbFrame.removeAttribute('src');
   document.body.style.overflow = '';
   document.body.style.paddingRight = '';
+  motionIndex = -1;
   if (motionReturn && motionReturn.focus) motionReturn.focus();
   motionReturn = null;
 }
 
 motionLbClose.addEventListener('click', closeMotionLB);
+motionLbPrev.addEventListener('click', () => stepMotionLB(-1));
+motionLbNext.addEventListener('click', () => stepMotionLB(1));
 motionLb.querySelector('[data-motion-close]').addEventListener('click', closeMotionLB);
 
 function buildMotionCard(item) {
@@ -2060,9 +2162,13 @@ pdfPreview.addEventListener('click', () => {
 lbClose.addEventListener('click', closeLB);
 lb.querySelector('[data-lb-close]').addEventListener('click', closeLB);
 document.addEventListener('keydown', e => {
-  if (e.key !== 'Escape') return;
-  if (!motionLb.hidden) closeMotionLB();
-  else if (!lb.hidden) closeLB();
+  if (!motionLb.hidden) {
+    if (e.key === 'Escape') closeMotionLB();
+    else if (e.key === 'ArrowLeft') stepMotionLB(-1);
+    else if (e.key === 'ArrowRight') stepMotionLB(1);
+    return;
+  }
+  if (e.key === 'Escape' && !lb.hidden) closeLB();
 });
 
 /* ══════════════════════════════════════════════════════════════
