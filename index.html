@@ -476,17 +476,15 @@ body {
   z-index: 1;
   left: 50%;
   top: 50%;
-  width: 42px;
-  height: 42px;
+  width: 34px;
+  height: 34px;
   transform: translate(-50%, -50%);
   display: grid;
   place-items: center;
-  border: 1px solid rgba(255,255,255,.72);
-  background: rgba(0,0,0,.46);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  pointer-events: none;
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,.72));
 }
-.motion-play svg { width: 15px; height: 15px; margin-left: 2px; }
+.motion-play svg { width: 25px; height: 25px; margin-left: 3px; }
 
 .motion-variant {
   display: flex;
@@ -1164,6 +1162,11 @@ const MOTION_ITEMS = [
 
 const MOTION_DIR = 'assets/motion/';
 
+/* Temporary playback fallback so the lightbox can be tested before the 43
+   Prismdrifter Vimeo URLs are added. Remove this line (or set it to '') for
+   final deployment if any card is still missing its real Vimeo URL. */
+const MOTION_DEMO_VIMEO = 'https://vimeo.com/76979871';
+
 /* ══════════════════════════════════════════════════════════════
    SVG PIPELINE
    ══════════════════════════════════════════════════════════════ */
@@ -1693,11 +1696,12 @@ function buildMotionCard(item) {
     const v = current();
     image.src = MOTION_DIR + v.image;
 
-    const ready = !!v.vimeo;
-    stage.disabled = !ready;
-    play.disabled = !ready;
+    const hasRealVimeo = !!v.vimeo;
+    const canPreview = hasRealVimeo || !!MOTION_DEMO_VIMEO;
+    stage.disabled = !canPreview;
+    play.disabled = !canPreview;
 
-    if (ready) {
+    if (hasRealVimeo) {
       page.href = v.vimeo;
       page.removeAttribute('aria-disabled');
       page.removeAttribute('tabindex');
@@ -1714,7 +1718,8 @@ function buildMotionCard(item) {
 
   function open(trigger) {
     const v = current();
-    if (v.vimeo) openMotionLB(v.vimeo, trigger);
+    const previewURL = v.vimeo || MOTION_DEMO_VIMEO;
+    if (previewURL) openMotionLB(previewURL, trigger);
   }
 
   stage.addEventListener('click', () => open(stage));
