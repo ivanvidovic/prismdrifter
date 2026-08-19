@@ -668,7 +668,7 @@ body {
 
 .charset {
   display: grid;
-  grid-template-columns: repeat(16, minmax(0, 1fr));
+  grid-template-columns: repeat(19, minmax(0, 1fr));
   gap: 1px;
   background: var(--rule);
   border: 1px solid var(--rule);
@@ -845,7 +845,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @media (max-width: 640px) {
-  .charset { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+  .charset { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
   /* Trim the dead space after each nav link so more of the rail is visible
      before it needs scrolling. */
@@ -1902,8 +1902,7 @@ const GLYPHS = [
   ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
   ...'abcdefghijklmnopqrstuvwxyz',
   ...'0123456789',
-  '&', '@',
-  '!', '?', '#', '$', '%', '+', '-', '=', '/', '\\', '(', ')', '[', ']', '{', '}'
+  '&', '@', '!', '?', '#', '$', '%', '+', '-', '=', '/', '\\', '(', ')'
 ];
 const glyphEl = document.getElementById('glyphs');
 for (const g of GLYPHS) {
