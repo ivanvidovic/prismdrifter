@@ -1063,16 +1063,17 @@ for (const g of GLYPHS) {
 }
 
 /* ── weight and width range ──
-   Lightest and narrowest at the top, heaviest and widest at the bottom.
-   Each word is scaled to span the full measure, so the stack reads flush
-   on both edges without distorting the width axis. */
+   Words keep their original order. The axes run the other way now, so the
+   stack opens at the lightest and narrowest and closes at the heaviest and
+   widest. Each word is scaled to span the full measure, so the block reads
+   flush on both edges without distorting the width axis. */
 const STORM = [
-  ['Hurricane',   180,  62],
-  ['Rainstorm',   300,  71],
-  ['Windswept',   420,  82],
-  ['Tornado',     560,  96],
-  ['Stormsystem', 700, 110],
-  ['Darkcloud',   900, 125]
+  ['Darkcloud',   180,  62],
+  ['Stormsystem', 300,  71],
+  ['Tornado',     420,  82],
+  ['Windswept',   560,  96],
+  ['Rainstorm',   700, 110],
+  ['Hurricane',   900, 125]
 ];
 const stormEl = document.getElementById('storm');
 for (const [word, wght, wdth] of STORM) {
