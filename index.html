@@ -52,7 +52,12 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 62px; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 62px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
@@ -116,22 +121,6 @@ body {
   color: var(--dim);
 }
 
-.theme-btn {
-  font: inherit;
-  font-size: 10.5px;
-  font-weight: 600;
-  font-stretch: 78%;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--ink);
-  background: none;
-  border: 1px solid var(--rule-strong);
-  padding: 9px 15px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background .12s, color .12s;
-}
-.theme-btn:hover { background: var(--ink); color: var(--paper); }
 
 /* ============================================================
    STICKY NAV
@@ -142,8 +131,30 @@ body {
   border-bottom: 1px solid var(--rule);
 }
 .nav-bar { display: flex; align-items: center; gap: 18px; }
-.nav-inner { flex: 1 1 auto; min-width: 0; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
+.nav-inner {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
 .nav-inner::-webkit-scrollbar { display: none; }
+/* The rail scrolls on narrow screens with no scrollbar to signal it, so the
+   overflowing edge fades out instead. Classes are toggled from scroll state. */
+.nav-inner.has-end {
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 34px), transparent);
+          mask-image: linear-gradient(90deg, #000 calc(100% - 34px), transparent);
+}
+.nav-inner.has-start {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 34px);
+          mask-image: linear-gradient(90deg, transparent, #000 34px);
+}
+.nav-inner.has-start.has-end {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 34px, #000 calc(100% - 34px), transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 34px, #000 calc(100% - 34px), transparent);
+}
 .nav a {
   flex: none;
   padding: 14px 20px 13px 0;
@@ -159,7 +170,7 @@ body {
   border-bottom: 2px solid transparent;
   transition: color .12s, border-color .12s;
 }
-.nav a:hover, .nav a.on { color: var(--ink); border-bottom-color: var(--ink); }
+.nav a.on { color: var(--ink); border-bottom-color: var(--ink); }
 
 .theme-btn {
   flex: none;
@@ -173,7 +184,6 @@ body {
   cursor: pointer;
   transition: background .12s, color .12s;
 }
-.theme-btn:hover { background: var(--ink); color: var(--paper); }
 .ico { width: 17px; height: 17px; display: block; }
 :root[data-theme="light"] .ico-sun { display: none; }
 :root[data-theme="dark"] .ico-moon { display: none; }
@@ -217,7 +227,6 @@ body {
   padding: 10px 18px;
   transition: background .12s, color .12s;
 }
-.doc-btn:hover { background: var(--ink); color: var(--paper); }
 
 /* ============================================================
    SECTIONS
@@ -256,7 +265,7 @@ body {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(272px, 100%), 1fr));
   gap: 1px;
   background: var(--rule);
   border: 1px solid var(--rule);
@@ -339,7 +348,6 @@ body {
   cursor: pointer;
   transition: color .1s, border-color .1s, background .1s;
 }
-.sz:hover { color: var(--ink); border-color: var(--rule-strong); }
 .sz[aria-pressed="true"] { color: var(--paper); background: var(--ink); border-color: var(--ink); }
 
 .szc {
@@ -376,7 +384,6 @@ body {
   transition: opacity .12s;
 }
 .dl button.ghost { background: none; color: var(--ink); }
-.dl button:hover { opacity: .72; }
 .dl button:disabled { opacity: .3; cursor: not-allowed; }
 
 .out {
@@ -428,7 +435,7 @@ body {
 }
 .storm span { display: inline-block; white-space: nowrap; }
 
-.axes { display: grid; grid-template-columns: repeat(auto-fit, minmax(228px, 1fr)); gap: 20px 34px; margin-bottom: 22px; }
+.axes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(228px, 100%), 1fr)); gap: 20px 34px; margin-bottom: 22px; }
 .axis-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
 input[type="range"] {
   -webkit-appearance: none; appearance: none;
@@ -444,14 +451,13 @@ input[type="range"]::-moz-range-thumb {
   width: 3px; height: 17px; background: var(--ink); border: 0; border-radius: 0;
 }
 .axis-demo {
-  font-size: clamp(30px, 9.6vw, 116px);
   line-height: 1.02;
   text-transform: uppercase;
   letter-spacing: -.02em;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: clip;
 }
+.axis-demo span { display: inline-block; white-space: nowrap; }
 
 /* ============================================================
    FILE ROWS  (PDF / font zip / tool link)
@@ -483,7 +489,6 @@ input[type="range"]::-moz-range-thumb {
   border: 1px solid var(--ink); padding: 9px 15px; white-space: nowrap;
   transition: background .12s, color .12s;
 }
-.row:hover .row-cta { background: var(--ink); color: var(--paper); }
 
 /* ============================================================
    06 — VISUAL LOOM
@@ -509,12 +514,74 @@ input[type="range"]::-moz-range-thumb {
   .loom { grid-template-columns: 1fr; }
   .loom-shot { flex: 0 0 auto; height: auto; min-height: 0; object-fit: contain; }
 }
-.loom-lead { font-size: clamp(17px,2.3vw,23px); font-weight: 600; font-stretch: 100%; line-height: 1.34; letter-spacing: -.008em; }
 
 /* ============================================================
    FOOT
    ============================================================ */
 .foot { padding: 30px 0 46px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+/* ============================================================
+   TOUCH + NARROW SCREENS
+   ============================================================ */
+
+/* Anything driven by a finger needs a target a finger can hit. Scoped to
+   coarse pointers so the desktop layout keeps its density. */
+@media (pointer: coarse) {
+  .sw { width: 32px; height: 32px; }
+  .sw-c input { inset: -8px; width: calc(100% + 16px); height: calc(100% + 16px); }
+
+  .sz { min-height: 40px; padding: 8px 13px; }
+
+  /* 16px is the threshold below which iOS Safari zooms the page on focus. */
+  .szc { min-height: 40px; font-size: 16px; width: 76px; padding: 8px; }
+
+  .dl button { padding: 15px 8px; }
+  .doc-btn, .row-cta { padding: 14px 20px; }
+  .theme-btn { width: 42px; height: 42px; }
+  .ico { width: 19px; height: 19px; }
+
+  input[type="range"] { height: 40px; }
+  input[type="range"]::-webkit-slider-thumb { width: 6px; height: 26px; margin-top: -13px; }
+  input[type="range"]::-moz-range-thumb { width: 6px; height: 26px; }
+
+  /* Hover never fires on touch, so presses need their own feedback. */
+  .sz:active, .sw:active, .dl button:active,
+  .doc-btn:active, .theme-btn:active, .row:active { opacity: .55; }
+}
+
+@media (max-width: 640px) {
+  /* Trim the dead space after each nav link so more of the rail is visible
+     before it needs scrolling. */
+  .nav a { padding: 14px 0 13px; margin-right: 22px; letter-spacing: .12em; }
+  .nav a:last-child { margin-right: 0; }
+  .nav-bar { gap: 12px; }
+
+  .bulk { gap: 14px 18px; padding: 10px 0; margin-bottom: 16px; }
+  .card { padding: 14px; gap: 11px; }
+  .card-top { flex-wrap: wrap; gap: 2px 10px; }
+
+  /* Five presets plus the custom field wrap unevenly at this width, so they
+     go into a 3-up grid and land as two full rows. */
+  .ctl-row[data-sizes] { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .ctl-row[data-sizes] .szc { width: auto; }
+  .bulk-grp[data-bsizes] { flex: 1 1 100%; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+
+  .sec-note { margin-bottom: 18px; }
+  .axes { gap: 16px 24px; margin-bottom: 18px; }
+  .spec-blk { padding: 20px 0; }
+  .foot { gap: 6px; }
+}
+/* Hover states latch after a tap on touch devices, leaving a button stuck
+   inverted. Gate them so only real pointers get them; :active in the coarse
+   block covers press feedback on touch. */
+@media (hover: hover) {
+  .nav a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+  .theme-btn:hover { background: var(--ink); color: var(--paper); }
+  .doc-btn:hover { background: var(--ink); color: var(--paper); }
+  .sz:hover { color: var(--ink); border-color: var(--rule-strong); }
+  .dl button:hover { opacity: .72; }
+  .row:hover .row-cta { background: var(--ink); color: var(--paper); }
+}
 
 /* ---------- a11y ---------- */
 a:focus-visible, button:focus-visible, input:focus-visible {
@@ -634,7 +701,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
             <input type="range" id="axD" min="62" max="125" step="1" value="100">
           </div>
         </div>
-        <div class="axis-demo" id="axDemo">Prismdrifter</div>
+        <div class="axis-demo" id="axDemoBox"><span id="axDemo">Prismdrifter</span></div>
       </div>
 
       <div class="spec-blk">
@@ -1213,7 +1280,7 @@ function fitStorm(force) {
 function scheduleFit() {
   if (queued) return;
   queued = true;
-  requestAnimationFrame(() => { queued = false; fitStorm(false); });
+  requestAnimationFrame(() => { queued = false; fitStorm(false); fitDemo(); });
 }
 
 fitStorm(true);
@@ -1226,14 +1293,29 @@ const axD = document.getElementById('axD');
 const axWv = document.getElementById('axWv');
 const axDv = document.getElementById('axDv');
 const axDemo = document.getElementById('axDemo');
+const axDemoBox = document.getElementById('axDemoBox');
+
+/* At the wide, heavy end of the axes the word outgrows a phone's measure, so
+   size follows the width available rather than a fixed clamp. */
+const DEMO_MAX = 116;
+function fitDemo() {
+  const box = axDemoBox.clientWidth;
+  if (!box) return;
+  axDemo.style.fontSize = DEMO_MAX + 'px';
+  const natural = axDemo.getBoundingClientRect().width;
+  if (natural > box) axDemo.style.fontSize = (DEMO_MAX * box / natural) + 'px';
+}
+
 function syncAxes() {
   axWv.textContent = axW.value;
   axDv.textContent = axD.value;
   axDemo.style.fontVariationSettings = `"wght" ${axW.value}, "wdth" ${axD.value}`;
+  fitDemo();
 }
 axW.addEventListener('input', syncAxes);
 axD.addEventListener('input', syncAxes);
 syncAxes();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncAxes);
 
 /* ── minimal store-only ZIP writer (no dependency, no build step) ── */
 const CRC = (() => {
@@ -1372,10 +1454,39 @@ setTheme(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').
 themeBtn.addEventListener('click', () => setTheme(root.getAttribute('data-theme') !== 'dark'));
 
 const links = [...document.querySelectorAll('.nav a')];
+const navInner = document.querySelector('.nav-inner');
+const stillMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+/* Fade whichever edge has links hidden past it. */
+function syncNavEdges() {
+  const slack = navInner.scrollWidth - navInner.clientWidth;
+  navInner.classList.toggle('has-start', slack > 1 && navInner.scrollLeft > 1);
+  navInner.classList.toggle('has-end', slack > 1 && navInner.scrollLeft < slack - 1);
+}
+navInner.addEventListener('scroll', syncNavEdges, { passive: true });
+window.addEventListener('resize', syncNavEdges);
+syncNavEdges();
+
+/* On a phone the rail is wider than the screen, so the current section's link
+   can sit off-view. Pull it in, but only when it isn't already showing. */
+function revealNavLink(a) {
+  const slack = navInner.scrollWidth - navInner.clientWidth;
+  if (slack <= 1) return;
+  const left = a.offsetLeft;
+  const right = left + a.offsetWidth;
+  if (left >= navInner.scrollLeft && right <= navInner.scrollLeft + navInner.clientWidth) return;
+  navInner.scrollTo({
+    left: Math.max(0, Math.min(left - (navInner.clientWidth - a.offsetWidth) / 2, slack)),
+    behavior: stillMotion.matches ? 'auto' : 'smooth'
+  });
+}
+
 const spy = new IntersectionObserver(entries => {
   for (const e of entries) {
     if (!e.isIntersecting) continue;
-    links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id));
+    const hit = links.find(a => a.getAttribute('href') === '#' + e.target.id);
+    links.forEach(a => a.classList.toggle('on', a === hit));
+    if (hit) revealNavLink(hit);
   }
 }, { rootMargin: '-30% 0px -60% 0px' });
 document.querySelectorAll('.sec').forEach(s => spy.observe(s));
