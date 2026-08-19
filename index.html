@@ -898,19 +898,24 @@ input[type="range"]::-moz-range-thumb {
 /* ============================================================
    06 — VISUAL LOOM
    ============================================================ */
-.loom { border-top: 1px solid var(--rule); padding-top: 24px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(28px,5vw,64px); align-items: start; }
-.loom-r { display: flex; flex-direction: column; min-height: 0; }
+.loom { border-top: 1px solid var(--rule); padding-top: 24px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(28px,5vw,64px); align-items: stretch; }
+.loom-l,
+.loom-r { min-width: 0; min-height: 0; }
+.loom-l { display: flex; flex-direction: column; }
+.loom-r { display: flex; flex-direction: column; }
 .loom p { margin: 0 0 1em; max-width: none; width: 100%; }
 .loom p:last-of-type { margin-bottom: 0; }
 .loom-lead { font-size: clamp(17px,2.3vw,23px); font-weight: 600; font-stretch: 100%; line-height: 1.34; letter-spacing: -.008em; }
+.loom-link { margin-top: 22px; }
 
 .loom-gallery {
   position: relative;
   width: 100%;
-  aspect-ratio: 7 / 2;
+  flex: 1 1 auto;
+  min-height: 0;
   overflow: hidden;
   border: 1px solid var(--rule);
-  margin-bottom: 22px;
+  margin-bottom: 0;
   background: var(--field);
 }
 .loom-shot {
@@ -931,16 +936,22 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @media (max-width: 860px) {
-  .loom { grid-template-columns: 1fr; }
-  .loom > div:first-child,
+  .loom { grid-template-columns: 1fr; align-items: start; }
+  .loom-l,
+  .loom-r,
   .loom p,
   .loom-lead {
     width: 100%;
     max-width: none;
   }
-  /* Keep the exact same landscape crop as desktop instead of reverting to the
-     source image's square 1:1 ratio. */
-  .loom-gallery { aspect-ratio: 7 / 2; }
+  .loom-link { margin-top: 18px; }
+  /* On mobile the gallery follows the copy/link in DOM order and stays the
+     final Visual Loom content before the footer. Keep the established wide crop. */
+  .loom-gallery {
+    flex: none;
+    aspect-ratio: 7 / 2;
+    min-height: 0;
+  }
 
   .motion-lb-nav {
     top: auto;
@@ -1218,9 +1229,18 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   <section class="sec" id="loom">
     <div class="sec-head"><h2>Visual Loom</h2></div>
     <div class="loom">
-      <div>
+      <div class="loom-l">
         <p class="loom-lead">A procedural tool for building textures and forms through the mathematical layering and weaving of simple graphic elements.</p>
         <p>Every output begins with a single black-and-white gradient, subdivided and layered through a fixed procedural system. Generate a complete composition with Random Look, then refine individual layers with the controls or directly on the canvas. Export the results as SVG or PNG for use across print, digital, social, and other brand applications.</p>
+        <div class="rows loom-link">
+          <a class="row" href="https://ivanvidovic.github.io/loomrift/" target="_blank" rel="noopener">
+            <span class="row-l">
+              <span class="row-name">Open Visual Loom</span>
+              <span class="row-meta">ivanvidovic.github.io/loomrift</span>
+            </span>
+            <span class="row-cta">Open</span>
+          </a>
+        </div>
       </div>
       <div class="loom-r">
         <div class="loom-gallery" id="loomGallery" aria-label="Visual Loom generated composition gallery">
@@ -1229,15 +1249,6 @@ a:focus-visible, button:focus-visible, input:focus-visible {
                alt="Visual Loom generated composition" loading="lazy">
           <img class="loom-shot" id="loomShotB"
                alt="" aria-hidden="true">
-        </div>
-        <div class="rows">
-          <a class="row" href="https://ivanvidovic.github.io/loomrift/" target="_blank" rel="noopener">
-            <span class="row-l">
-              <span class="row-name">Open Visual Loom</span>
-              <span class="row-meta">ivanvidovic.github.io/loomrift</span>
-            </span>
-            <span class="row-cta">Open</span>
-          </a>
         </div>
       </div>
     </div>
