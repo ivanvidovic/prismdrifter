@@ -241,43 +241,35 @@ body {
 /* ============================================================
    PDF LIGHTBOX
    ============================================================ */
-.lb { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; }
+.lb { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 3.5vh 3vw; }
 .lb[hidden] { display: none; }
-.lb-back { position: absolute; inset: 0; background: rgba(0,0,0,.78); }
-.lb-panel {
+.lb-back { position: absolute; inset: 0; background: rgba(0,0,0,.84); }
+.lb-shell {
   position: relative;
-  width: min(1100px, 94vw);
-  height: min(88vh, 100%);
+  width: min(1100px, 100%);
+  height: 100%;
   display: flex;
   flex-direction: column;
-  background: var(--paper);
-  border: 1px solid var(--rule-strong);
+  gap: 7px;
 }
-.lb-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 11px 14px;
-  border-bottom: 1px solid var(--rule);
-}
-.lb-acts { display: flex; gap: 8px; }
-.lb-btn {
+/* Sits on the backdrop above the document, not on a bar across it. Fixed
+   white because the backdrop is dark in both themes. */
+.lb-x {
+  align-self: flex-end;
   font: inherit;
-  font-size: 10.5px;
-  font-weight: 700;
-  font-stretch: 80%;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--ink);
-  text-decoration: none;
+  font-size: 24px;
+  line-height: 1;
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  padding: 0;
+  color: #fff;
   background: none;
-  border: 1px solid var(--rule-strong);
-  padding: 8px 14px;
+  border: 0;
   cursor: pointer;
-  transition: background .12s, color .12s;
+  opacity: .65;
+  transition: opacity .12s;
 }
-.lb-frame { flex: 1 1 auto; width: 100%; border: 0; background: var(--field); }
+.lb-frame { flex: 1 1 auto; width: 100%; border: 0; background: #fff; }
 
 /* ============================================================
    SECTIONS
@@ -632,7 +624,7 @@ input[type="range"]::-moz-range-thumb {
   .theme-btn:hover { color: var(--ink); }
   .doc-btn:hover { background: var(--ink); color: var(--paper); }
   .doc-btn.solid:hover { background: none; color: var(--ink); }
-  .lb-btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .lb-x:hover { opacity: 1; }
   .sz:hover { color: var(--ink); border-color: var(--rule-strong); }
   .dl button:hover { opacity: .72; }
   .row:hover .row-cta { background: var(--ink); color: var(--paper); }
@@ -811,15 +803,8 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 <!-- ══════════════════════════ PDF LIGHTBOX ══════════════════════════ -->
 <div class="lb" id="lb" hidden>
   <div class="lb-back" data-lb-close></div>
-  <div class="lb-panel" role="dialog" aria-modal="true" aria-label="Brand Assets Overview">
-    <div class="lb-bar">
-      <span class="lbl">Brand Assets Overview</span>
-      <span class="lb-acts">
-        <a class="lb-btn" id="lbOpen" href="assets/docs/Prismdrifter_Brand_Assets_01.pdf"
-           target="_blank" rel="noopener">New tab</a>
-        <button class="lb-btn" id="lbClose" type="button">Close</button>
-      </span>
-    </div>
+  <div class="lb-shell" role="dialog" aria-modal="true" aria-label="Brand Assets Overview">
+    <button class="lb-x" id="lbClose" type="button" aria-label="Close preview">&times;</button>
     <iframe class="lb-frame" id="lbFrame" title="Brand Assets Overview PDF"></iframe>
   </div>
 </div>
@@ -1560,7 +1545,10 @@ function canFramePDF() {
 
 function openLB() {
   lbReturn = document.activeElement;
-  lbFrame.src = PDF_SRC;          // deferred so 1.2MB isn't fetched on page load
+  // PDF Open Parameters: Chrome and Edge honour these and drop the viewer's
+  // toolbar, side panel and scrollbar, leaving just the pages. FitH opens at
+  // page width so it scrolls like a document.
+  lbFrame.src = PDF_SRC + '#toolbar=0&navpanes=0&scrollbar=0&view=FitH';
   lb.hidden = false;
   // Compensate for the vanishing scrollbar so the page doesn't jump.
   const bar = window.innerWidth - document.documentElement.clientWidth;
