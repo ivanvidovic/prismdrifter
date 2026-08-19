@@ -685,6 +685,9 @@ body {
 .charset span.fig {
   font-variant-numeric: tabular-nums;
 }
+.charset .mobile-glyph {
+  display: none;
+}
 
 /* One size for every line. With size locked, tracking is what fills the
    measure, so each word sits flush on both edges. */
@@ -846,6 +849,14 @@ input[type="range"]::-moz-range-thumb {
 @media (max-width: 640px) {
   .charset { grid-template-columns: repeat(8, minmax(0, 1fr)); }
   .charset span { font-size: clamp(11px, 3.6vw, 17px); }
+  .charset .mobile-glyph { display: grid; }
+
+  /* Same six-word layout, just scaled up on phones. fitStorm() continues
+     to distribute each word edge-to-edge without changing its arrangement. */
+  .storm div {
+    font-size: clamp(31px, 8vw, 40px);
+    line-height: 1.08;
+  }
 
   /* Trim the dead space after each nav link so more of the rail is visible
      before it needs scrolling. */
@@ -1909,6 +1920,15 @@ for (const g of GLYPHS) {
   const s = document.createElement('span');
   s.textContent = g;
   if (g >= '0' && g <= '9') s.className = 'fig';
+  glyphEl.appendChild(s);
+}
+
+/* Hidden on desktop so the 19 × 4 grid remains exact. On mobile these four
+   symbols complete the 8-column grid instead of leaving gray empty cells. */
+for (const g of ['[', ']', '{', '}']) {
+  const s = document.createElement('span');
+  s.className = 'mobile-glyph';
+  s.textContent = g;
   glyphEl.appendChild(s);
 }
 
