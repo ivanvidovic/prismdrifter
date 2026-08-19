@@ -751,26 +751,43 @@ input[type="range"]::-moz-range-thumb {
 /* ============================================================
    06 — VISUAL LOOM
    ============================================================ */
-.loom { border-top: 1px solid var(--rule); padding-top: 24px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(28px,5vw,64px); align-items: stretch; }
+.loom { border-top: 1px solid var(--rule); padding-top: 24px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(28px,5vw,64px); align-items: start; }
 .loom-r { display: flex; flex-direction: column; min-height: 0; }
 .loom p { margin: 0 0 1em; max-width: 48ch; }
 .loom p:last-of-type { margin-bottom: 0; }
 .loom-lead { font-size: clamp(17px,2.3vw,23px); font-weight: 600; font-stretch: 100%; line-height: 1.34; letter-spacing: -.008em; }
-/* Basis of 0 keeps the shot from inflating the row; it takes whatever height
-   the text column sets and crops the overflow rather than letterboxing. */
-.loom-shot {
-  display: block;
+
+.loom-gallery {
+  position: relative;
   width: 100%;
-  flex: 1 1 0;
-  min-height: 170px;
-  object-fit: cover;
-  object-position: center;
+  aspect-ratio: 7 / 2;
+  overflow: hidden;
   border: 1px solid var(--rule);
   margin-bottom: 22px;
+  background: var(--field);
 }
+.loom-shot {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 1.15s ease;
+}
+.loom-shot.is-active { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .loom-shot { transition: none; }
+}
+
 @media (max-width: 860px) {
   .loom { grid-template-columns: 1fr; }
-  .loom-shot { flex: 0 0 auto; height: auto; min-height: 0; object-fit: contain; }
+  /* Keep the exact same landscape crop as desktop instead of reverting to the
+     source image's square 1:1 ratio. */
+  .loom-gallery { aspect-ratio: 7 / 2; }
 
   .motion-lb-nav {
     top: auto;
@@ -1054,8 +1071,13 @@ a:focus-visible, button:focus-visible, input:focus-visible {
         <p>Use it for background textures, print graphics, social assets, and other supporting brand visuals.</p>
       </div>
       <div class="loom-r">
-        <img class="loom-shot" id="loomShot" src="assets/images/visual_loom.png"
-             alt="Visual Loom interface showing a generated black and white pattern" loading="lazy">
+        <div class="loom-gallery" id="loomGallery" aria-label="Visual Loom generated composition gallery">
+          <img class="loom-shot is-active" id="loomShotA"
+               src="assets/images/visual_loom_01.jpg"
+               alt="Visual Loom generated composition" loading="lazy">
+          <img class="loom-shot" id="loomShotB"
+               alt="" aria-hidden="true">
+        </div>
         <div class="rows">
           <a class="row" href="https://ivanvidovic.github.io/loomrift/" target="_blank" rel="noopener">
             <span class="row-l">
@@ -1119,6 +1141,7 @@ const SIZE_MAX     = 8192;
 const SIZE_MIN     = 16;
 const STROKE_FLOOR = 1.5;      // rendered px — thinner strokes get scaled up
 const DEFAULT_SIZE = 1024;
+const stillMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 const FONT_FILES = [
   'Archivo-VariableFont_wdth,wght.ttf',
@@ -2182,8 +2205,79 @@ loadSVG('assets/logos/Prismdrifter_Alt_Logo_06.svg').then(src => {
   markHost.remove();
 });
 
-const loomShot = document.getElementById('loomShot');
-loomShot.addEventListener('error', () => loomShot.remove());
+/* ══════════════════════════════════════════════════════════════
+   VISUAL LOOM — crossfading gallery
+   ══════════════════════════════════════════════════════════════ */
+const LOOM_IMAGES = Array.from({ length: 11 }, (_, i) =>
+  `assets/images/visual_loom_${String(i + 1).padStart(2, '0')}.jpg`
+);
+
+const loomGallery = document.getElementById('loomGallery');
+const loomShots = [
+  document.getElementById('loomShotA'),
+  document.getElementById('loomShotB')
+];
+
+let loomIndex = 0;
+let loomLayer = 0;
+let loomTimer = null;
+
+function preloadLoomImage(index) {
+  const img = new Image();
+  img.src = LOOM_IMAGES[index % LOOM_IMAGES.length];
+}
+
+function advanceLoom() {
+  const nextIndex = (loomIndex + 1) % LOOM_IMAGES.length;
+  const nextLayer = 1 - loomLayer;
+  const incoming = loomShots[nextLayer];
+  const outgoing = loomShots[loomLayer];
+
+  incoming.src = LOOM_IMAGES[nextIndex];
+
+  const reveal = () => {
+    incoming.classList.add('is-active');
+    outgoing.classList.remove('is-active');
+    loomIndex = nextIndex;
+    loomLayer = nextLayer;
+    preloadLoomImage((loomIndex + 1) % LOOM_IMAGES.length);
+  };
+
+  if (incoming.complete) reveal();
+  else incoming.addEventListener('load', reveal, { once: true });
+}
+
+function startLoomGallery() {
+  if (loomTimer || stillMotion.matches) return;
+  preloadLoomImage(1);
+  loomTimer = setInterval(advanceLoom, 4200);
+}
+
+function stopLoomGallery() {
+  if (!loomTimer) return;
+  clearInterval(loomTimer);
+  loomTimer = null;
+}
+
+loomShots.forEach(img => {
+  img.addEventListener('error', () => {
+    // Skip a missing frame rather than leaving a broken-image icon in the stage.
+    img.removeAttribute('src');
+  });
+});
+
+if (!stillMotion.matches && 'IntersectionObserver' in window) {
+  const loomObserver = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (entry.target !== loomGallery) continue;
+      if (entry.isIntersecting) startLoomGallery();
+      else stopLoomGallery();
+    }
+  }, { threshold: 0.12 });
+  loomObserver.observe(loomGallery);
+} else if (!stillMotion.matches) {
+  startLoomGallery();
+}
 
 /* ══════════════════════════════════════════════════════════════
    PDF LIGHTBOX
@@ -2260,7 +2354,6 @@ themeBtn.addEventListener('click', () => setTheme(root.getAttribute('data-theme'
 
 const links = [...document.querySelectorAll('.nav a')];
 const navInner = document.querySelector('.nav-inner');
-const stillMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 /* Fade whichever edge has links hidden past it. */
 function syncNavEdges() {
