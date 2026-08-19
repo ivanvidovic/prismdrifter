@@ -89,8 +89,6 @@ body {
    MASTHEAD
    ============================================================ */
 .mast { border-bottom: 1px solid var(--rule); padding: clamp(28px,5vw,56px) 0 0; }
-.mast-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
-.mast-l { flex: 1 1 320px; min-width: 0; }
 .mast h1 {
   margin: 0;
   font-size: clamp(34px, 7.4vw, 82px);
@@ -100,9 +98,17 @@ body {
   line-height: .9;
   text-transform: uppercase;
 }
-.mark { max-width: min(620px, 100%); }
+.mark { width: 100%; }
 .mark svg { display: block; width: 100%; height: auto; }
-.mast-sub { margin: 20px 0 0; max-width: 46ch; }
+.mast-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: clamp(22px,3.4vw,36px);
+}
+.mast-sub { margin: 0; max-width: 46ch; flex: 1 1 300px; }
 .mast-doc { margin-top: clamp(24px,4vw,40px); }
 .mast-doc .row { border-bottom: 0; }
 
@@ -156,15 +162,7 @@ body {
 .sec { padding: clamp(48px, 7vw, 96px) 0; border-bottom: 1px solid var(--rule); }
 .sec:last-of-type { border-bottom: 0; }
 
-.sec-head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 8px; }
-.sec-head .idx {
-  font-size: clamp(11px, 1.3vw, 13px);
-  font-weight: 700;
-  font-stretch: 80%;
-  letter-spacing: .1em;
-  color: var(--dim);
-  font-variant-numeric: tabular-nums;
-}
+.sec-head { margin-bottom: 8px; }
 .sec-head h2 {
   margin: 0;
   font-size: clamp(26px, 4.6vw, 52px);
@@ -352,11 +350,12 @@ body {
 }
 .glyphgrid span.fig { font-variant-numeric: tabular-nums; }
 
-/* Each word is scaled by JS until it spans the full measure, so the stack
-   sits flush on both edges and the width axis stays undistorted. */
+/* One size for every line. With size locked, tracking is what fills the
+   measure, so each word sits flush on both edges. */
 .storm { display: flex; flex-direction: column; }
 .storm div {
-  line-height: .94;
+  font-size: clamp(24px, 3.9vw, 56px);
+  line-height: 1.14;
   text-transform: uppercase;
   letter-spacing: 0;
   white-space: nowrap;
@@ -424,16 +423,26 @@ input[type="range"]::-moz-range-thumb {
 /* ============================================================
    06 — VISUAL LOOM
    ============================================================ */
-.loom { border-top: 1px solid var(--rule); padding-top: 30px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(28px,5vw,64px); align-items: start; }
-@media (max-width: 860px) { .loom { grid-template-columns: 1fr; } }
+.loom { border-top: 1px solid var(--rule); padding-top: 30px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(28px,5vw,64px); align-items: stretch; }
+.loom-r { display: flex; flex-direction: column; min-height: 0; }
 .loom p { margin: 0 0 1em; max-width: 48ch; }
 .loom p:last-of-type { margin-bottom: 0; }
+.loom-lead { font-size: clamp(17px,2.3vw,23px); font-weight: 600; font-stretch: 100%; line-height: 1.34; letter-spacing: -.008em; }
+/* Basis of 0 keeps the shot from inflating the row; it takes whatever height
+   the text column sets and crops the overflow rather than letterboxing. */
 .loom-shot {
   display: block;
   width: 100%;
-  height: auto;
+  flex: 1 1 0;
+  min-height: 170px;
+  object-fit: cover;
+  object-position: center;
   border: 1px solid var(--rule);
   margin-bottom: 22px;
+}
+@media (max-width: 860px) {
+  .loom { grid-template-columns: 1fr; }
+  .loom-shot { flex: 0 0 auto; height: auto; min-height: 0; object-fit: contain; }
 }
 .loom-lead { font-size: clamp(17px,2.3vw,23px); font-weight: 600; font-stretch: 100%; line-height: 1.34; letter-spacing: -.008em; }
 
@@ -460,12 +469,10 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 <!-- ══════════════════════════ MASTHEAD ══════════════════════════ -->
 <header class="mast">
   <div class="wrap">
+    <h1 class="vh" id="markFallback">Prismdrifter</h1>
+    <div class="mark" id="mark" role="img" aria-label="Prismdrifter"></div>
     <div class="mast-row">
-      <div class="mast-l">
-        <h1 class="vh" id="markFallback">Prismdrifter</h1>
-        <div class="mark" id="mark" role="img" aria-label="Prismdrifter"></div>
-        <p class="mast-sub">Brand assets. Pick a colour and a size, then download. Vector source is available on every asset.</p>
-      </div>
+      <p class="mast-sub">Brand assets. Pick a colour and a size, then download. Vector source is available on every asset.</p>
       <button class="theme-btn" id="theme" type="button" aria-pressed="false">Dark</button>
     </div>
     <div class="rows mast-doc">
@@ -483,11 +490,11 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 <!-- ══════════════════════════ NAV ══════════════════════════ -->
 <nav class="nav" aria-label="Sections">
   <div class="wrap nav-inner">
-    <a href="#logos">01 Logos</a>
-    <a href="#alt">02 Alternate logos</a>
-    <a href="#illus">03 Illustrations</a>
-    <a href="#font">04 Font</a>
-    <a href="#loom">05 Visual Loom</a>
+    <a href="#logos">Logos</a>
+    <a href="#alt">Alternate logos</a>
+    <a href="#illus">Illustrations</a>
+    <a href="#font">Font</a>
+    <a href="#loom">Visual Loom</a>
   </div>
 </nav>
 
@@ -495,7 +502,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 
   <!-- ═════════════ 01 LOGOS ═════════════ -->
   <section class="sec" id="logos">
-    <div class="sec-head"><span class="idx">01</span><h2>Logos</h2></div>
+    <div class="sec-head"><h2>Logos</h2></div>
     <p class="sec-note">Primary marks. PNG exports are transparent; the number you pick is the longest edge.</p>
     <div data-bulk="logos"></div>
     <div class="grid" id="grid-logos"></div>
@@ -503,7 +510,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 
   <!-- ═════════════ 02 ALTERNATE LOGOS ═════════════ -->
   <section class="sec" id="alt">
-    <div class="sec-head"><span class="idx">02</span><h2>Alternate logos</h2></div>
+    <div class="sec-head"><h2>Alternate logos</h2></div>
     <p class="sec-note">Secondary marks and horizontal lockups.</p>
     <div data-bulk="alt"></div>
     <div class="grid" id="grid-alt"></div>
@@ -511,7 +518,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 
   <!-- ═════════════ 03 ILLUSTRATIONS ═════════════ -->
   <section class="sec" id="illus">
-    <div class="sec-head"><span class="idx">03</span><h2>Illustrations</h2></div>
+    <div class="sec-head"><h2>Illustrations</h2></div>
     <p class="sec-note">Line artwork. Hairline strokes are thickened on small PNG exports so they stay solid; SVG downloads keep the original weight.</p>
     <div data-bulk="illus"></div>
     <div class="grid" id="grid-illus"></div>
@@ -519,7 +526,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 
   <!-- ═════════════ 04 FONT ═════════════ -->
   <section class="sec" id="font">
-    <div class="sec-head"><span class="idx">04</span><h2>Font</h2></div>
+    <div class="sec-head"><h2>Font</h2></div>
     <p class="sec-note">Archivo. One variable file carries every weight from 100 to 900 and every width from 62 to 125.</p>
 
     <div class="spec">
@@ -570,14 +577,14 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 
   <!-- ═════════════ 05 VISUAL LOOM ═════════════ -->
   <section class="sec" id="loom">
-    <div class="sec-head"><span class="idx">05</span><h2>Visual Loom</h2></div>
+    <div class="sec-head"><h2>Visual Loom</h2></div>
     <div class="loom">
       <div>
         <p class="loom-lead">A procedural pattern generator built for Prismdrifter, for producing on-brand textures and graphics without building each one by hand.</p>
         <p>Every output derives from a single black-and-white gradient, subdivided and layered by a fixed rule set. Random Look generates a full composition in one click; sliders adjust it layer by layer, or drag on the canvas to drift the layers against each other. Exports as SVG or PNG at multiple sizes.</p>
         <p>Use it for background textures, print graphics, social support graphics, and anything else that comes up.</p>
       </div>
-      <div>
+      <div class="loom-r">
         <img class="loom-shot" id="loomShot" src="assets/images/visual_loom.png"
              alt="Visual Loom interface showing a generated black and white pattern" loading="lazy">
         <div class="rows">
@@ -1085,21 +1092,42 @@ for (const [word, wght, wdth] of STORM) {
   stormEl.appendChild(line);
 }
 
-const PROBE = 200;
 let lastWidth = 0;
 let queued = false;
 
+/* Every line shares one font size, so tracking is what carries each word out
+   to both edges. CSS adds a space after the final letter too, so the gap
+   count is one less than the letter count and the trailing space is pulled
+   back off with a negative margin. */
 function fitStorm(force) {
   const measure = stormEl.clientWidth;
   if (!measure) return;
   if (!force && measure === lastWidth) return;
   lastWidth = measure;
-  for (const line of stormEl.children) {
-    const span = line.firstElementChild;
-    span.style.fontSize = PROBE + 'px';
-    const natural = span.getBoundingClientRect().width;
-    if (natural > 0) span.style.fontSize = (PROBE * measure / natural) + 'px';
+
+  const lines = [...stormEl.children];
+  for (const line of lines) {
+    line.style.fontSize = '';
+    line.firstElementChild.style.letterSpacing = '0px';
+    line.firstElementChild.style.marginRight = '0px';
   }
+
+  const naturals = lines.map(l => l.firstElementChild.getBoundingClientRect().width);
+  const widest = Math.max(...naturals);
+  const base = parseFloat(getComputedStyle(lines[0]).fontSize);
+
+  // Only shrink if the longest word overruns the measure, and shrink every
+  // line by the same factor so the sizes stay uniform.
+  const shrink = widest > measure ? measure / widest : 1;
+
+  lines.forEach((line, i) => {
+    if (shrink < 1) line.style.fontSize = (base * shrink) + 'px';
+    const span = line.firstElementChild;
+    const gaps = Math.max(1, span.textContent.length - 1);
+    const track = (measure - naturals[i] * shrink) / gaps;
+    span.style.letterSpacing = track + 'px';
+    span.style.marginRight = -track + 'px';
+  });
 }
 
 /* Resizing the words changes the stack's height, which re-triggers the
@@ -1234,17 +1262,40 @@ fetch('assets/docs/Prismdrifter_Brand_Assets_01.pdf', { method: 'HEAD' })
 /* ══════════════════════════════════════════════════════════════
    MASTHEAD MARK
    ══════════════════════════════════════════════════════════════ */
-loadSVG('assets/logos/Prismdrifter_Alt_Logo_06.svg').then(src => {
-  const svg = src.cloneNode(true);
+const markHost = document.getElementById('mark');
+let markSrc = null, markWidth = 0, markQueued = false;
+
+/* Spanning the full measure, the outline lockup's 10-unit stroke renders
+   around 3px on a desktop column but drops under 1px on a phone, where it
+   washes out to grey. Same floor as the exports, recomputed on resize. */
+function fitMark(force) {
+  if (!markSrc) return;
+  const w = markHost.clientWidth;
+  if (!w || (!force && w === markWidth)) return;
+  markWidth = w;
+  const svg = markSrc.cloneNode(true);
   namespaceIds(svg, 'mark');
   recolor(svg, 'currentColor');   // follows the theme: black on light, white on dark
+  compensateStrokes(svg, w / parseViewBox(svg).w);
   svg.removeAttribute('width');
   svg.removeAttribute('height');
-  document.getElementById('mark').replaceChildren(svg);
+  markHost.replaceChildren(svg);
+}
+function scheduleMark() {
+  if (markQueued) return;
+  markQueued = true;
+  requestAnimationFrame(() => { markQueued = false; fitMark(false); });
+}
+
+loadSVG('assets/logos/Prismdrifter_Alt_Logo_07.svg').then(src => {
+  markSrc = src;
+  fitMark(true);
+  if (window.ResizeObserver) new ResizeObserver(scheduleMark).observe(markHost);
+  else window.addEventListener('resize', scheduleMark);
 }).catch(() => {
   // Fall back to the typeset wordmark rather than an empty header.
   document.getElementById('markFallback').classList.remove('vh');
-  document.getElementById('mark').remove();
+  markHost.remove();
 });
 
 const loomShot = document.getElementById('loomShot');
