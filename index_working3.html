@@ -1746,19 +1746,8 @@ function buildCard(group, file, label) {
     clone.removeAttribute('height');
     clone.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     stage.replaceChildren(clone);
-    /* Backdrop follows the theme — black marks on white, white marks on black.
-       It only flips when the mark would disappear into the page, e.g. a white
-       logo picked while in light mode. Judged on contrast ratio rather than a
-       luminance gap, because a mid-grey can sit far from white numerically and
-       still read fine against it. */
-    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const L = luminance(state.color);
-    const ratio = (a, b) => (Math.max(a, b) + .05) / (Math.min(a, b) + .05);
-    const paperL = dark ? 0.003 : 0.961;          // #0a0a0a / #fafafa
-    stage.style.setProperty('--stage-bg',
-      ratio(L, paperL) < 3
-        ? (dark ? '#fafafa' : '#0a0a0a')
-        : (dark ? '#0a0a0a' : '#fafafa'));
+    // Backdrop always contrasts the mark, so white assets stay visible.
+    stage.style.setProperty('--stage-bg', luminance(state.color) > 0.5 ? '#0a0a0a' : '#fafafa');
   }
 
   function syncOut() {
@@ -1779,10 +1768,7 @@ function buildCard(group, file, label) {
 
   const customWrap = card.querySelector('[data-custom-wrap]');
 
-  function setColor(hex, fromTheme) {
-    // A colour the user chose outright survives theme flips; an untouched
-    // card keeps following the theme.
-    if (!fromTheme) state.pinned = true;
+  function setColor(hex) {
     state.color = hex;
     let matched = false;
     card.querySelectorAll('[data-color]').forEach(b => {
@@ -1870,10 +1856,6 @@ function buildCard(group, file, label) {
 
   state.setColor = setColor;
   state.setSize = setSize;
-  state.applyTheme = dark => {
-    if (state.pinned) { paintPreview(); return; }   // backdrop still follows
-    setColor(dark ? '#ffffff' : '#000000', true);
-  };
   cards.push(state);
   return card;
 }
@@ -2588,8 +2570,6 @@ document.addEventListener('keydown', e => {
 const root = document.documentElement;
 const themeBtn = document.getElementById('theme');
 function setTheme(dark) {
-  // Graphics default to the theme's ink: black on white, white on black.
-  cards.forEach(c => c.applyTheme && c.applyTheme(dark));
   root.setAttribute('data-theme', dark ? 'dark' : 'light');
   // The icon shows the theme you'd switch to, so the label names that too.
   const next = dark ? 'light' : 'dark';
