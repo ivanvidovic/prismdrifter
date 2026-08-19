@@ -844,7 +844,8 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @media (max-width: 640px) {
-  .charset { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .charset { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+  .charset span { font-size: clamp(11px, 3.6vw, 17px); }
 
   /* Trim the dead space after each nav link so more of the rail is visible
      before it needs scrolling. */
