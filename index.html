@@ -667,37 +667,24 @@ body {
 }
 
 .charset {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
   gap: 1px;
   background: var(--rule);
   border: 1px solid var(--rule);
 }
-.charset-row {
-  width: 100%;
-  display: grid;
-  background: var(--rule);
-  gap: 1px;
-}
-.charset-row.alpha {
-  grid-template-columns: repeat(26, minmax(0, 1fr));
-}
-.charset-row.nums {
-  grid-template-columns: repeat(10, minmax(0, 1fr));
-  font-variant-numeric: tabular-nums;
-}
-.charset-row span {
+.charset span {
   min-width: 0;
   aspect-ratio: 1 / 1;
   display: grid;
   place-items: center;
   background: var(--paper);
-  font-size: clamp(12px, 2.15vw, 30px);
+  font-size: clamp(15px, 2vw, 28px);
   font-weight: 400;
   line-height: 1;
 }
-.charset-row.nums span {
-  font-size: clamp(26px, 5vw, 70px);
+.charset span.fig {
+  font-variant-numeric: tabular-nums;
 }
 
 /* One size for every line. With size locked, tracking is what fills the
@@ -858,6 +845,8 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @media (max-width: 640px) {
+  .charset { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+
   /* Trim the dead space after each nav link so more of the rail is visible
      before it needs scrolling. */
   .nav a { padding: 14px 0 13px; margin-right: 22px; letter-spacing: .12em; }
@@ -1909,21 +1898,19 @@ for (const item of MOTION_ITEMS) motionGrid.appendChild(buildMotionCard(item));
 /* ── character set ──
    Each row uses flex space-between so the first and last glyph sit flush to
    the measure and all spacing between characters is distributed automatically. */
-const CHARSET_ROWS = [
-  ['ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'alpha'],
-  ['abcdefghijklmnopqrstuvwxyz', 'alpha'],
-  ['0123456789', 'nums']
+const GLYPHS = [
+  ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+  ...'abcdefghijklmnopqrstuvwxyz',
+  ...'0123456789',
+  '&', '@',
+  '!', '?', '#', '$', '%', '+', '-', '=', '/', '\\', '(', ')', '[', ']', '{', '}'
 ];
 const glyphEl = document.getElementById('glyphs');
-for (const [chars, cls] of CHARSET_ROWS) {
-  const row = document.createElement('div');
-  row.className = 'charset-row ' + cls;
-  for (const g of chars) {
-    const s = document.createElement('span');
-    s.textContent = g;
-    row.appendChild(s);
-  }
-  glyphEl.appendChild(row);
+for (const g of GLYPHS) {
+  const s = document.createElement('span');
+  s.textContent = g;
+  if (g >= '0' && g <= '9') s.className = 'fig';
+  glyphEl.appendChild(s);
 }
 
 /* ── weight and width range ──
